@@ -5,9 +5,9 @@ import Model.AeronaveTO;
 public interface AeronaveDao {
 	public void inserirAeronave(AeronaveTO aeronave);
 	
-	//public void alterarAeronave();
+	public void alterarAeronave(AeronaveTO aeronave);
 	
-	//public void excluirAeronave();
+	public void excluirAeronave(AeronaveTO aeronave);
 	
 	//public List<AeronaveTO> consultarAeronave();
 

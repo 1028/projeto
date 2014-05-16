@@ -54,7 +54,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 		</form>
 		<div id="msg" >
 			<%
-				out.print(request.getParameter("msg"));
+			out.print(request.getAttribute("msg"));
 			%>
 		</div>
 	</div>

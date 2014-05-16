@@ -67,16 +67,17 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 	}
 
 	// método de update
-	public void alterarAeronave(int codigo, int tipo, String nome,
-			int qtdAssentos) {
-		String update = String
-				.format("UPDATE AERONAVE SET TIPO_AERO = %d, NOME_AERO = '%s', QTD_ASSENTOS_AERO = %d WHERE COD_AERO = %d",
-						tipo, nome, qtdAssentos, codigo);
+	public void alterarAeronave(AeronaveTO aeronave) {
+		String update = "UPDATE AERONAVE SET TIPO_AERO = ?, NOME_AERO = ?, QTD_ASSENTOS_AERO = ? WHERE COD_AERO = ?";
 
 		PreparedStatement stm = null;
 
 		try {
 			stm = prepararComando(update);
+			stm.setInt(1, aeronave.getTipoAeronave());
+			stm.setString(2, aeronave.getNome());
+			stm.setInt(3, aeronave.getQtdAssentos());
+			stm.setInt(4, aeronave.getCodigoAeronave());
 			stm.execute();
 			conexao.commit();
 		} catch (Exception e) {
@@ -104,9 +105,9 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 	}
 
 	// Método de delete
-	public void excluirAeronave(int codigo) {
+	public void excluirAeronave(AeronaveTO aeronave) {
 		String delete = String.format(
-				"DELETE FROM AERONAVE WHERE COD_AERO = %d", codigo);
+				"DELETE FROM AERONAVE WHERE COD_AERO = %d", aeronave.getCodigoAeronave());
 
 		PreparedStatement stm = null;
 

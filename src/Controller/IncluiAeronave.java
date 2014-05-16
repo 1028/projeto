@@ -1,13 +1,14 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import Model.Aeronave;
 import Model.AeronaveTO;
 
 /**
@@ -41,12 +42,16 @@ public class IncluiAeronave extends HttpServlet {
 		executa(request, response);
 	}
 
-	protected void executa(HttpServletRequest request, HttpServletResponse response){
+	protected void executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		AeronaveTO aeronave = new AeronaveTO();
 		//aeronave.setCodigoAeronave(request.getParameter(""));
 		aeronave.setNome(request.getParameter("fnome"));
 		aeronave.setQtdAssentos(Integer.parseInt(request.getParameter("fqntassento")));
 		aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
+		
+		Aeronave a = new Aeronave(aeronave);
+		a.incluirAeronave(aeronave);
+		
 	}
 	
 }

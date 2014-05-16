@@ -3,37 +3,33 @@ package Model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Aeronave {
-	private BancoDeDados bd;
+import Model.dao.DaoFactory;
+import Model.dao.AeronaveDao;
 
-	public Aeronave(int codigoAeronave, int tipoAeronave, int qtdAssentos,	String nome) throws SQLException {
-		setCodigoAeronave(codigoAeronave);
-		setTipoAeronave(tipoAeronave);
-		setQtdAssentos(qtdAssentos);
-		setNome(nome);
-		bd = null;
+public class Aeronave {
+	AeronaveTO dadosAeronave = null;
+	
+	public Aeronave(AeronaveTO aeronave){
+		this.dadosAeronave = aeronave;
 	}
 	
-	public Aeronave() {
-		
+	public Aeronave(int codigo) {
+		setCodigoAeronave(codigo);
 	}
-	
+
 	public String toString() {
 		return String.format("%d - %s ", getCodigoAeronave(), getNome());
 	}
 
-	public Aeronave(int codigo) {
-		setCodigoAeronave(codigo);
-		bd = null;
-	}
+	
 
 	
 
 	// Métodos do diagrama
-	public void incluirAeronave() throws SQLException {
-		bd = new BancoDeDados();
-
-		bd.inserirAeronave(getTipoAeronave(), getQtdAssentos(), getNome());
+	public void incluirAeronave(AeronaveTO aeronave) {
+		DaoFactory factory = DaoFactory.getInstance();
+		AeronaveDao dao = factory.getAeronaveDao();
+		dao.inserirAeronave(dadosAeronave);
 	}
 	
 	public ArrayList consultarTodas() throws SQLException {
@@ -69,15 +65,14 @@ public class Aeronave {
 	}
 
 	public void alterarAeronave() throws SQLException {
-		bd = new BancoDeDados();
-
-		bd.alterarAeronave(getCodigoAeronave(), getTipoAeronave(), getNome(),
-				getQtdAssentos());
+		DaoFactory factory = DaoFactory.getInstance();
+		AeronaveDao dao = factory.getAeronaveDao();
+		dao.alterarAeronave(dadosAeronave);
 	}
 
 	public void excluirAeronave() throws SQLException {
-		bd = new BancoDeDados();
-
-		bd.excluirAeronave(getCodigoAeronave());
+		DaoFactory factory = DaoFactory.getInstance();
+		AeronaveDao dao = factory.getAeronaveDao();
+		dao.excluirAeronave(dadosAeronave);
 	}
 }

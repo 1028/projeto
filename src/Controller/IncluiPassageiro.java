@@ -74,7 +74,7 @@ public class IncluiPassageiro extends HttpServlet {
 				p.cadastrarPassageiro();
 				request.setAttribute("msg", "Usuário cadastrado com sucesso!");
 				System.out.println("Aqui");
-				request.getRequestDispatcher("/cadastroPassageiro.jsp").forward(request, response);
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(request, response);
 				//response.getWriter().write("Usuário cadastrado com sucesso!");
 			}
 			catch (Exception e) {

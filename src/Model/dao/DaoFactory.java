@@ -2,6 +2,7 @@ package Model.dao;
 
 import java.sql.SQLException;
 
+import Model.dao.impl.AeronaveMysqlDaoImpl;
 import Model.dao.impl.PassageiroMysqlDaoImpl;
 
 public class DaoFactory {
@@ -21,5 +22,9 @@ public class DaoFactory {
 
 	public PassageiroMysqlDaoImpl getPassageiroDao() throws SQLException {
 		return new PassageiroMysqlDaoImpl();
+	}
+
+	public AeronaveMysqlDaoImpl getAeronaveDao() {
+		return new AeronaveMysqlDaoImpl();
 	}
 }

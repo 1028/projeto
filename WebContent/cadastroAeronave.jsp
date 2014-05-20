@@ -18,7 +18,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 <body>
-	<form action="">
+	<form action="IncluiAeronave" method="post">
 		<fieldset>
 			<legend><% out.print(bundle.getString("FrmCadastrarAeronave.titulo")); %></legend>
 			<p>

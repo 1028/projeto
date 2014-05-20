@@ -17,11 +17,7 @@ public class Passageiro {
 		DaoFactory factory = DaoFactory.getInstance();
 		PassageiroDao dao = factory.getPassageiroDao();
 		dao.cadastraPassageiro(dadosPassageiro);
-/*
-		pDAO.cadastraPassageiro("1", "1","911111111",
-				"1111-11-11", "1", 1,
-				1);
-				*/
+
 		System.out.println("Ok");
 	}
 

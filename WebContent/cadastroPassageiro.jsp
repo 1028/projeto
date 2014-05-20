@@ -22,7 +22,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 </head>
 <body>
 	<div id="container" >
-		<form action="IncluiPassageiro" method=post >
+		<form action="IncluiPassageiro" method="post">
 		<fieldset>
 		<legend><% out.print(bundle.getString("FrmCadastrarPassageiro.titulo")); %></legend>
 			<p><label for="nome" ><% out.print(bundle.getString("rotulo.nome")); %></label> <input type="text" id="nome" name="nome" required/></p>

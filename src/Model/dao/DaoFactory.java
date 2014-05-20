@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import Model.dao.impl.AeronaveMysqlDaoImpl;
 import Model.dao.impl.PassageiroMysqlDaoImpl;
+import Model.dao.impl.VooMysqlDaoImpl;
 
 public class DaoFactory {
 
@@ -26,5 +27,9 @@ public class DaoFactory {
 
 	public AeronaveMysqlDaoImpl getAeronaveDao() {
 		return new AeronaveMysqlDaoImpl();
+	}
+	
+	public VooMysqlDaoImpl getVooDao(){
+		return new VooMysqlDaoImpl();
 	}
 }

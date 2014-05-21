@@ -1,5 +1,7 @@
 package Model.dao;
 
+import java.util.List;
+
 import Model.AeronaveTO;
 
 public interface AeronaveDao {
@@ -9,6 +11,6 @@ public interface AeronaveDao {
 	
 	public void excluirAeronave(AeronaveTO aeronave);
 	
-	//public List<AeronaveTO> consultarAeronave();
+	public List<AeronaveTO> consultarAeronave(AeronaveTO aeronave);
 
 }

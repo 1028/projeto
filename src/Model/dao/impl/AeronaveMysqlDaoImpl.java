@@ -68,18 +68,17 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 
 	// método de update
 	public void alterarAeronave(AeronaveTO aeronave) {
-		String update = "UPDATE AERONAVE SET TIPO_AERO = ?, NOME_AERO = ?, QTD_ASSENTOS_AERO = ? WHERE COD_AERO = ?";
+		String update = String
+				.format("UPDATE AERONAVE SET TIPO_AERO = %d, NOME_AERO = '%s', QTD_ASSENTOS_AERO = %d WHERE COD_AERO = %d",
+						aeronave.getTipoAeronave(), aeronave.getNome(), aeronave.getQtdAssentos(), aeronave.getCodigoAeronave());
 
 		PreparedStatement stm = null;
-
+		conexao = null;
 		try {
+			conexao = obtemConexao();
 			stm = prepararComando(update);
-			stm.setInt(1, aeronave.getTipoAeronave());
-			stm.setString(2, aeronave.getNome());
-			stm.setInt(3, aeronave.getQtdAssentos());
-			stm.setInt(4, aeronave.getCodigoAeronave());
 			stm.execute();
-			conexao.commit();
+			//conexao.commit();
 		} catch (Exception e) {
 			// tenta dar rollback na instrução realizada
 			try {
@@ -106,15 +105,18 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 
 	// Método de delete
 	public void excluirAeronave(AeronaveTO aeronave) {
-		String delete = String.format(
-				"DELETE FROM AERONAVE WHERE COD_AERO = %d", aeronave.getCodigoAeronave());
+		//String delete = String.format(
+		//		"DELETE FROM dbprojeto1.aeronave WHERE COD_AERO = %d", aeronave.getCodigoAeronave());
 
+		String delete = "DELETE FROM AERONAVE WHERE COD_AERO =?";
 		PreparedStatement stm = null;
-
+		conexao = null;
 		try {
+			conexao = obtemConexao();
 			stm = prepararComando(delete);
+			stm.setInt(1, aeronave.getCodigoAeronave());
 			stm.execute();
-			conexao.commit();
+			//conexao.commit();
 		} catch (Exception e) {
 			// tenta dar rollback na instrução realizada
 			try {
@@ -144,9 +146,9 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 		return conexao.prepareStatement(comando);
 	}
 
-	public List<AeronaveTO> consultarAeronave(int codigo) {
+	public List<AeronaveTO> consultarAeronave(AeronaveTO aeronave) {
 		String consulta = String.format(
-				"SELECT * FROM AERONAVE WHERE COD_AERO = %d", codigo);
+				"SELECT * FROM AERONAVE WHERE COD_AERO = %d", aeronave.getCodigoAeronave());
 		conexao = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
@@ -161,9 +163,9 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 				//VERIFICARR!!!
 				AeronaveTO aero = new AeronaveTO();
 				aero.setCodigoAeronave((rs.getInt(1)));
-				aero.setQtdAssentos((rs.getInt(2)));
+				aero.setTipoAeronave((rs.getInt(2)));
 				aero.setNome((rs.getString(3)));
-				aero.setTipoAeronave((rs.getInt(4)));
+				aero.setQtdAssentos((rs.getInt(4)));
 				resultado.add(aero);
 			}
 			return resultado;

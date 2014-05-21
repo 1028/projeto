@@ -2,12 +2,15 @@ package Controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import Model.Aeronave;
 import Model.AeronaveTO;
 
@@ -43,9 +46,9 @@ public class IncluiAeronave extends HttpServlet {
 	}
 
 	protected void executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String operacao = (String) request.getParameter("operacao");
+		String operacao = (String) request.getParameter("btn");
 		
-		if(operacao.equals("cadastrar")){
+		if(operacao.equals("Cadastrar")){
 		AeronaveTO aeronave = new AeronaveTO();
 		//aeronave.setCodigoAeronave(request.getParameter(""));
 		aeronave.setNome(request.getParameter("fnome"));
@@ -55,23 +58,27 @@ public class IncluiAeronave extends HttpServlet {
 		Aeronave a = new Aeronave(aeronave);
 		a.incluirAeronave(aeronave);
 		}
-		else if (operacao.equals("consultar")){
+		else if (operacao.equals("Consultar")){
 			AeronaveTO aeronave = new AeronaveTO();
 			
 			aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
 			
 			Aeronave a = new Aeronave(aeronave);
-			
+			List<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
 			try {
-				a.consultarAeronave();
+				consulta = a.consultarAeronave();
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			request.setAttribute("consultou", "ok");
+			request.setAttribute("con", consulta);
+			request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
 		}
-		else if(operacao.equals("alterar")){
+		else if(operacao.equals("Alterar")){
 			AeronaveTO aeronave = new  AeronaveTO();
-			
+			aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
 			aeronave.setNome(request.getParameter("fnome"));
 			aeronave.setQtdAssentos(Integer.parseInt(request.getParameter("fqntassento")));
 			aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
@@ -85,7 +92,18 @@ public class IncluiAeronave extends HttpServlet {
 			}
 		}
 		else{
+			AeronaveTO aeronave = new  AeronaveTO();
+			System.out.print(Integer.parseInt(request.getParameter("fcodigo")) + "");
+			aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
 			
+
+			Aeronave a = new Aeronave(aeronave);
+			try {
+				a.excluirAeronave();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

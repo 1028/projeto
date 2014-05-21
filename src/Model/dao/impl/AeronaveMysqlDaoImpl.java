@@ -1,0 +1,198 @@
+package Model.dao.impl;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
+import Model.AeronaveTO;
+import Model.dao.AeronaveDao;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AeronaveMysqlDaoImpl implements AeronaveDao {
+	private Connection conexao;
+
+	// ---------------------------------------------------------------------
+	// Médotos referente ao Caso de Uso Manter Aeronave
+	private Connection obtemConexao() throws SQLException {
+		BancoDeDados bd = new BancoDeDados();
+		return bd.obtemConexao();
+	}
+
+	// Métodos de insert
+	public void inserirAeronave(AeronaveTO aeronave) {
+
+		// String do comando a ser realizado
+		String insercao = "INSERT INTO AERONAVE VALUES (NULL,?,?,?)";
+		// pega conexão com o servidor MYSql
+		conexao = null;
+		// Prepara o comando para ser realizado
+		PreparedStatement stm = null;
+
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(insercao);
+			stm.setInt(1, aeronave.getCodigoAeronave());
+			stm.setString(2, aeronave.getNome());
+			stm.setInt(3, aeronave.getQtdAssentos());
+			stm.execute();
+			conexao.commit();
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Não foi possível realizar o rollback \n\n"
+								+ sqlEx.getStackTrace());
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fechar a conexão com o banco \n"
+									+ sqlEx.getStackTrace());
+				}
+			}
+
+		}
+	}
+
+	// método de update
+	public void alterarAeronave(AeronaveTO aeronave) {
+		String update = "UPDATE AERONAVE SET TIPO_AERO = ?, NOME_AERO = ?, QTD_ASSENTOS_AERO = ? WHERE COD_AERO = ?";
+
+		PreparedStatement stm = null;
+
+		try {
+			stm = prepararComando(update);
+			stm.setInt(1, aeronave.getTipoAeronave());
+			stm.setString(2, aeronave.getNome());
+			stm.setInt(3, aeronave.getQtdAssentos());
+			stm.setInt(4, aeronave.getCodigoAeronave());
+			stm.execute();
+			conexao.commit();
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+			} catch (SQLException sqlEx) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Não foi possível realizar o rollback \n\n"
+								+ sqlEx.getStackTrace());
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fechar a conexão com o banco \n"
+									+ sqlEx.getStackTrace());
+				}
+			}
+
+		}
+	}
+
+	// Método de delete
+	public void excluirAeronave(AeronaveTO aeronave) {
+		String delete = String.format(
+				"DELETE FROM AERONAVE WHERE COD_AERO = %d", aeronave.getCodigoAeronave());
+
+		PreparedStatement stm = null;
+
+		try {
+			stm = prepararComando(delete);
+			stm.execute();
+			conexao.commit();
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+			} catch (SQLException sqlEx) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Não foi possível realizar o rollback \n\n"
+								+ sqlEx.getStackTrace());
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fechar a conexão com o banco \n"
+									+ sqlEx.getStackTrace());
+				}
+			}
+
+		}
+	}
+
+	public PreparedStatement prepararComando(String comando)
+			throws SQLException {
+		return conexao.prepareStatement(comando);
+	}
+
+	public List<AeronaveTO> consultarAeronave(int codigo) {
+		String consulta = String.format(
+				"SELECT * FROM AERONAVE WHERE COD_AERO = %d", codigo);
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		ArrayList<AeronaveTO> resultado = new ArrayList<AeronaveTO>();
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+			rs = stm.executeQuery();
+			// retornoQuery = (ArrayList) rs.getArray(0);
+			// System.out.println(rs.getArray(0));
+			if (rs.next()) {
+				//VERIFICARR!!!
+				AeronaveTO aero = new AeronaveTO();
+				aero.setCodigoAeronave((rs.getInt(1)));
+				aero.setQtdAssentos((rs.getInt(2)));
+				aero.setNome((rs.getString(3)));
+				aero.setTipoAeronave((rs.getInt(4)));
+				resultado.add(aero);
+			}
+			return resultado;
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null,
+						"Rollback realizado com sucesso");
+			} catch (SQLException sqlEx) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Não foi possível realizar o rollback \n\n"
+								+ sqlEx.getStackTrace());
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fechar a conexão com o banco \n"
+									+ sqlEx.getStackTrace());
+				}
+			}
+
+		}
+		return resultado;
+
+	}
+}

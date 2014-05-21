@@ -1,0 +1,132 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Times New Roman", Aria, sans-serif;
+	font-size: 14px;
+}
+
+#btnEspanhol{
+	font-size: 1px;
+	background-image: url("images/es.jpg");
+	background-repeat: no-repeat;
+	width: 195px;
+	height: 124px;
+}
+
+#btnIngles {
+	font-size: 1px;
+	background-image: url("images/usa.jpg");
+	background-repeat: no-repeat;
+	width: 195px;
+	height: 124px;
+}
+
+#btnPortugues {
+	font-size: 1px;
+	background-image: url("images/pt_br.jpg");
+	background-repeat: no-repeat;
+	width: 195px;
+	height: 124px;
+}
+
+form {
+	width: 400px;
+	margin: auto;
+}
+
+label {
+	width: 150px;
+	display: inline-block;
+}
+
+#btnForm {
+	width: 204px;
+	display: block;
+	margin: auto;
+}
+
+#msg {
+	border: 1px solid red;
+	width: 394px;
+	display: block;
+	margin: auto;
+	text-align: center;
+	font-family: calibri;
+}
+
+.botoes {
+	border: 1px solid black;
+	display: inline-block;
+	width: 100px;
+}
+
+.btnLogin {
+	text-align: center;
+}
+
+#container {
+	width: 800px;
+	height: 600px;
+	margin: auto;
+}
+
+table,td,tr {
+	border: 1px solid black;
+}
+
+#idioma {
+	width: 620px;
+	margin-top: 40vh;
+}
+
+#frmLogin {
+	margin-top: 30vh;
+}
+
+.menu {
+	list-style: none;
+	border: 1px solid #c0c0c0;
+	float: left;
+}
+
+.menu li {
+	position: relative;
+	float: left;
+	border-right: 1px solid #c0c0c0;
+}
+
+.menu li a {
+	color: #333;
+	text-decoration: none;
+	padding: 5px 10px;
+	display: block;
+}
+
+.menu li a:hover {
+	background: #333;
+	color: #fff;
+	-moz-box-shadow: 0 3px 10px 0 #CCC;
+	-webkit-box-shadow: 0 3px 10px 0 #ccc;
+	text-shadow: 0px 0px 5px #fff;
+}
+
+.menu li   ul {
+	position: absolute;
+	top: 25px;
+	left: 0;
+	background-color: #fff;
+	display: none;
+}
+
+.menu li:hover ul,.menu li.over ul {
+	display: block;
+}
+
+.menu li ul li {
+	border: 1px solid #c0c0c0;
+	display: block;
+	width: 150px;
+}

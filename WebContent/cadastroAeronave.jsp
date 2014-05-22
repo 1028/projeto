@@ -14,7 +14,7 @@
 
 	Locale idioma = new Locale(lingua, pais);
 	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma",
-	idioma);
+			idioma);
 %>
 <title>
 	<%
@@ -24,6 +24,24 @@
 <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 <body>
+
+	<%
+		String consultar = (String) request.getAttribute("consultou");
+		ArrayList<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
+		if (consultar == "ok") {
+			consulta = (ArrayList<AeronaveTO>) request
+					.getAttribute("con");
+			for (AeronaveTO aTO : consulta) {
+				out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome()
+						+ "/" + aTO.getQtdAssentos() + "/"
+						+ aTO.getTipoAeronave());
+			}
+		}
+		else {
+			AeronaveTO naoConsultado = new AeronaveTO();
+			consulta.add(naoConsultado);
+		}
+	%>
 	<form action="IncluiAeronave" method="post">
 		<fieldset>
 			<legend>
@@ -33,19 +51,19 @@
 			</legend>
 			<p>
 				<label for="codigo"> cod </label> <input type="text" id="codigo"
-					name="fcodigo">
+					name="fcodigo" value=<%consulta.get(0).getCodigoAeronave(); %>>
 			</p>
 			<p>
 				<label for="nome"> <%
  	out.print(bundle.getString("rotulo.nome"));
  %>
-				</label> <input type="text" id="nome" name="fnome">
+				</label> <input type="text" id="nome" name="fnome" value=<%consulta.get(0).getNome(); %>>
 			</p>
 			<p>
 				<label> <%
  	out.print(bundle.getString("rotulo.qntAssentos"));
  %>
-				</label> <input type="text" name="fqntassento">
+				</label> <input type="text" name="fqntassento" value=<%consulta.get(0).getQtdAssentos(); %>>
 			</p>
 
 			<p>
@@ -63,24 +81,19 @@
 					type="submit" name="btn"
 					value=<%out.print(bundle.getString("cadastrar"));%> class="botoes">
 
-				<input type="submit" name="btn" value=<%out.print(bundle.getString("consultar"));%> class="botoes">
-				<input type="submit" name="btn" value=<%out.print(bundle.getString("alterar"));%> class="botoes">
-				<input type="submit" name="btn" value=<%out.print(bundle.getString("excluir"));%> class="botoes"> <input
-					type="reset" value=<%out.print(bundle.getString("botao.limpar"));%>
+				<input type="submit" name="btn"
+					value=<%out.print(bundle.getString("consultar"));%> class="botoes">
+				<input type="submit" name="btn"
+					value=<%out.print(bundle.getString("alterar"));%> class="botoes">
+				<input type="submit" name="btn"
+					value=<%out.print(bundle.getString("excluir"));%> class="botoes">
+				<input type="reset"
+					value=<%out.print(bundle.getString("botao.limpar"));%>
 					class="botoes">
 			</p>
 		</fieldset>
 	</form>
 
-	<%
-	String consultar = (String) request.getAttribute("consultou");
-	if(consultar== "ok"){
-		ArrayList<AeronaveTO> consulta = (ArrayList<AeronaveTO>) request.getAttribute("con");
-		for(AeronaveTO aTO : consulta){
-		out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome() + "/" + aTO.getQtdAssentos() + "/" + aTO.getTipoAeronave());
-		}
-	}
-	%>
 	<!-- <form action="IncluiAeronave" method="post">
 		<input type="hidden" name="operacao" value="consultar">
 		<input type="submit" name="btn" value="con" class="botoes">

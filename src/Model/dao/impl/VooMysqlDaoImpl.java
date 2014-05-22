@@ -13,8 +13,16 @@ import Model.dao.VooDao;
 public class VooMysqlDaoImpl implements VooDao {
 	private Connection conexao;
 	
+	private Connection obtemConexao() throws SQLException {
+		BancoDeDados bd = new BancoDeDados();
+		return bd.obtemConexao();
+	}
 	
 	
+	public PreparedStatement prepararComando(String comando)
+			throws SQLException {
+		return conexao.prepareStatement(comando);
+	}
 	// ---------------------------------------------------------------------
 	// Médotos referente ao Caso de Uso Manter Voo
 	public void inserirVoo(VooTO voo, int codigoLocalidade,	int codigoAeronave) {
@@ -62,14 +70,14 @@ public class VooMysqlDaoImpl implements VooDao {
 
 	// Classes de domínios
 
-	public void consultarSituacao(int codigo) {
+	public void consultarSituacao(VooTO voo) {
 		String consulta = "SELECT * FROM SITUACAO WHERE COD_SIT = ?";
 
 		PreparedStatement stm = null;
 
 		try {
 			stm = prepararComando(consulta);
-			stm.setInt(1, codigo);
+			stm.setInt(1, voo.getCodigoVoo());
 			rs = stm.executeQuery();
 
 			if (rs.next()) {
@@ -340,14 +348,14 @@ public class VooMysqlDaoImpl implements VooDao {
 
 	}
 
-	public void excluirVoo(int codigo) {
-		String delete = String.format("DELETE FROM VOO WHERE COD_VOO = %d",
-				codigo);
+	public void excluirVoo(VooTO voo) {
+		String delete = "DELETE FROM VOO WHERE COD_VOO = ?";
 
 		PreparedStatement stm = null;
 
 		try {
 			stm = prepararComando(delete);
+			stm.setInt(1, voo.getCodigoVoo());
 			stm.execute();
 			conexao.commit();
 

@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Locale" import="java.util.ResourceBundle"
-	import="Model.AeronaveTO" import="java.util.ArrayList"%>
+	import="Model.AeronaveTO" import="java.util.ArrayList" import="java.util.Iterator"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,18 +28,28 @@
 	<%
 		String consultar = (String) request.getAttribute("consultou");
 		ArrayList<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
+		AeronaveTO element =null;
 		if (consultar == "ok") {
-			consulta = (ArrayList<AeronaveTO>) request
-					.getAttribute("con");
-			for (AeronaveTO aTO : consulta) {
+			consulta = (ArrayList<AeronaveTO>) request.getAttribute("con");
+			 Iterator itr = consulta.iterator();
+		      while(itr.hasNext()) {
+		        element = (AeronaveTO) itr.next();
+		         System.out.print(element.getCodigoAeronave() + " ");
+		      }
+		/*	for (AeronaveTO aTO : consulta) {
 				out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome()
 						+ "/" + aTO.getQtdAssentos() + "/"
 						+ aTO.getTipoAeronave());
-			}
+			}*/
 		}
 		else {
 			AeronaveTO naoConsultado = new AeronaveTO();
 			consulta.add(naoConsultado);
+			Iterator itr = consulta.iterator();
+			 while(itr.hasNext()) {
+			        element = (AeronaveTO) itr.next();
+			         System.out.print(element + " ");
+			      }
 		}
 	%>
 	<form action="IncluiAeronave" method="post">
@@ -50,27 +60,24 @@
 				%>
 			</legend>
 			<p>
-				<label for="codigo"> cod </label> <input type="text" id="codigo"
-					name="fcodigo" value=<%consulta.get(0).getCodigoAeronave(); %>>
+				<label for="codigo"> cod </label> 
+				<input type="text" id="codigo"
+					name="fcodigo" value=<%out.print(element.getCodigoAeronave()); %>>
 			</p>
+			
 			<p>
-				<label for="nome"> <%
- 	out.print(bundle.getString("rotulo.nome"));
- %>
-				</label> <input type="text" id="nome" name="fnome" value=<%consulta.get(0).getNome(); %>>
+				<label for="nome"> <%out.print(bundle.getString("rotulo.nome"));%></label> 
+				<input type="text" id="nome" name="fnome" value=<%out.print(element.getNome()); %>>
 			</p>
+			
 			<p>
-				<label> <%
- 	out.print(bundle.getString("rotulo.qntAssentos"));
- %>
-				</label> <input type="text" name="fqntassento" value=<%consulta.get(0).getQtdAssentos(); %>>
+				<label> <%out.print(bundle.getString("rotulo.qntAssentos"));%></label> 
+				<input type="text" name="fqntassento" value=<%out.print(element.getQtdAssentos()); %>>
 			</p>
 
 			<p>
-				<label> <%
- 	out.print(bundle.getString("rotulo.tipoAeronave"));
- %>
-				</label> <select name="ftipoaeronave">
+				<label> <%out.print(bundle.getString("rotulo.tipoAeronave")); %></label>
+				 <select name="ftipoaeronave">
 					<option>1</option>
 					<option>2</option>
 				</select>

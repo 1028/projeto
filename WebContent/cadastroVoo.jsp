@@ -27,19 +27,19 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 		<input type="text" name="fdata"></p>
 		
 		<p><label><% out.print(bundle.getString("rotulo.origem")); %></label>
-		<select></select></p>
+		<select name="forigem"></select></p>
 		
 		<p><label><% out.print(bundle.getString("rotulo.destino")); %></label>
-		<select></select></p>
+		<select name="fdestino"></select></p>
 		
 		<p><label><% out.print(bundle.getString("rotulo.escalas")); %></label>
-		<select></select></p>
+		<select name="fescala"></select></p>
 				
 		<p><label><% out.print(bundle.getString("rotulo.tipo.aeronave")); %></label>
-		<select></select></p>
+		<select name="faeronave"></select></p>
 		
 		<p><label><% out.print(bundle.getString("rotulo.situacao")); %></label>
-		<select></select></p>
+		<select name="fsituacao"></select></p>
 		
 		<p id="btnForm">
 		<input type="submit" value=<% out.print(bundle.getString("cadastrar")); %> class="botoes">

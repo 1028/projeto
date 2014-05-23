@@ -8,38 +8,17 @@ import java.util.ArrayList;
 
 public class Situacao {
 	
-	private BancoDeDados bd;
-	private String nome;
-	private int codigo;
+	SituacaoTO dadosSituacao;
 	
-	public Situacao(String nome, int codigo) {
-		setNome(nome);
-		setCodigo(codigo);
-	}
-	
-	public Situacao() {
-		
+	public Situacao(SituacaoTO dadosSituacao) {
+		this.dadosSituacao = dadosSituacao;
 	}
 	
 	public String toString() {
 		return String.format(" %d - %s", getCodigo(), getNome());
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
+
 	
 	public void consultar() throws SQLException {
 		bd = new BancoDeDados();

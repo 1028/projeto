@@ -3,11 +3,10 @@ package Model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+// mudar para class TipoPassageiro?
 public class Perfil {
-	private BancoDeDados bd;
-	private String nome;
-	private int codigo;
+	
+
 	
 	public Perfil(String nome, int codigo) {
 		setNome(nome);
@@ -21,22 +20,7 @@ public class Perfil {
 	public String toString() {
 		return String.format(" %d - %s", getCodigo(), getNome());
 	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
+
 	
 	public void consultar() throws SQLException {
 		bd = new BancoDeDados();

@@ -9,8 +9,8 @@ import Model.dao.AeronaveDao;
 public class Aeronave {
 	AeronaveTO dadosAeronave = null;
 
-	public Aeronave(AeronaveTO aeronave) {
-		this.dadosAeronave = aeronave;
+	public Aeronave(AeronaveTO dadosAeronave) {
+		this.dadosAeronave = dadosAeronave;
 	}
 
 	// Métodos do diagrama

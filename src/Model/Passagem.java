@@ -4,9 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class Passagem {
-	private int iNumeroPassagem;
-	private Date data;
-	private String numeroAssento;
+
 	private BancoDeDados bd;
 
 	public Passagem() {
@@ -17,29 +15,7 @@ public class Passagem {
 		setNumeroPassagem(iNumeroPassagem);
 	}
 
-	public int getNumeroPassagem() {
-		return iNumeroPassagem;
-	}
-
-	public void setNumeroPassagem(int iNumeroPassagem) {
-		this.iNumeroPassagem = iNumeroPassagem;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public String getNumeroAssento() {
-		return numeroAssento;
-	}
-
-	public void setNumeroAssento(String numeroAssento) {
-		this.numeroAssento = numeroAssento;
-	}
+	
 	
 	public void efetuarCheckin(){
 		

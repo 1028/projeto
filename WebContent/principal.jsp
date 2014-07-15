@@ -28,7 +28,7 @@
 			</ul></li>
 		<li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.passagem")); %></a>
 			<ul>
-				<li><a href="cadastroPassageiro.jsp"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li>
+				<li><a href="comprarPassagem"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.cancelar")); %></a></li>
 				<li><a href="#">2.3</a></li>
 			</ul></li>
@@ -38,7 +38,7 @@
 		<li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.voo")); %></a>
 			<ul>
 				<li><a href="cadastroVoo.jsp"><% out.print(bundle.getString("cadastrar")); %></a></li>
-				<li><a href="#"><% out.print(bundle.getString("consultar")); %></a></li>
+				<li><a href="consultarVoo.jsp"><% out.print(bundle.getString("consultar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("alterar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("excluir")); %></a></li>
 			</ul></li>

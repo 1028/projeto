@@ -1,5 +1,7 @@
 package Model.dao;
 
+import java.util.List;
+
 import Model.VooTO;
 
 public interface VooDao {
@@ -11,4 +13,6 @@ public interface VooDao {
 	public void alterarVoo(VooTO voo);
 	
 	public void excluirVoo(VooTO voo);
+	
+	public List<VooTO> consultar();
 }

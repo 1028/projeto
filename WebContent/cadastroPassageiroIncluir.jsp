@@ -58,7 +58,7 @@
 		}
 		catch (Exception e) {
 			System.out.println(e);
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Há campos não preenchidos.");
+			//response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Há campos não preenchidos.");
 		}
 	%>
 </body>

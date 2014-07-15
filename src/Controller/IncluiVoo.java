@@ -1,6 +1,8 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Model.Voo;
 import Model.VooTO;
 
 /**
@@ -30,7 +33,8 @@ public class IncluiVoo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		executa(request, response);
+		//executa(request, response);
+		verificaOp(request,response);
 	}
 
 	/**
@@ -38,7 +42,8 @@ public class IncluiVoo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		executa(request, response);
+		//executa(request, response);
+		verificaOp(request,response);
 	}
 
 	public void executa(HttpServletRequest request, HttpServletResponse response){
@@ -51,6 +56,32 @@ public class IncluiVoo extends HttpServlet {
 		voo.setEscala(request.getParameter("fescala"));
 		
 		voo.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
+	}
+	
+	public void verificaOp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String teste = request.getParameter("op").toString();
+		teste = (teste != null ? teste : "");
+		
+		if(teste.equals("listar")) {
+			consultar(request, response) ;
+		}
+	}
+	
+	public void consultar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		VooTO vooTO = new VooTO();
+		Voo voo = new Voo(vooTO);
+		List<VooTO> lista = new ArrayList<VooTO>();
+		
+		try {
+			lista = voo.consultar();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("ret", "listar");
+		request.setAttribute("lst", lista);
+		request.getRequestDispatcher("consultarVoo.jsp").forward(request, response);
 	}
 	
 }

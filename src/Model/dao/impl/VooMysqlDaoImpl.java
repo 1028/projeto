@@ -2,11 +2,14 @@ package Model.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import Model.AeronaveTO;
 import Model.VooTO;
 import Model.dao.VooDao;
 
@@ -25,6 +28,61 @@ public class VooMysqlDaoImpl implements VooDao {
 	}
 	// ---------------------------------------------------------------------
 	// Médotos referente ao Caso de Uso Manter Voo
+	
+	public List<VooTO> consultar() {
+		
+		String consulta = "SELECT * FROM VOO";
+		
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		ArrayList<VooTO> resultado = new ArrayList<VooTO>();
+		
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+			rs = stm.executeQuery();
+			
+			while (rs.next()) {
+				VooTO voo = new VooTO();
+				voo.setCodigoVoo((rs.getInt(1)));
+				voo.setOrigem((rs.getString(2)));
+				voo.setDestino((rs.getString(3)));
+				voo.setEscala((rs.getString(4)));
+				voo.setDateHora(rs.getString(5));
+				voo.setValor((rs.getDouble(6)));
+				voo.setSituacao((rs.getInt(8)));
+				resultado.add(voo);
+			}
+			return resultado;
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null,
+						"Rollback realizado com sucesso");
+			} catch (SQLException sqlEx) {
+				JOptionPane.showMessageDialog(
+						null,
+						"Não foi possível realizar o rollback \n\n"
+								+ sqlEx.getStackTrace());
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fechar a conexão com o banco \n"
+									+ sqlEx.getStackTrace());
+				}
+			}
+
+		}
+		return resultado;
+	}
+	
 	public void inserirVoo(VooTO voo, int codigoLocalidade,	int codigoAeronave) {
 		String inserir = "INSERT INTO VOO VALUES(NULL,?,?,?,?,?,?,?,?)";
 		PreparedStatement stm = null;
@@ -70,173 +128,13 @@ public class VooMysqlDaoImpl implements VooDao {
 
 	// Classes de domínios
 
-	public void consultarSituacao(VooTO voo) {
-		String consulta = "SELECT * FROM SITUACAO WHERE COD_SIT = ?";
+	
 
-		PreparedStatement stm = null;
+	
 
-		try {
-			stm = prepararComando(consulta);
-			stm.setInt(1, voo.getCodigoVoo());
-			rs = stm.executeQuery();
+	
 
-			if (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getString(2));
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
-
-	public void consultarAeronave() {
-		String consulta = "SELECT * FROM AERONAVE";
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getInt(2));
-				retornoQuery.add(rs.getString(3));
-				retornoQuery.add(rs.getInt(4));
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
-
-	public void consultarSituacao() {
-		String consulta = "SELECT * FROM SITUACAO";
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getString(2));
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
-
-	public void consultarLocalidade() {
-		String consulta = "SELECT * FROM LOCALIDADE";
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));// codigo
-				retornoQuery.add(rs.getString(2));// Nome
-				retornoQuery.add(rs.getString(3));// UF
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
+	
 
 	public void alterarVoo(String origem, String destino, String escala,
 			String dataHora, Double valor, int codigoAeronave,
@@ -291,63 +189,7 @@ public class VooMysqlDaoImpl implements VooDao {
 
 	}
 
-	public ArrayList consultarVoo(int codigo) {
-		String consulta = String
-				.format("SELECT COD_VOO, ORIGEM_VOO, DESTINO_VOO, ESCALA_VOO, DATA_VOO, VALOR_VOO, COD_SIT, NOME_SIT, COD_AERO, TIPO_AERO, NOME_AERO, QTD_ASSENTOS_AERO FROM VOO V INNER JOIN SITUACAO ON COD_SIT = COD_SIT_VOO INNER JOIN AERONAVE ON COD_AERO = COD_AERO_VOO WHERE COD_VOO = %d",
-						codigo);
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1)); // codigo do Voo
-				retornoQuery.add(rs.getString(2)); // Origem do voo
-				retornoQuery.add(rs.getString(3)); // Destino
-				retornoQuery.add(rs.getString(4));// Escala
-				retornoQuery.add(rs.getDate(5));// Data do voo
-				retornoQuery.add(rs.getTime(5));// Hora do voo
-				retornoQuery.add(rs.getDouble(6));// Valor
-				retornoQuery.add(rs.getInt(7));// Codigo situação
-				retornoQuery.add(rs.getString(8));// nome situação
-				retornoQuery.add(rs.getInt(9));// Código aeronave
-				retornoQuery.add(rs.getString(10));// Tipo aeronave
-				retornoQuery.add(rs.getString(11));// nome Aeronave
-				retornoQuery.add(rs.getInt(12));// qtd Assentos
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-
-		return retornoQuery;
-
-	}
-
+	
 	public void excluirVoo(VooTO voo) {
 		String delete = "DELETE FROM VOO WHERE COD_VOO = ?";
 
@@ -375,5 +217,26 @@ public class VooMysqlDaoImpl implements VooDao {
 			}
 
 		}
+	}
+
+
+	@Override
+	public void inserirVoo(VooTO voo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void consultarVoo(VooTO voo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void alterarVoo(VooTO voo) {
+		// TODO Auto-generated method stub
+		
 	}
 }

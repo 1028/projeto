@@ -2,6 +2,7 @@ package Model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import Model.dao.DaoFactory;
 import Model.dao.VooDao;
@@ -24,6 +25,12 @@ public class Voo {
 		DaoFactory factory = DaoFactory.getInstance();
 		VooDao dao = factory.getVooDao();
 		dao.consultarVoo(dadosVoo);
+	}
+	
+	public List<VooTO> consultar() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		VooDao dao = factory.getVooDao();
+		return dao.consultar();
 	}
 
 	public void alterarVoo() throws SQLException {

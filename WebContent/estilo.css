@@ -73,6 +73,12 @@ label {
 	margin: auto;
 }
 
+table {
+	margin: auto;
+	width: 500px;
+	text-align: center;
+}
+
 table,td,tr {
 	border: 1px solid black;
 }
@@ -129,4 +135,10 @@ table,td,tr {
 	border: 1px solid #c0c0c0;
 	display: block;
 	width: 150px;
+}
+
+#wrap {
+	border: 1px solid red;
+	width: 800px;
+	margin: auto;
 }

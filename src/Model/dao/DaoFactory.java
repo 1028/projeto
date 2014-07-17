@@ -3,6 +3,7 @@ package Model.dao;
 import java.sql.SQLException;
 
 import Model.dao.impl.AeronaveMysqlDaoImpl;
+import Model.dao.impl.LoginMysqlImpl;
 import Model.dao.impl.PassageiroMysqlDaoImpl;
 import Model.dao.impl.VooMysqlDaoImpl;
 
@@ -31,5 +32,9 @@ public class DaoFactory {
 	
 	public VooMysqlDaoImpl getVooDao(){
 		return new VooMysqlDaoImpl();
+	}
+	
+	public LoginMysqlImpl getLoginDao(){
+		return new LoginMysqlImpl(); 
 	}
 }

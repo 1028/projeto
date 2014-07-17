@@ -1,32 +1,21 @@
 package Model;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+
+import Model.dao.DaoFactory;
+import Model.dao.FormaTratamentoDao;
 
 
 public class FormaTratamento {
-	private BancoDeDados bd;
 
 	public FormaTratamento() {
 		
 	}
 	
-	public String toString() {
-		return String.format(" %d - %s", getCodigo(), getNome());
-	}
-	
-
-	
-	public void consultar() throws SQLException {
-		bd = new BancoDeDados();
-		
-		bd.consultarSituacao(getCodigo());
-	}
-	
-	public ArrayList consultarTodos() throws SQLException {
-		bd = new BancoDeDados();
-		bd.consultarTratamento();
-		
-		return bd.getRetornoQuery();
+	public List<FormaTratamentoTO> consultarFormaTratamento() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		FormaTratamentoDao dao = (FormaTratamentoDao) factory.getFormaTratamentoDao();
+		return dao.consultarFormaTratamento();
 	}
 }

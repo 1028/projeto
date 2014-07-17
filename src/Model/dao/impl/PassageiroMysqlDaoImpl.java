@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
-
 import Model.dao.impl.BancoDeDados;
 import Model.PassageiroTO;
 import Model.dao.PassageiroDao;
@@ -62,87 +60,4 @@ public class PassageiroMysqlDaoImpl implements PassageiroDao{
 			}
 		}
 	}
-
-	public void consultarTratamento() {
-		String consulta = "SELECT * FROM TRATAMENTO";
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getString(2));
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
-
-	public void consultarPerfil() {
-		String consulta = "SELECT * FROM PERFIL";
-
-		PreparedStatement stm = null;
-
-		try {
-			stm = prepararComando(consulta);
-			rs = stm.executeQuery();
-
-			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getString(2));
-			}
-
-		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
-			try {
-				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
-			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
-			}
-		} finally {
-			if (stm != null) {
-				try {
-					conexao.close();
-				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
-				}
-			}
-
-		}
-	}
-
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -26,18 +27,23 @@ public class FormaTratamentoMysqlImpl implements FormaTratamentoDao {
 
 	public List<FormaTratamentoTO> consultarFormaTratamento() {
 		String consulta = "SELECT * FROM TRATAMENTO";
-
+		ArrayList<FormaTratamentoTO> resultado = new ArrayList<FormaTratamentoTO>();
 		PreparedStatement stm = null;
 		ResultSet rs = null;
+		conexao = null;
 		try {
+			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();
 
 			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getString(2));
+				FormaTratamentoTO formaTrat = new FormaTratamentoTO();
+				formaTrat.setCodigo(rs.getInt(1));
+				formaTrat.setNome(rs.getString(2));
+				resultado.add(formaTrat);
 			}
 
+			return resultado;
 		} catch (Exception e) {
 			// tenta dar rollback na instrução realizada
 			try {
@@ -63,5 +69,6 @@ public class FormaTratamentoMysqlImpl implements FormaTratamentoDao {
 			}
 
 		}
+		return resultado;
 	}
 }

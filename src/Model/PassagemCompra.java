@@ -4,13 +4,12 @@ import java.sql.SQLException;
 
 public class PassagemCompra extends Passagem {
 
-	private BancoDeDados bd;
+	PassagemCompraTO dadosPassagemCompra = null;
 
-	public PassagemCompra() {
-		
+	public PassagemCompra(PassagemCompraTO dadosPassagemCompra) {
+		this.dadosPassagemCompra = dadosPassagemCompra;
 	}
 
-	
 	public void cancelarPassagem() throws SQLException {
 		bd = new BancoDeDados();
 

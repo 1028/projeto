@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import Model.AeronaveTO;
 import Model.VooTO;
 import Model.dao.VooDao;
 

@@ -11,7 +11,7 @@ import Model.dao.SituacaoDao;
 
 public class Situacao {
 	
-	SituacaoTO dadosSituacao;
+	SituacaoTO dadosSituacao = null;
 	
 	public Situacao(SituacaoTO dadosSituacao) {
 		this.dadosSituacao = dadosSituacao;

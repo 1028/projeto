@@ -41,14 +41,18 @@
 				<li><a href="consultarVoo.jsp"><% out.print(bundle.getString("consultar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("alterar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("excluir")); %></a></li>
-			</ul></li>
+			</ul>
+		</li>
 		<li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.aeronave")); %></a>
 			<ul>
 				<li><a href="cadastroAeronave.jsp"><% out.print(bundle.getString("cadastrar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("consultar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("alterar")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("excluir")); %></a></li>
-			</ul></li>
+			</ul>
+		</li>
+		<li><a>Tabelas</a>
+		</li>
 	</ul>
 	</nav>
 </body>

@@ -17,6 +17,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<script>
+
+</script>
+
+
 		<%
 			String msg = bundle.getString("mensagem.sobre");
 

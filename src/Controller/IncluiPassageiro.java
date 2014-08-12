@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Model.Passageiro;
+import View.Validacoes;
 import Model.PassageiroTO;
 import Controller.Formatador;
 
@@ -64,9 +65,9 @@ public class IncluiPassageiro extends HttpServlet {
 		System.out.println(Integer.parseInt(request.getParameter("tratamento")));
 		System.out.println(Integer.parseInt(request.getParameter("perfil")));
 		//Verifica os campos enviados
-		Validacao oValida = new Validacao();
+		Validacoes validador = new Validacoes();
 		
-		if(!(oValida.camposEmBranco(passageiro.getNome(), passageiro.getEmail(), passageiro.getDataNascimento()))) {
+		if(!(validador.camposEmBranco(passageiro.getNome()) || validador.camposEmBranco(passageiro.getEmail()) || validador.camposEmBranco(passageiro.getDataNascimento()))) {
 			Passageiro p = new Passageiro(passageiro);
 			
 			try {

@@ -15,7 +15,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> <% out.print(bundle.getString("FrmSistemaPassagensAereas.titulo")); %></title>
 <link rel="stylesheet" type="text/css" href="estilo.css">
-
 </head>
 <body>
 
@@ -24,7 +23,7 @@
 	<ul class="menu">
 		<li><a>  <% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.sistema")); %> </a>
 			<ul>
-				<li><a href="#" onclick="mensagem('<% out.print(bundle.getString("mensagem.sobre")); %>')"> <% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.sobre")); %> </a></li>
+				<li><a href="mensagem.jsp"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.sobre")); %></a></li>
 				<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.sair")); %></a></li>
 			</ul></li>
 		<li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.passagem")); %></a>
@@ -56,11 +55,5 @@
 		</li>
 	</ul>
 	</nav>
-	
-<!--	<script>
-	function mensagem(texto){
-		alert(texto);
-	}
-	</script> -->
 </body>
 </html>

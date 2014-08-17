@@ -56,16 +56,27 @@ public class GerenciaLogin extends HttpServlet {
 		Validacao oValida = new Validacao();
 		if (!(oValida.camposEmBranco(login.getLogin(), login.getSenha()))) {
 			Login l = new Login(login);
-			l.efetuarLogin();
+			LoginTO resultado = l.efetuarLogin();
+			
+			
+			oCriptografa;
+			String senhaCriptografada;
+			senhaCriptografada = oCriptografa.cifra(login.getSenha());
+			
+			if(resultado != null && resultado.getSenha().equals(senhaCriptografada)){
 
 			request.setAttribute("msg", "FrmLogin.mensagem.validado");
 			request.getRequestDispatcher("principal.jsp").forward(request,
 					response);
+			} else {
+				request.setAttribute("msg", "FrmLogin.mensagem.invalidos");
+				request.getRequestDispatcher("login.jsp")
+						.forward(request, response);
+				}
 		} else {
-			request.setAttribute("msg", "FrmLogin.mensagem.invalidos");
+			request.setAttribute("msg", "mensage.campos.branco");
 			request.getRequestDispatcher("login.jsp")
 					.forward(request, response);
 		}
 	}
-
 }

@@ -10,9 +10,9 @@ public class Login {
 		this.dadosLogin = dadosLogin;
 	}
 	
-	public void efetuarLogin(){
+	public LoginTO efetuarLogin(){
 		DaoFactory factory = DaoFactory.getInstance();
 		LoginDao dao = factory.getLoginDao();
-		dao.efetuarLogin(dadosLogin);		
+		return dao.efetuarLogin(dadosLogin);		
 	}
 }

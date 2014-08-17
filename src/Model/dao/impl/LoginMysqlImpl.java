@@ -22,26 +22,44 @@ public class LoginMysqlImpl implements LoginDao {
 		return (PreparedStatement) conexao.prepareStatement(comando);
 	}
 
-	public void efetuarLogin(LoginTO login) {
+	public LoginTO efetuarLogin(LoginTO login) {
 		// public List<LoginTO> efetuarLogin(){
 
-		String consulta = "SELECT * FROM LOGIN";
+		String consulta = "SELECT * FROM LOGIN WHERE  = ?";
 
 		conexao = null;
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-
+		LoginTO oLogin = new LoginTO();
 		try {
 			conexao = obtemConexao();
 			stm = prepararComando(consulta);
+			stm.setString(1, login.getLogin());
 			rs = stm.executeQuery();
 
-			LoginTO loginAr = new LoginTO();
-			// login.setTipoUsuario((rs.getString(1)));
+			if (rs.next()) {
+				oLogin.setTipoUsuario(Integer.parseInt((rs.getString(1))));
+				oLogin.setLogin(rs.getString(2));
+				oLogin.setSenha(rs.getString(3));
+
+				return oLogin;
+			}
 		} catch (Exception e) {
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
 
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					sqlEx.printStackTrace();
+				}
+			}
 		}
-
+		return oLogin;
 	}
-
 }

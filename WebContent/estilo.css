@@ -32,9 +32,13 @@ body {
 	height: 124px;
 }
 
+#boxExibicao {
+	width: 620px;
+}
+
 form {
-	width: 400px;
 	margin: auto;
+	width: 400px;
 }
 
 label {
@@ -75,7 +79,7 @@ label {
 
 table {
 	margin: auto;
-	width: 500px;
+	width: 600px;
 	text-align: center;
 }
 
@@ -96,6 +100,8 @@ table,td,tr {
 	list-style: none;
 	border: 1px solid #c0c0c0;
 	float: left;
+	margin: auto;
+	width: 
 }
 
 .menu li {
@@ -119,6 +125,8 @@ table,td,tr {
 	text-shadow: 0px 0px 5px #fff;
 }
 
+
+
 .menu li   ul {
 	position: absolute;
 	top: 25px;
@@ -139,6 +147,16 @@ table,td,tr {
 
 #wrap {
 	border: 1px solid red;
-	width: 800px;
+	width: 1000px;
 	margin: auto;
+}
+
+nav {
+	margin: auto;
+	height: 30px;
+	width: 399px;
+}
+
+#paginacao {
+	border:1px solid cyan;
 }

@@ -28,9 +28,50 @@ public class VooMysqlDaoImpl implements VooDao {
 	// ---------------------------------------------------------------------
 	// Médotos referente ao Caso de Uso Manter Voo
 	
+	public int total() {
+		String consulta = "SELECT COUNT(COD_VOO) FROM VOO_GERAL";
+		
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		
+		int total = 0;
+		
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+			rs = stm.executeQuery();
+			
+			rs.next();
+			total = rs.getInt(1);
+		}
+		catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			e.printStackTrace();
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
+				sqlEx.getStackTrace();
+			}
+		}
+		finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					sqlEx.getStackTrace();
+				}
+			}
+
+		}
+		
+		return total;
+	}
+	
 	public List<VooTO> consultar() {
 		
-		String consulta = "SELECT * FROM VOO";
+		String consulta = "SELECT * FROM VOO_GERAL";
 		
 		conexao = null;
 		PreparedStatement stm = null;
@@ -45,40 +86,37 @@ public class VooMysqlDaoImpl implements VooDao {
 			while (rs.next()) {
 				VooTO voo = new VooTO();
 				voo.setCodigoVoo((rs.getInt(1)));
-				voo.setOrigem((rs.getString(2)));
-				voo.setDestino((rs.getString(3)));
-				voo.setEscala((rs.getString(4)));
-				voo.setDateHora(rs.getString(5));
-				voo.setValor((rs.getDouble(6)));
-				voo.setSituacao((rs.getInt(8)));
+				voo.setValor((rs.getDouble(2)));
+				//3 - CODIGO DA AERONAVE
+				//4 - COD DA SITUACAO
+				voo.setOrigem((rs.getString(5)));
+				//6 - DATA DA ORIGEM
+				voo.setDestino((rs.getString(7)));
+				//8 - DATA DESTINO
+				voo.setEscala((rs.getString(9)));
+				voo.setDateHora(rs.getString(6));
 				resultado.add(voo);
 			}
-			return resultado;
+			
 		} catch (Exception e) {
 			// tenta dar rollback na instrução realizada
 			try {
 				conexao.rollback();
 				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
 			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
+				sqlEx.getStackTrace();
 			}
 		} finally {
 			if (stm != null) {
 				try {
 					conexao.close();
 				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
+					sqlEx.getStackTrace();
 				}
 			}
 
 		}
+		
 		return resultado;
 	}
 	

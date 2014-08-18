@@ -72,13 +72,24 @@ public class IncluiVoo extends HttpServlet {
 		Voo voo = new Voo(vooTO);
 		List<VooTO> lista = new ArrayList<VooTO>();
 		
+		//variável pegará o total de voos registros na base
+		int total = 0;
+		//calculará a quantidade de páginas geral.
+		int totPag; 
+		//Quantidade de registros por página
+		int qtdReg = 2;
 		try {
 			lista = voo.consultar();
+			total = voo.total();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//Cálculo, arredondado para cima, de páginas necessárias para a quantidade de registros retornados.
+		totPag = (total + (qtdReg - 1))/ qtdReg;
 		
+		
+		request.setAttribute("total", totPag);
 		request.setAttribute("ret", "listar");
 		request.setAttribute("lst", lista);
 		request.getRequestDispatcher("consultarVoo.jsp").forward(request, response);

@@ -78,6 +78,15 @@ public class IncluiVoo extends HttpServlet {
 		int totPag; 
 		//Quantidade de registros por página
 		int qtdReg = 2;
+		int pag;
+		try {
+			pag = Integer.parseInt(request.getParameter("pagAt"));
+			System.out.println("o valor de pag é " + pag);
+		}
+		catch(Exception e) {
+			System.out.println("Pag não chegou aqui rapa!");
+		}
+		
 		try {
 			lista = voo.consultar();
 			total = voo.total();

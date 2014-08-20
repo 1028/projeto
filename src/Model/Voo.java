@@ -31,6 +31,12 @@ public class Voo {
 		VooDao dao = factory.getVooDao();
 		return dao.consultar();
 	}
+	
+	public int total() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		VooDao dao = factory.getVooDao();
+		return dao.total();
+	}
 
 	public void alterarVoo() throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();

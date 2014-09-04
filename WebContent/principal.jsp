@@ -1,17 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ResourceBundle" import="java.util.Locale"%>
-
-<!DOCTYPE HTML>
-<html lang="pt-br">
-<head>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	String lingua, pais;
+	String lingua, pais,atrLang;
 	lingua = session.getAttribute("idioma").toString();
 	pais = session.getAttribute("pais").toString();
 	Locale idioma = new Locale(lingua, pais);
 	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	atrLang = lingua + '-' + pais;
+	session.setAttribute("atrLang", atrLang);
 %>
+
+
+
+<!DOCTYPE HTML>
+<html lang="${atrLang }">
+<head>
+
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title> <% out.print(bundle.getString("FrmSistemaPassagensAereas.titulo")); %></title>
@@ -31,7 +37,7 @@
 						<ul>
 							<li><a href="comprarPassagem"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li><!-- Btn Comprar-->
 							<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.cancelar")); %></a></li><!-- Btn Cancelar -->
-							<li><a href="#">2.3</a></li>
+							<li><a href="cadastroPassageiro.jsp">2.3</a></li>
 						</ul></li>
 			
 					<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.checkin")); %></a></li><!-- Btn Check-in -->

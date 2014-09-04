@@ -25,7 +25,7 @@ public class LoginMysqlImpl implements LoginDao {
 	public LoginTO efetuarLogin(LoginTO login) {
 		// public List<LoginTO> efetuarLogin(){
 
-		String consulta = "SELECT * FROM LOGIN WHERE  = ?";
+		String consulta = "SELECT * FROM LOGIN WHERE login = ?";
 
 		conexao = null;
 		PreparedStatement stm = null;

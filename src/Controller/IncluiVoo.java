@@ -59,12 +59,15 @@ public class IncluiVoo extends HttpServlet {
 	}
 	
 	public void verificaOp(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String teste = request.getParameter("op").toString();
-		teste = (teste != null ? teste : "");
 		
-		if(teste.equals("listar")) {
-			consultar(request, response) ;
-		}
+		
+			String teste = request.getParameter("op").toString();
+			teste = (teste != null ? teste : "");
+			
+			if(teste.equals("listar")) {
+				consultar(request, response) ;
+			}
+		
 	}
 	
 	public void consultar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -79,16 +82,13 @@ public class IncluiVoo extends HttpServlet {
 		//Quantidade de registros por página
 		int qtdReg = 2;
 		int pag;
-		try {
-			pag = Integer.parseInt(request.getParameter("pagAt"));
-			System.out.println("o valor de pag é " + pag);
-		}
-		catch(Exception e) {
-			System.out.println("Pag não chegou aqui rapa!");
-		}
+		
+		
+		pag = Integer.parseInt(request.getParameter("pag"));
+		pag = (pag == 1 ? 0:pag);//Ajuste necessário para quando clicar na página de link 1;
 		
 		try {
-			lista = voo.consultar();
+			lista = voo.consultar(pag);
 			total = voo.total();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -99,6 +99,7 @@ public class IncluiVoo extends HttpServlet {
 		
 		
 		request.setAttribute("total", totPag);
+		request.setAttribute("pagAtual", pag);
 		request.setAttribute("ret", "listar");
 		request.setAttribute("lst", lista);
 		request.getRequestDispatcher("consultarVoo.jsp").forward(request, response);

@@ -69,9 +69,9 @@ public class VooMysqlDaoImpl implements VooDao {
 		return total;
 	}
 	
-	public List<VooTO> consultar() {
+	public List<VooTO> consultar(int pag) {
 		
-		String consulta = "SELECT * FROM VOO_GERAL";
+		String consulta = "SELECT * FROM VOO_GERAL LIMIT " + pag + ",2 ";
 		
 		conexao = null;
 		PreparedStatement stm = null;

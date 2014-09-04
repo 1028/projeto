@@ -6,27 +6,26 @@
     		 import = "Model.VooTO"
     %>
 <%
-	String lingua, pais;
+	String lingua, pais, atrLang;
 	lingua = session.getAttribute("idioma").toString();
 	pais = session.getAttribute("pais").toString();
 	
 	Locale idioma = new Locale(lingua, pais);
 	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	
+	atrLang = lingua + '-' + pais;
+	session.setAttribute("atrLang", atrLang);
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="">
+<html lang="${atrLang }">
 <head>
 	<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
 	<title><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></title>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
-	<script type="text/javascript" rel="javascript" >
-		window.onload = function() {
-			var btns = getElementByTagName("a");
-			btn
-		}
-	</script>
+	<script type="text/javascript" src="scripts/jquery-1.11.0.min.js" > </script>
+	<script type="text/javascript" src="scripts/jquery.maskedinput.js" > </script>
+	<script type="text/javascript" rel="javascript" src="scripts/script.js" > </script>
+	
 <style>
 </style>
 </head>
@@ -59,10 +58,10 @@
 					<input type="hidden" value="listar" name="op" />
 					
 					<c:if test="${empty param.pag }" >
-						<c:out value="parametro nulo" ></c:out>
+						<input type="hidden" value="0" name="pag" />
 					</c:if>
 					
-					<input type="hidden" value="${param.pag }" name="pagAt" />
+					
 				</fieldset>
 			</form>
 			
@@ -92,16 +91,17 @@
 							</c:choose>
 					</table>
 				</fieldset>
+				
+				<nav id="paginacao" >
+					<c:if test="${not empty total}" >
+							<c:forEach var="cont" begin="1" end="${total }" >
+							<c:set var="valor" value="${cont * 2-cont}" ></c:set>
+							<a href="./IncluiVoo?pag=${valor }&op=listar" >${cont }</a>
+						</c:forEach>
+					</c:if>
+				</nav>
 			</form>
-			<nav id="paginacao" >
-				<c:out value="${param.pag }" ></c:out> 
-				<c:if test="${not empty total}" >
-					<c:forEach var="cont" begin="1" end="${total }" >
-						<c:set var="valor" value="${cont * 2-cont}" ></c:set>
-						<a href="./consultarVoo.jsp?pag=${valor }" >${cont }</a>
-					</c:forEach>
-				</c:if>
-			</nav>
+			
 		</div>
 </body>
 </html>

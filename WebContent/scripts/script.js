@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$('#celular').mask("(99) 99999-9999");
 	$('#nascimento').mask("99/99/9999");
 	
-	//Verificação dos campos
+	//Verificaï¿½ï¿½o dos campos
 	/*$('form').submit(function(e) {
 		if(valida($('#nome').val()) || valida($('#nascimento').val()) ) {
 			return false;
@@ -19,7 +19,7 @@ $(document).ready(function() {
 					"tratamento" : $('#tratamento option:selected').val(),
 					"perfil" : $('#perfil option:selected').val()
 			};
-			//criar requisição ajax
+			//criar requisiï¿½ï¿½o ajax
 			$.ajax({
 				url: '/ProjetoIntegradoWEB/cadastroPassageiroIncluir.jsp',
 				dataType: 'text',
@@ -48,8 +48,6 @@ $(document).ready(function() {
 		}
 		return true;
 	};
-	
-	
 
 	
 	

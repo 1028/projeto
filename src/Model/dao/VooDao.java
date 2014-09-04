@@ -14,7 +14,7 @@ public interface VooDao {
 	
 	public void excluirVoo(VooTO voo);
 	
-	public List<VooTO> consultar();
+	public List<VooTO> consultar(int pag);
 	
 	public int total();
 }

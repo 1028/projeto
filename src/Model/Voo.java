@@ -26,10 +26,10 @@ public class Voo {
 		dao.consultarVoo(dadosVoo);
 	}
 	
-	public List<VooTO> consultar() throws SQLException {
+	public List<VooTO> consultar(int pag) throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();
 		VooDao dao = factory.getVooDao();
-		return dao.consultar();
+		return dao.consultar(pag);
 	}
 	
 	public int total() throws SQLException {

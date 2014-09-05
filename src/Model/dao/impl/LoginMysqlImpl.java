@@ -23,9 +23,8 @@ public class LoginMysqlImpl implements LoginDao {
 	}
 
 	public LoginTO efetuarLogin(LoginTO login) {
-		// public List<LoginTO> efetuarLogin(){
 
-		String consulta = "SELECT * FROM LOGIN WHERE  = ?";
+		String consulta = "SELECT * FROM LOGIN WHERE login = ? AND SENHA = ?";
 
 		conexao = null;
 		PreparedStatement stm = null;
@@ -35,13 +34,14 @@ public class LoginMysqlImpl implements LoginDao {
 			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			stm.setString(1, login.getLogin());
+			stm.setString(2, login.getSenha());
 			rs = stm.executeQuery();
 
 			if (rs.next()) {
-				oLogin.setTipoUsuario(Integer.parseInt((rs.getString(1))));
-				oLogin.setLogin(rs.getString(2));
-				oLogin.setSenha(rs.getString(3));
-
+				oLogin.setLogin(rs.getString(1));
+				oLogin.setSenha(rs.getString(2));
+				oLogin.setTipoUsuario(Integer.parseInt((rs.getString(3))));
+				
 				return oLogin;
 			}
 		} catch (Exception e) {

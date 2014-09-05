@@ -22,7 +22,7 @@
 		</form>
 	</div>
 	
-
+<%session.setAttribute("idiomaOk", "false"); %>
 </body>
 </body>
 </html>

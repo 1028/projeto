@@ -1,11 +1,24 @@
 package Model.dao.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-public class PassagemDAO {
+public class PassagemMysqlImpl {
+	private Connection conexao;
+
+	private Connection obtemConexao() throws SQLException {
+		BancoDeDados bd = new BancoDeDados();
+		return bd.obtemConexao();
+	}
+
+	public PreparedStatement prepararComando(String comando)
+			throws SQLException {
+		return (PreparedStatement) conexao.prepareStatement(comando);
+	}
 	// ---------------------------------------------------------------------
 	// Médotos referente ao Caso de Uso Comprar Passagem
 
@@ -114,7 +127,7 @@ public class PassagemDAO {
 				"SELECT * FROM PASSAGEM WHERE NUM_PASS = %d", numPassagem);
 
 		PreparedStatement stm = null;
-
+		ResultSet rs = null;
 		try {
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();

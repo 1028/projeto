@@ -55,24 +55,33 @@ public class GerenciaLogin extends HttpServlet {
 
 		Validacao oValida = new Validacao();
 		if (!(oValida.camposEmBranco(login.getLogin(), login.getSenha()))) {
+			CryptoDummy oCriptografa = new CryptoDummy();
+			String senhaCriptografada = "";
+
+			try {
+				senhaCriptografada = oCriptografa.cifraSenha(login.getSenha());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			login.setSenha(senhaCriptografada);
+			
 			Login l = new Login(login);
 			LoginTO resultado = l.efetuarLogin();
 			
-			
-			oCriptografa;
-			String senhaCriptografada;
-			senhaCriptografada = oCriptografa.cifra(login.getSenha());
-			
-			if(resultado != null && resultado.getSenha().equals(senhaCriptografada)){
+			System.out.println(senhaCriptografada + "  senha dig. " + "senha objeto TO" + login.getSenha());
+			System.out.println("senha --" + resultado.getSenha() + "\nlogin --" + resultado.getLogin() + "\ntipo usu. --" + resultado.getTipoUsuario());
 
-			request.setAttribute("msg", "FrmLogin.mensagem.validado");
-			request.getRequestDispatcher("principal.jsp").forward(request,
-					response);
+			if (resultado != null) {
+
+				request.setAttribute("msg", "FrmLogin.mensagem.validado");
+				request.getRequestDispatcher("principal.jsp").forward(request,
+						response);
 			} else {
 				request.setAttribute("msg", "FrmLogin.mensagem.invalidos");
-				request.getRequestDispatcher("login.jsp")
-						.forward(request, response);
-				}
+				request.getRequestDispatcher("login.jsp").forward(request, response);
+			}
 		} else {
 			request.setAttribute("msg", "mensage.campos.branco");
 			request.getRequestDispatcher("login.jsp")

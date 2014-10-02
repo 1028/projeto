@@ -16,13 +16,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title> <% out.print(bundle.getString("FrmSistemaPassagensAereas.titulo")); %></title>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 	<div id="wrap" >
-			<nav>
-				<ul class="menu">
-					<li><a>  <% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.sistema")); %> </a><!-- Botão Sistema -->
+			<ul class="menu">
+					<li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.sistema")); %></a><!-- Botão Sistema -->
 						<ul>
 							<li><a href="mensagem.jsp"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.sobre")); %></a></li><!-- SubBotão Sobre -->
 							<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.sair")); %></a></li><!-- SubBotão Sair -->
@@ -31,7 +31,7 @@
 						<ul>
 							<li><a href="comprarPassagem"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li><!-- Btn Comprar-->
 							<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.cancelar")); %></a></li><!-- Btn Cancelar -->
-							<li><a href="#">2.3</a></li>
+							<li><a href="cadastroPassageiro.jsp">Passageiro (teste)</a></li>
 						</ul></li>
 			
 					<li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.checkin")); %></a></li><!-- Btn Check-in -->
@@ -54,8 +54,14 @@
 					</li>
 					<li><a>Tabelas</a>
 					</li>
-				</ul>
-			</nav>
+			</ul>
+	</div>
+	
+	<div id = msg>
+	<% 
+		String msg = request.getAttribute("msg").toString();
+		out.print(bundle.getString(msg));
+	%>
 	</div>
 </body>
 </html>

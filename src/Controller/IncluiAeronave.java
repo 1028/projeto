@@ -53,8 +53,9 @@ public class IncluiAeronave extends HttpServlet {
 		//aeronave.setCodigoAeronave(request.getParameter(""));
 		aeronave.setNome(request.getParameter("fnome"));
 		aeronave.setQtdAssentos(Integer.parseInt(request.getParameter("fqntassento")));
-		aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
-		
+//		aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
+				aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
+		System.out.print(aeronave.getTipoAeronave() + "");
 		Aeronave a = new Aeronave(aeronave);
 		a.incluirAeronave(aeronave);
 		}
@@ -81,7 +82,8 @@ public class IncluiAeronave extends HttpServlet {
 			aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
 			aeronave.setNome(request.getParameter("fnome"));
 			aeronave.setQtdAssentos(Integer.parseInt(request.getParameter("fqntassento")));
-			aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
+		//	aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
+			aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
 			
 			Aeronave a = new Aeronave(aeronave);
 			try {

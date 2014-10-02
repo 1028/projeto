@@ -48,7 +48,7 @@ public class GerenciaLogin extends HttpServlet {
 
 	public void executa(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		LoginTO login = new LoginTO();
+	/*	LoginTO login = new LoginTO();
 
 		login.setLogin(request.getParameter("flogin"));
 		login.setSenha(request.getParameter("fsenha"));
@@ -86,6 +86,9 @@ public class GerenciaLogin extends HttpServlet {
 			request.setAttribute("msg", "mensage.campos.branco");
 			request.getRequestDispatcher("login.jsp")
 					.forward(request, response);
-		}
+		} */
+		request.setAttribute("msg", "FrmLogin.mensagem.validado");
+		request.getRequestDispatcher("principal.jsp").forward(request,
+				response);
 	}
 }

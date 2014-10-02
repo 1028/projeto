@@ -72,5 +72,14 @@
 			</p>
 		</fieldset>
 	</form>
+	
+	<div id = msg>
+	<% 
+	
+	//	String msg = request.getAttribute("msg").toString();
+		//out.print(bundle.getString(msg));
+	%>
+	</div>
+	
 </body>
 </html>

@@ -12,7 +12,7 @@ public class Perfil {
 	public Perfil() {
 	}
 
-	public List<PerfilTO> consultarTodos() throws SQLException {
+	public List<PerfilTO> consultarPerfil() throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();
 		PerfilDao dao = (PerfilDao) factory.getPerfilDao();
 		return dao.consultarPerfil();

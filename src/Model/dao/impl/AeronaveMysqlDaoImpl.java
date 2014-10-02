@@ -28,7 +28,7 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 	public void inserirAeronave(AeronaveTO aeronave) {
 
 		// String do comando a ser realizado
-		String insercao = "INSERT INTO AERONAVE VALUES (NULL,?,?,?)";
+		String insercao = "INSERT INTO AERONAVE VALUES (NULL,?,?,?,?)";
 		// pega conexão com o servidor MYSql
 		conexao = null;
 		// Prepara o comando para ser realizado
@@ -38,8 +38,9 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 			conexao = obtemConexao();
 			stm = prepararComando(insercao);
 			stm.setInt(1, aeronave.getCodigoAeronave());
-			stm.setString(2, aeronave.getNome());
-			stm.setInt(3, aeronave.getQtdAssentos());
+			stm.setString(2, aeronave.getTipoAeronave());
+			stm.setString(3, aeronave.getNome());
+			stm.setInt(4, aeronave.getQtdAssentos());
 			stm.execute();
 			conexao.commit();
 		} catch (Exception e) {

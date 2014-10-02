@@ -4,7 +4,7 @@
 }
 
 body {
-	font-family: "Times New Roman", Aria, sans-serif;
+	font-family: 'Roboto', 'Arial', sans-serif;
 	font-size: 14px;
 }
 
@@ -98,40 +98,47 @@ table,td,tr {
 
 .menu {
 	list-style: none;
-	border: 1px solid #c0c0c0;
 	float: left;
-	margin: auto;
-	width: 
+	margin: 0px;
+	width: 660px;
 }
 
-.menu li {
+.menu  li {
 	position: relative;
 	float: left;
-	border-right: 1px solid #c0c0c0;
+	background-color: rgba(222,238,250,1);
+	width: 108px;
+	height: 35px;
+	border-left: 1px solid rgba(155,204,240,1);
+	border-right: 1px solid rgba(155,204,240,1);
 }
 
-.menu li a {
-	color: #333;
+.menu  li  a {
+	color: rgba(11,45,70,1);
 	text-decoration: none;
-	padding: 5px 10px;
+	padding: 0px;
 	display: block;
+	width: inherit;
+	height: inherit;
+	text-align: center;
+	line-height: 35px;
+	background-color: rgba(0,0,0,0);
 }
 
-.menu li a:hover {
-	background: #333;
-	color: #fff;
+.menu  li  a:hover {
+	background-color: rgba(11,45,70,1);
+	color: rgba(222,238,250,1);
 	-moz-box-shadow: 0 3px 10px 0 #CCC;
 	-webkit-box-shadow: 0 3px 10px 0 #ccc;
-	text-shadow: 0px 0px 5px #fff;
+	/*text-shadow: 0px 0px 5px #fff;*/
 }
-
 
 
 .menu li   ul {
 	position: absolute;
-	top: 25px;
-	left: 0;
-	background-color: #fff;
+	top: 35px;
+	left: 0px;
+	background-color: rgba(255,255,0,0.2);
 	display: none;
 }
 
@@ -140,23 +147,20 @@ table,td,tr {
 }
 
 .menu li ul li {
-	border: 1px solid #c0c0c0;
 	display: block;
-	width: 150px;
+	width: 110px;
+	border: 0px;
 }
 
 #wrap {
-	border: 1px solid red;
-	width: 1000px;
 	margin: auto;
-}
-
-nav {
-	margin: auto;
-	height: 30px;
-	width: 399px;
 }
 
 #paginacao {
 	border:1px solid cyan;
+}
+
+#msg{
+	color: red;
+	border: 0px;
 }

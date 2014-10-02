@@ -22,6 +22,7 @@
 	%>
 </title>
 <link rel="stylesheet" type="text/css" href="estilo.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -45,6 +46,7 @@
 		}
 		else {
 			AeronaveTO naoConsultado = new AeronaveTO();
+			naoConsultado.setNome("");
 			consulta.add(naoConsultado);
 			Iterator itr = consulta.iterator();
 			 while(itr.hasNext()) {
@@ -61,7 +63,7 @@
 				%>
 			</legend>
 			<p>
-				<label for="codigo"> cod </label> 
+				<label for="codigo"> <%out.print(bundle.getString("rotulo.codigo")); %> </label> 
 				<input type="text" id="codigo"
 					name="fcodigo" value=<%out.print(element.getCodigoAeronave()); %>>
 			</p>
@@ -79,8 +81,8 @@
 			<p>
 				<label> <%out.print(bundle.getString("rotulo.tipoAeronave")); %></label>
 				 <select name="ftipoaeronave">
-					<option>1</option>
-					<option>2</option>
+					<option value="1"><%out.print(bundle.getString("tipoAeronave.comercial")); %></option>
+					<option value="2"><%out.print(bundle.getString("tipoAeronave.luxo")); %></option>
 				</select>
 			</p>
 
@@ -101,7 +103,12 @@
 			</p>
 		</fieldset>
 	</form>
-
+	<div id = msg>
+	<% 
+		//String msg = request.getAttribute("msg").toString();
+		//out.print(bundle.getString(msg));
+	%>
+	</div>
 	<!-- <form action="IncluiAeronave" method="post">
 		<input type="hidden" name="operacao" value="consultar">
 		<input type="submit" name="btn" value="con" class="botoes">

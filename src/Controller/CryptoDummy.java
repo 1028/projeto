@@ -42,8 +42,7 @@ public class CryptoDummy {
 
 	public void geraDecifra(byte[] texto, File fDummy) throws IOException,
 			ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-				fDummy));
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fDummy));
 		int iDummy = (Integer) ois.readObject();
 		ois.close();
 		textoDecifrado = texto;
@@ -62,7 +61,9 @@ public class CryptoDummy {
 
 		// Gera a cifra Dummy da senha dada, com a chave Dummy simetrica
 		// dada
-		geraCifra(bSenhaClara, new File("chave.dummy"));
+		File arq = new File("chave.dummy");
+		System.out.println(arq.toString());
+		geraCifra(bSenhaClara, arq);
 
 		// Recebe o texto cifrado
 		byte[] bSenhaCifrada = getTextoCifrado();

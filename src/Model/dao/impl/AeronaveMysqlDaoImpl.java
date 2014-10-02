@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Model.AeronaveTO;
+import Model.LocalidadeTO;
 import Model.dao.AeronaveDao;
 
 import java.sql.Connection;
@@ -163,7 +164,7 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 				//VERIFICARR!!!
 				AeronaveTO aero = new AeronaveTO();
 				aero.setCodigoAeronave((rs.getInt(1)));
-				aero.setTipoAeronave((rs.getInt(2)));
+				aero.setTipoAeronave((rs.getString(2)));
 				aero.setNome((rs.getString(3)));
 				aero.setQtdAssentos((rs.getInt(4)));
 				resultado.add(aero);
@@ -197,4 +198,50 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 		return resultado;
 
 	}
+	
+	public ArrayList<AeronaveTO> consultar() {
+		String consulta = "SELECT * FROM AERONAVE";
+		
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		ArrayList<AeronaveTO> resultado = new ArrayList<AeronaveTO>();
+		
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+			rs = stm.executeQuery();
+			System.out.println("Executou a query.");
+			while (rs.next()) {
+				AeronaveTO aeronave = new AeronaveTO();
+				aeronave.setCodigoAeronave((rs.getInt(1)));
+				aeronave.setTipoAeronave((rs.getString(2)));
+				aeronave.setNome((rs.getString(3)));
+				aeronave.setQtdAssentos((rs.getInt(4)));
+				resultado.add(aeronave);
+			}
+			
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
+				sqlEx.getStackTrace();
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					sqlEx.getStackTrace();
+				}
+			}
+
+		}
+		
+		return resultado;
+
+	}
+	
 }

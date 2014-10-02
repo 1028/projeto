@@ -19,4 +19,8 @@ public class SituacaoTO {
 	public int getCodigo() {
 		return codigo;
 	}
+	
+	public String toString() {
+		return "" + getCodigo() + " - " + getNome();
+	}
 }

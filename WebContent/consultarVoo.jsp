@@ -24,7 +24,6 @@
 	<script type="text/javascript" rel="javascript" >
 		window.onload = function() {
 			var btns = getElementByTagName("a");
-			btn
 		}
 	</script>
 <style>

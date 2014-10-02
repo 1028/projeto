@@ -3,60 +3,23 @@ package Model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Model.LocalidadeTO;
+import Model.dao.DaoFactory;
+import Model.dao.LocalidadeDao;
+import java.util.List;
 
 public class Localidade {
 	
-	private int codigo;
-	private String nome;
-	private String uf;
-	private BancoDeDados bd;
+	private LocalidadeTO dadosLocalidade;
 	
-	public Localidade() {
+	public Localidade(LocalidadeTO dadosTO) {
+		dadosLocalidade = dadosTO;
+	}
 		
-	}
-	
-	public Localidade(int codigo, String nome, String uf) {
-		setCodigo(codigo);
-		setNome(nome);
-		setUf(uf);
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
-	
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
-	
-	public String getUf() {
-		return uf;
-	}
-	
-	public void setUf(String uf) {
-		this.uf = uf;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome= nome;
-	}
-	
-	public String toString() {
-		return "" + getCodigo() + " - " + getUf() + " - " + getNome();
-	}
-	
-	public ArrayList consultarTodos() throws SQLException {
-		ArrayList consulta;
-		
-		bd = new BancoDeDados();
-		bd.consultarLocalidade();		
-		consulta = bd.getRetornoQuery();
-		
-		return consulta;
+	public List<LocalidadeTO> consultar() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		LocalidadeDao dao = factory.getLocalidadeDao();
+		return dao.consultar();
 	}
 
 }

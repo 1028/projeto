@@ -27,8 +27,9 @@
 
 	<%
 		String consultar = (String) request.getAttribute("consultou");
+	
 		ArrayList<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
-		AeronaveTO element =null;
+		AeronaveTO element = null;
 		if (consultar == "ok") {
 			consulta = (ArrayList<AeronaveTO>) request.getAttribute("con");
 			 Iterator itr = consulta.iterator();

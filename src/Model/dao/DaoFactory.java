@@ -9,6 +9,7 @@ import Model.dao.impl.PassageiroMysqlDaoImpl;
 import Model.dao.impl.PerfilMysqlImpl;
 import Model.dao.impl.SituacaoMysqlImpl;
 import Model.dao.impl.VooMysqlDaoImpl;
+import Model.dao.impl.LocalidadeMysqlDaoImpl;
 
 public class DaoFactory {
 
@@ -51,5 +52,9 @@ public class DaoFactory {
 	
 	public PerfilMysqlImpl getPerfilDao(){
 		return new PerfilMysqlImpl();
+	}
+	
+	public LocalidadeMysqlDaoImpl getLocalidadeDao(){
+		return new LocalidadeMysqlDaoImpl();
 	}
 }

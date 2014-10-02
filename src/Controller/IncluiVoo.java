@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
+import Model.Aeronave;
+import Model.AeronaveTO;
+import Model.Localidade;
+import Model.LocalidadeTO;
+import Model.Situacao;
+import Model.SituacaoTO;
 import Model.Voo;
 import Model.VooTO;
 
@@ -33,8 +41,49 @@ public class IncluiVoo extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//executa(request, response);
-		verificaOp(request,response);
+		if(Boolean.parseBoolean(request.getAttribute("carrega").toString())) {
+			try {
+				carregaComboBox(request,response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			verificaOp(request,response);
+		}
+	}
+
+	private void carregaComboBox(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException {
+		//Primeiro comboBox a ser preenchido é o de Localidade
+		LocalidadeTO locaTO = new LocalidadeTO();
+		Localidade local = new Localidade(locaTO);
+		
+		List<LocalidadeTO> locais = local.consultar();
+		
+		//Carrega ComboBOX da Aeronave
+		
+		AeronaveTO aeronaveTO = new AeronaveTO();
+		Aeronave aeronave = new Aeronave(aeronaveTO);
+		ArrayList<AeronaveTO> aeronaves = aeronave.consultar();
+		
+		//Carrega ComboBox de Situação
+		
+		SituacaoTO situacaoTO = new SituacaoTO();
+		Situacao situacao = new Situacao(situacaoTO);
+		ArrayList<SituacaoTO> situacoes = situacao.consultarSituacao();
+		
+		Boolean carrega = false;
+		request.setAttribute("carrega", carrega);
+		
+		//Adiciona as listas para preencher os ComboBox
+		request.setAttribute("locais", locais);
+		request.setAttribute("aeronaves", aeronaves);
+		request.setAttribute("situacoes", situacoes);
+		
+		//Retorna para a VIEW
+		request.getRequestDispatcher("cadastroVoo.jsp").forward(request, response);
+		
 	}
 
 	/**
@@ -42,8 +91,12 @@ public class IncluiVoo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//executa(request, response);
-		verificaOp(request,response);
+		if(Boolean.parseBoolean(request.getAttribute("carrega").toString())) {
+			
+		}
+		else {
+			verificaOp(request,response);
+		}
 	}
 
 	public void executa(HttpServletRequest request, HttpServletResponse response){
@@ -62,9 +115,26 @@ public class IncluiVoo extends HttpServlet {
 		String teste = request.getParameter("op").toString();
 		teste = (teste != null ? teste : "");
 		
+		
+		switch (teste) {
+		case "listar" : 
+			consultar(request, response);
+			break;
+		case "cadastro" :
+			cadastrar(request, response);
+			break;
+		}
+		/*
 		if(teste.equals("listar")) {
 			consultar(request, response) ;
 		}
+		*/
+	}
+	
+	public void cadastrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		VooTO vooTO = new VooTO();
+		Voo voo = new Voo(vooTO);
+		
 	}
 	
 	public void consultar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

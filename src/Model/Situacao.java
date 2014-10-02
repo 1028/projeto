@@ -3,6 +3,7 @@
 package Model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Model.dao.DaoFactory;
@@ -17,13 +18,7 @@ public class Situacao {
 		this.dadosSituacao = dadosSituacao;
 	}
 	
-	/*
-	public String toString() {
-		return String.format(" %d - %s", getCodigo(), getNome());
-	}
-	*/
-	
-	public List<SituacaoTO> consultarSituacao() throws SQLException {
+	public ArrayList<SituacaoTO> consultarSituacao() throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();
 		SituacaoDao dao = (SituacaoDao) factory.getSituacaoDao();
 		return dao.consultarSituacao();

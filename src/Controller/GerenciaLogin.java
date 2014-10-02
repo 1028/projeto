@@ -70,8 +70,8 @@ public class GerenciaLogin extends HttpServlet {
 			Login l = new Login(login);
 			LoginTO resultado = l.efetuarLogin();
 			
-			System.out.println(senhaCriptografada + "  senha dig. " + "senha objeto TO" + login.getSenha());
-			System.out.println("senha --" + resultado.getSenha() + "\nlogin --" + resultado.getLogin() + "\ntipo usu. --" + resultado.getTipoUsuario());
+			//System.out.println(senhaCriptografada + "  senha dig. " + "senha objeto TO" + login.getSenha());
+			//System.out.println("senha --" + resultado.getSenha() + "\nlogin --" + resultado.getLogin() + "\ntipo usu. --" + resultado.getTipoUsuario());
 
 			if (resultado != null) {
 

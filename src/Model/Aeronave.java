@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Model.dao.DaoFactory;
@@ -25,6 +26,12 @@ public class Aeronave {
 		AeronaveDao dao = factory.getAeronaveDao();
 		return dao.consultarAeronave(dadosAeronave);
 	}
+	
+	public ArrayList<AeronaveTO> consultar() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		AeronaveDao dao = factory.getAeronaveDao();
+		return dao.consultar();
+	}
 
 	public void alterarAeronave() throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();
@@ -37,4 +44,6 @@ public class Aeronave {
 		AeronaveDao dao = factory.getAeronaveDao();
 		dao.excluirAeronave(dadosAeronave);
 	}
+	
+	
 }

@@ -54,6 +54,29 @@ public class IncluiVoo extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("Entrou no post");
+
+		if(Boolean.parseBoolean(request.getAttribute("carrega").toString())) {
+			try {
+				carregaComboBox(request,response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Entrou no catch");
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("Entrou no else");
+			verificaOp(request,response);
+		}
+	}
+	
+	
 	private void carregaComboBox(HttpServletRequest request,HttpServletResponse response) throws SQLException, ServletException, IOException {
 		//Primeiro comboBox a ser preenchido é o de Localidade
 		LocalidadeTO locaTO = new LocalidadeTO();
@@ -73,8 +96,7 @@ public class IncluiVoo extends HttpServlet {
 		Situacao situacao = new Situacao(situacaoTO);
 		ArrayList<SituacaoTO> situacoes = situacao.consultarSituacao();
 		
-		Boolean carrega = false;
-		request.setAttribute("carrega", carrega);
+		request.setAttribute("carrega", false);
 		
 		//Adiciona as listas para preencher os ComboBox
 		request.setAttribute("locais", locais);
@@ -84,19 +106,6 @@ public class IncluiVoo extends HttpServlet {
 		//Retorna para a VIEW
 		request.getRequestDispatcher("cadastroVoo.jsp").forward(request, response);
 		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		if(Boolean.parseBoolean(request.getAttribute("carrega").toString())) {
-			
-		}
-		else {
-			verificaOp(request,response);
-		}
 	}
 
 	public void executa(HttpServletRequest request, HttpServletResponse response){
@@ -132,8 +141,11 @@ public class IncluiVoo extends HttpServlet {
 	}
 	
 	public void cadastrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//System.out.println(request.getParameter("fvalor"));
+		
 		VooTO vooTO = new VooTO();
 		Voo voo = new Voo(vooTO);
+		
 		
 	}
 	

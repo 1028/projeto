@@ -16,11 +16,8 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 
 
 if(request.getAttribute("carrega") == null) {
-	System.out.println("Acabou de entrar valor é " + request.getAttribute("carrega"));
 	request.setAttribute("carrega", true);
-	System.out.println("Valor atribuido " + request.getAttribute("carrega"));
 	request.getRequestDispatcher("IncluiVoo").forward(request, response);
-	System.out.println("Valor de retorno " + request.getAttribute("carrega"));
 }
 
 %>
@@ -29,7 +26,7 @@ if(request.getAttribute("carrega") == null) {
 <script type="text/javascript" rel="javascript" ></script>
 </head>
 <body>
-		<form method="post" action="incluiVoo" >
+		<form method="GET" action="IncluiVoo" >
 			<fieldset>
 				<input type="hidden" name="op" value="cadastro" />
 				<legend><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></legend>

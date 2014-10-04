@@ -61,7 +61,7 @@ public class CryptoDummy {
 
 		// Gera a cifra Dummy da senha dada, com a chave Dummy simetrica
 		// dada
-		File arq = new File("chave.dummy");
+		File arq = new File("/WebContent/WEB-INF/lib/chave.dummy");
 		System.out.println(arq.toString());
 		geraCifra(bSenhaClara, arq);
 

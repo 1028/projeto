@@ -36,7 +36,7 @@
 				
 				ret = (ret != null ? ret : "");
 			%>
-			<form action="IncluiVoo" method="get" >
+			<form action="GerenciaVoo" method="get" >
 				<fieldset>
 					<legend><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></legend>
 					<label for="codigo" ><% out.print(bundle.getString("rotulo.codigo")); %></label><!-- Código do Voo -->

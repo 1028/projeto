@@ -16,9 +16,10 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 
 
 if(request.getAttribute("carrega") == null) {
-	request.setAttribute("carrega", true);
-	request.getRequestDispatcher("IncluiVoo").forward(request, response);
+	request.setAttribute("carrega", "true");
+	request.getRequestDispatcher("GerenciaVoo").forward(request, response);
 }
+
 
 %>
 <title><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></title>
@@ -26,9 +27,13 @@ if(request.getAttribute("carrega") == null) {
 <script type="text/javascript" rel="javascript" ></script>
 </head>
 <body>
-		<form method="GET" action="IncluiVoo" >
+		<%
+			out.print(request.getAttribute("carrega"));
+		%>
+		<form method="GET" action="GerenciaVoo" >
 			<fieldset>
 				<input type="hidden" name="op" value="cadastro" />
+				<input type="hidden" name="carrega" value="${carrega }" />
 				<legend><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></legend>
 				<p>
 					<label><% out.print(bundle.getString("rotulo.valor")); %></label>
@@ -46,7 +51,7 @@ if(request.getAttribute("carrega") == null) {
 						<c:choose>
 								<c:when test="${not empty locais }" >
 									<c:forEach var="local" items="${locais}" >
-										<option value="${local.codigo }" >${local }</option>
+										<option value="${local }" >${local }</option>
 									</c:forEach>
 								</c:when>
 							</c:choose>
@@ -59,7 +64,7 @@ if(request.getAttribute("carrega") == null) {
 						<c:choose>
 								<c:when test="${not empty locais }" >
 									<c:forEach var="local" items="${locais}" >
-										<option value="${local.codigo }" >${local }</option>
+										<option value="${local }" >${local }</option>
 									</c:forEach>
 								</c:when>
 							</c:choose>
@@ -72,7 +77,7 @@ if(request.getAttribute("carrega") == null) {
 						<c:choose>
 								<c:when test="${not empty locais }" >
 									<c:forEach var="local" items="${locais}" >
-										<option value="${local.codigo }" >${local }</option>
+										<option value="${local }" >${local }</option>
 									</c:forEach>
 								</c:when>
 							</c:choose>
@@ -111,5 +116,36 @@ if(request.getAttribute("carrega") == null) {
 				</p>
 			</fieldset>
 		</form>
+		
+		<div id = msg>
+			<c:if test="${not empty msg }" >
+				<p>
+					<c:out value="${msg }" />
+				</p>
+				<c:choose>
+					<c:when test="${not empty erro }" >
+						<p><c:out value="${erro }" /></p>
+					</c:when>
+					<c:when test="${empty erro }">
+						<table>
+						<tr>
+							<th><% out.print(bundle.getString("rotulo.codigo")); %></th><!-- Código -->
+							<th><% out.print(bundle.getString("rotulo.origem")); %></th><!-- Origem -->
+							<th><% out.print(bundle.getString("rotulo.destino")); %></th><!-- Destino -->
+							<th><% out.print(bundle.getString("rotulo.escalas")); %></th><!-- Escala -->
+							<th><% out.print(bundle.getString("rotulo.data.hora")); %></th><!-- Data/hora -->
+							<th><% out.print(bundle.getString("rotulo.valor") + "  (" + bundle.getString("moeda") + ")");%></th><!-- Valor -->
+						</tr>
+						<tr>
+							<td>${vooCadastrado.codigoVoo }</td><td>${vooCadastrado.origem }</td>
+							<td>${vooCadastrado.destino}</td><td>${vooCadastrado.escala}</td>
+							<td>${vooCadastrado.dateHora}</td><td>${vooCadastrado.valor}</td>
+						</tr>
+						</table>
+					</c:when>
+				</c:choose>
+			</c:if>
+		</div>
+		
 </body>
 </html>

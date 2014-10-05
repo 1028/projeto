@@ -5,6 +5,7 @@ import java.util.List;
 
 import Model.dao.DaoFactory;
 import Model.dao.VooDao;
+import Model.VooTO;
 
 public class Voo {
 
@@ -36,6 +37,12 @@ public class Voo {
 		DaoFactory factory = DaoFactory.getInstance();
 		VooDao dao = factory.getVooDao();
 		return dao.total();
+	}
+	
+	public int cadastrarVoo() throws SQLException {
+		DaoFactory factory = DaoFactory.getInstance();
+		VooDao dao = factory.getVooDao();
+		return dao.cadastrarVoo(dadosVoo);
 	}
 
 	public void alterarVoo() throws SQLException {

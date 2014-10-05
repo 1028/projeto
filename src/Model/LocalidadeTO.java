@@ -5,15 +5,25 @@ public class LocalidadeTO {
 	private int codigo;
 	private String nome;
 	private String uf;
+	private String tipo;
 	
 	public LocalidadeTO() {
 		
 	}
 	
-	public LocalidadeTO(int codigo, String nome, String uf) {
+	public LocalidadeTO(int codigo, String nome, String uf,String tipo) {
 		setCodigo(codigo);
 		setNome(nome);
 		setUf(uf);
+		setTipo(tipo);
+	}
+	
+	public String getTipo() {
+		return this.tipo;
+	}
+	
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	public int getCodigo() {

@@ -12,17 +12,17 @@
 		String escolha = request.getParameter("idioma");
 		String escolhaPais = "";
 		if (escolha.equals("es")) {
-			idioma = new Locale("es", "ES");
-			bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-			escolhaPais = "ES";
+	idioma = new Locale("es", "ES");
+	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	escolhaPais = "ES";
 		} else if (escolha.equals("en")) {
-			idioma = new Locale("en", "US");
-			bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-			escolhaPais = "US";
+	idioma = new Locale("en", "US");
+	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	escolhaPais = "US";
 		} else {
-			idioma = new Locale("pt", "BR");
-			bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-			escolhaPais = "BR";
+	idioma = new Locale("pt", "BR");
+	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	escolhaPais = "BR";
 		}
 
 		session.setAttribute("idioma", escolha);
@@ -72,14 +72,18 @@
 			</p>
 		</fieldset>
 	</form>
-	
-	<div id = msg>
-	<% 
-	
-	//	String msg = request.getAttribute("msg").toString();
-		//out.print(bundle.getString(msg));
-	%>
+
+	<div id=msg>
+		<%
+			String msg;
+			if(session.getAttribute("msg").toString().equals("")){
+				msg = request.getAttribute("msg").toString();
+			}else{
+				msg = session.getAttribute("msg").toString();
+			}
+				session.setAttribute("msg", "");				
+				out.print(bundle.getString(msg));
+		%>
 	</div>
-	
 </body>
 </html>

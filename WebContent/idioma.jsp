@@ -9,20 +9,26 @@
 <link rel="stylesheet" type="text/css" href="estilo.css" />
 </head>
 <body>
-	
+
 	<div id="container">
-		<form action="login.jsp" id="idioma">
+		<form action="login.jsp" method="post" id="idioma">
 			<table>
 				<tr>
-					<td><input type="submit" id="btnEspanhol" name=idioma value="es" ></td>
-					<td><input type="submit" id="btnIngles" name="idioma" value="en" ></td>
-					<td><input type="submit" id="btnPortugues" name=idioma value="pt"></td>
+					<td><input type="submit" id="btnEspanhol" name="idioma"
+						value="es"></td>
+					<td><input type="submit" id="btnIngles" name="idioma"
+						value="en"></td>
+					<td><input type="submit" id="btnPortugues" name="idioma"
+						value="pt"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	
-<%session.setAttribute("idiomaOk", "false"); %>
+
+	<%
+		session.setAttribute("idiomaOk", "false");
+		session.setAttribute("msg", "mensagem.branco");
+	%>
 </body>
 </body>
 </html>

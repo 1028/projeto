@@ -10,6 +10,12 @@ public class Login {
 		this.dadosLogin = dadosLogin;
 	}
 	
+	public void cadastrarUsuario(){
+		DaoFactory factory = DaoFactory.getInstance();
+		LoginDao dao = factory.getLoginDao();
+		dao.cadastrarUsuario(dadosLogin);
+	}
+	
 	public LoginTO efetuarLogin(){
 		DaoFactory factory = DaoFactory.getInstance();
 		LoginDao dao = factory.getLoginDao();

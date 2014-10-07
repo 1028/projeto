@@ -59,6 +59,7 @@
 	
 	<div id = msg>
 	<% 
+		session.setAttribute("msg", "mensagem.branco");
 		String msg = request.getAttribute("msg").toString();
 		out.print(bundle.getString(msg));
 	%>

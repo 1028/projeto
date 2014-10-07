@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Locale" import="java.util.ResourceBundle"
-	import="Model.AeronaveTO" import="java.util.ArrayList" import="java.util.Iterator"%>
+	import="Model.AeronaveTO" import="java.util.ArrayList"
+	import="java.util.Iterator"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,37 +23,37 @@
 	%>
 </title>
 <link rel="stylesheet" type="text/css" href="estilo.css">
-	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
 
 	<%
 		String consultar = (String) request.getAttribute("consultou");
-	
+
 		ArrayList<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
 		AeronaveTO element = null;
 		if (consultar == "ok") {
 			consulta = (ArrayList<AeronaveTO>) request.getAttribute("con");
-			 Iterator itr = consulta.iterator();
-		      while(itr.hasNext()) {
-		        element = (AeronaveTO) itr.next();
-		         System.out.print(element.getCodigoAeronave() + " ");
-		      }
-		/*	for (AeronaveTO aTO : consulta) {
-				out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome()
-						+ "/" + aTO.getQtdAssentos() + "/"
-						+ aTO.getTipoAeronave());
-			}*/
-		}
-		else {
+			Iterator itr = consulta.iterator();
+			while (itr.hasNext()) {
+				element = (AeronaveTO) itr.next();
+				System.out.print(element.getCodigoAeronave() + " ");
+			}
+			/*	for (AeronaveTO aTO : consulta) {
+					out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome()
+							+ "/" + aTO.getQtdAssentos() + "/"
+							+ aTO.getTipoAeronave());
+				}*/
+		} else {
 			AeronaveTO naoConsultado = new AeronaveTO();
 			naoConsultado.setNome("");
 			consulta.add(naoConsultado);
 			Iterator itr = consulta.iterator();
-			 while(itr.hasNext()) {
-			        element = (AeronaveTO) itr.next();
-			         System.out.print(element + " ");
-			      }
+			while (itr.hasNext()) {
+				element = (AeronaveTO) itr.next();
+				System.out.print(element + " ");
+			}
 		}
 	%>
 	<form action="IncluiAeronave" method="post">
@@ -63,26 +64,55 @@
 				%>
 			</legend>
 			<p>
-				<label for="codigo"> <%out.print(bundle.getString("rotulo.codigo")); %> </label> 
-				<input type="text" id="codigo"
-					name="fcodigo" value=<%out.print(element.getCodigoAeronave()); %>>
-			</p>
-			
-			<p>
-				<label for="nome"> <%out.print(bundle.getString("rotulo.nome"));%></label> 
-				<input type="text" id="nome" name="fnome" value=<%out.print(element.getNome()); %>>
-			</p>
-			
-			<p>
-				<label> <%out.print(bundle.getString("rotulo.qntAssentos"));%></label> 
-				<input type="text" name="fqntassento" value=<%out.print(element.getQtdAssentos()); %>>
+				<label for="codigo"> <%
+ 	out.print(bundle.getString("rotulo.codigo"));
+ %>
+				</label> <input type="text" id="codigo" name="fcodigo"
+					value=<%if(element.getCodigoAeronave() > 0){
+						out.print(element.getCodigoAeronave());
+						}
+						else{
+							out.print("");
+						}
+						%>>
 			</p>
 
 			<p>
-				<label> <%out.print(bundle.getString("rotulo.tipoAeronave")); %></label>
-				 <select name="ftipoaeronave">
-					<option value="1"><%out.print(bundle.getString("tipoAeronave.comercial")); %></option>
-					<option value="2"><%out.print(bundle.getString("tipoAeronave.luxo")); %></option>
+				<label for="nome"> <%
+ 	out.print(bundle.getString("rotulo.nome"));
+ %></label>
+				<input type="text" id="nome" name="fnome"
+					value=<%out.print(element.getNome());%>>
+			</p>
+
+			<p>
+				<label> <%
+ 	out.print(bundle.getString("rotulo.qntAssentos"));
+ %></label>
+				<input type="text" name="fqntassento"
+					value=<%if(element.getQtdAssentos() > 0){
+						out.print(element.getQtdAssentos());
+						}
+						else{
+							out.print("");
+						}%>>
+			</p>
+
+			<p>
+				<label> <%
+ 	out.print(bundle.getString("rotulo.tipoAeronave"));
+ %></label>
+				<select name="ftipoaeronave">
+					<option value="1">
+						<%
+							out.print(bundle.getString("tipoAeronave.comercial"));
+						%>
+					</option>
+					<option value="2">
+						<%
+							out.print(bundle.getString("tipoAeronave.luxo"));
+						%>
+					</option>
 				</select>
 			</p>
 
@@ -103,11 +133,18 @@
 			</p>
 		</fieldset>
 	</form>
-	<div id = msg>
-	<% 
-		//String msg = request.getAttribute("msg").toString();
-		//out.print(bundle.getString(msg));
-	%>
+	<div id=msg>
+		<%
+			String msg;
+			if (session.getAttribute("msg").toString().equals("")) {
+				msg = request.getAttribute("msg").toString();
+			} else {
+				msg = session.getAttribute("msg").toString();
+			}
+			session.setAttribute("msg", "");
+			System.out.println(msg);
+			out.print(bundle.getString(msg));
+		%>
 	</div>
 	<!-- <form action="IncluiAeronave" method="post">
 		<input type="hidden" name="operacao" value="consultar">

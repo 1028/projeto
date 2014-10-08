@@ -8,7 +8,8 @@
 <%
 	Locale idioma;
 	ResourceBundle bundle;
-	if ((session.getAttribute("idiomaOk").toString()).equals("false")) {
+	bundle = (ResourceBundle) session.getAttribute("idioma");
+	/* if ((session.getAttribute("idiomaOk").toString()).equals("false")) {
 		String escolha = request.getParameter("idioma");
 		String escolhaPais = "";
 		if (escolha.equals("es")) {
@@ -36,7 +37,7 @@
 
 		idioma = new Locale(lingua, pais);
 		bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	}
+	}*/
 %>
 
 <title>

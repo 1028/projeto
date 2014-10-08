@@ -3,16 +3,17 @@
 <%@ page import="java.util.Locale" import="java.util.ResourceBundle"
 	import="java.util.List" import="Model.FormaTratamento"
 	import="Model.FormaTratamentoTO" import = "Model.Perfil" import = "Model.PerfilTO"%>
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <%
-	String lingua, pais;
+/*	String lingua, pais;
 lingua = session.getAttribute("idioma").toString();
 pais = session.getAttribute("pais").toString();
 Locale idioma = new Locale(lingua, pais);
-ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma); */
+ResourceBundle bundle;
+bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <title>
 	<%

@@ -52,107 +52,103 @@ public class GerenciaAeronave extends HttpServlet {
 	protected void executa(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String operacao = (String) request.getParameter("btn");
+		System.out.println(operacao);
+		String sCodigo, sQntAssento;
+		sCodigo = request.getParameter("fcodigo");
+		sQntAssento = request.getParameter("fqntassento");
+
 		AeronaveTO aeronave = new AeronaveTO();
-		aeronave.setNome(request.getParameter("fnome"));		
+		aeronave.setNome(request.getParameter("fnome"));
 		aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
 		System.out.print(aeronave.getCodigoAeronave() + " aero cod");
+
 		Validacao oValida = new Validacao();
-		
-		if(!(oValida.camposEmBranco(request.getParameter("fcodigo"), aeronave.getNome(), request
-				.getParameter("fqntassento")))){
-			aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
-			aeronave.setQtdAssentos(Integer.parseInt(request.getParameter("fqntassento")));
-		if (operacao.equals("Cadastrar")) {
-			Aeronave a = new Aeronave(aeronave);
-			try {
-				a.incluirAeronave(aeronave);
-				request.setAttribute("msg", "mensagem.cadastrar.exito");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			} catch (Exception e) {
-				request.setAttribute("msg", "mensagem.cadastrar.erro");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			}
 
-		} else if (operacao.equals("Consultar")) {
-			//AeronaveTO aeronave = new AeronaveTO();
-
-			//aeronave.setCodigoAeronave(Integer.parseInt(request.getParameter("fcodigo")));
-
-			Aeronave a = new Aeronave(aeronave);
-			List<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
-			try {
-				consulta = a.consultarAeronave();
-				if(consulta.size() > 0){				
-				request.setAttribute("consultou", "ok");
-				request.setAttribute("con", consulta);
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
-				} else {
-					request.setAttribute("msg",
-							"mensagem.consulta.dado.nao.encontrado");
-					request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-							request, response);
+			
+			if (operacao.equals("Cadastrar") && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
+				try {
+					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
+					aeronave.setQtdAssentos(Integer.parseInt(sQntAssento));
+					aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
+					Aeronave a = new Aeronave(aeronave);
+					
+					a.incluirAeronave(aeronave);
+					request.setAttribute("msg", "mensagem.cadastrar.exito");
+					request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
+				} catch (Exception e) {
+					request.setAttribute("msg", "mensagem.cadastrar.erro");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
 				}
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				// e.printStackTrace();
-				request.setAttribute("msg",
-						"mensagem.consulta.dado.nao.encontrado");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			}
+			} else if (operacao.equals("Consultar") && (!(oValida.camposEmBranco(sCodigo)))) {
+				try {
+					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
+					Aeronave a = new Aeronave(aeronave);
+					List<AeronaveTO> consulta = new ArrayList<AeronaveTO>();
+					
+					consulta = a.consultarAeronave();
+					if (consulta.size() > 0) {
+						request.setAttribute("msg", "mensagem.branco");
+						request.setAttribute("consultou", "ok");
+						request.setAttribute("con", consulta);
+						request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
+					} else {
+						request.setAttribute("msg",
+								"mensagem.consulta.dado.nao.encontrado");
+						request.getRequestDispatcher("cadastroAeronave.jsp")
+								.forward(request, response);
+					}
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+					request.setAttribute("msg",
+							"mensagem.consulta.dado.nao.encontrado");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
+				}
+
+			} else if (operacao.equals("Alterar") && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
+				try {
+					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
+					aeronave.setQtdAssentos(Integer.parseInt(sQntAssento));
+					aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
+					Aeronave a = new Aeronave(aeronave);
+					
+					a.alterarAeronave();
+					request.setAttribute("msg", "mensagem.alterar.exito");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+					request.setAttribute("msg", "mensagem.alterar.erro");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
+				}
+			} else if(operacao.equals("Excluir") && (!(oValida.camposEmBranco(sCodigo)))) {
+				try {
+					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
+					Aeronave a = new Aeronave(aeronave);
+					
+					a.excluirAeronave();
+					request.setAttribute("msg", "mensagem.excluir.exito");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					// e.printStackTrace();
+					request.setAttribute("msg", "mensagem.excluir.erro");
+					request.getRequestDispatcher("cadastroAeronave.jsp")
+							.forward(request, response);
+				}
 			
-		} else if (operacao.equals("Alterar")) {
-			/*AeronaveTO aeronave = new AeronaveTO();
-			aeronave.setCodigoAeronave(Integer.parseInt(request
-					.getParameter("fcodigo")));
-			aeronave.setNome(request.getParameter("fnome"));
-			aeronave.setQtdAssentos(Integer.parseInt(request
-					.getParameter("fqntassento")));
-			// aeronave.setTipoAeronave(Integer.parseInt(request.getParameter("ftipoaeronave")));
-			aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
-*/
-			Aeronave a = new Aeronave(aeronave);
-			try {
-				a.alterarAeronave();
-				request.setAttribute("msg", "mensagem.alterar.exito");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				// e.printStackTrace();
-				request.setAttribute("msg", "mensagem.alterar.erro");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			}
 		} else {
-		/*	AeronaveTO aeronave = new AeronaveTO();
-			System.out.print(Integer.parseInt(request.getParameter("fcodigo"))
-					+ "");
-			aeronave.setCodigoAeronave(Integer.parseInt(request
-					.getParameter("fcodigo")));
-*/
-			Aeronave a = new Aeronave(aeronave);
-			try {
-				a.excluirAeronave();
-				request.setAttribute("msg", "mensagem.excluir.exito");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				// e.printStackTrace();
-				request.setAttribute("msg", "mensagem.excluir.erro");
-				request.getRequestDispatcher("cadastroAeronave.jsp").forward(
-						request, response);
-			}
+			request.setAttribute("msg", "mensage.campos.branco");
+			request.getRequestDispatcher("cadastroAeronave.jsp").forward(
+					request, response);
 		}
-	} else {
-		request.setAttribute("msg", "mensage.campos.branco");
-		request.getRequestDispatcher("cadastroAeronave.jsp")
-				.forward(request, response);	
-	}
-		
+
 	}
 }

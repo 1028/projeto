@@ -71,6 +71,7 @@ public class GerenciaPassageiro extends HttpServlet {
 		System.out
 				.println(Integer.parseInt(request.getParameter("tratamento")));
 		System.out.println(Integer.parseInt(request.getParameter("perfil")));
+
 		// Verifica os campos enviados
 		Validacao oValida = new Validacao();
 
@@ -80,14 +81,17 @@ public class GerenciaPassageiro extends HttpServlet {
 
 			try {
 				p.cadastrarPassageiro();
-				request.setAttribute("msg", "Usuário cadastrado com sucesso!");
+				request.setAttribute("msg", "mensagem.cadastrar.exito");
 				System.out.println("Aqui");
 				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
 						request, response);
 				// response.getWriter().write("Usuário cadastrado com sucesso!");
 			} catch (Exception e) {
-				System.out.println("Exception");
-				System.out.println(e.getMessage());
+				// System.out.println("Exception");
+				// System.out.println(e.getMessage());
+				request.setAttribute("msg", "mensagem.cadastrar.erro");
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+						request, response);
 				// out.print("<p>Falha ao cadastrar o Passageiro!</p>");
 				// out.print("<p>" + e.getMessage() +"</p>");
 				// out.print("<p>" + e.getStackTrace() +"</p>");
@@ -96,21 +100,29 @@ public class GerenciaPassageiro extends HttpServlet {
 			// Alteração do dados do Passageiro
 			try {
 				p.alterarPassageiro();
-
+				request.setAttribute("msg", "mensagem.alterar.exito");
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+						request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				// e.printStackTrace();
+				request.setAttribute("msg", "mensagem.alterar.erro");
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+						request, response);
 			}
 
 			try {
 				p.excluirPassageiro();
+				request.setAttribute("msg", "mensagem.excluir.exito");
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(request, response);
 			} catch (Exception e) {
-
+				request.setAttribute("msg", "mensagem.excluir.erro");
+				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(request, response);
 			}
 
 		} else {
 			// response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Há campos não preenchidos.");
-			request.setAttribute("msg", "Há campos não preenchidos.");
+			request.setAttribute("msg", "mensage.campos.branco");
 			request.getRequestDispatcher("/cadastroPassageiro.jsp").forward(
 					request, response);
 		}

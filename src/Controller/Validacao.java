@@ -59,4 +59,31 @@ public class Validacao {
 		return false;
 	}
 
+	public boolean operacaoCadastro(String operacao){
+		if(operacao.equals("Cadastro") || operacao.equals("Register") || operacao.equals("Registro")){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean operacaoConsultar(String operacao){
+		if(operacao.equals("Consultar") || operacao.equals("Consult") || operacao.equals("Consultar")){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean operacaoAlterar(String operacao){
+		if(operacao.equals("Alterar") || operacao.equals("Change") || operacao.equals("Alterar")){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean operacaoExcluir(String operacao){
+		if(operacao.equals("Excluir") || operacao.equals("Delete") || operacao.equals("Excluir")){
+			return true;
+		}
+		return false;
+	}
 }

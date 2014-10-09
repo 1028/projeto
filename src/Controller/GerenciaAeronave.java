@@ -65,7 +65,7 @@ public class GerenciaAeronave extends HttpServlet {
 		Validacao oValida = new Validacao();
 
 			
-			if (operacao.equals("Cadastrar") && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
+			if (oValida.operacaoCadastro(operacao) && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
 				try {
 					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
 					aeronave.setQtdAssentos(Integer.parseInt(sQntAssento));
@@ -81,7 +81,7 @@ public class GerenciaAeronave extends HttpServlet {
 							.forward(request, response);
 				}
 
-			} else if (operacao.equals("Consultar") && (!(oValida.camposEmBranco(sCodigo)))) {
+			} else if (oValida.operacaoConsultar(operacao) && (!(oValida.camposEmBranco(sCodigo)))) {
 				try {
 					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
 					Aeronave a = new Aeronave(aeronave);
@@ -109,7 +109,7 @@ public class GerenciaAeronave extends HttpServlet {
 							.forward(request, response);
 				}
 
-			} else if (operacao.equals("Alterar") && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
+			} else if (oValida.operacaoAlterar(operacao) && (!(oValida.camposEmBranco(sCodigo, aeronave.getNome(), sQntAssento)))) {
 				try {
 					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
 					aeronave.setQtdAssentos(Integer.parseInt(sQntAssento));
@@ -127,7 +127,7 @@ public class GerenciaAeronave extends HttpServlet {
 					request.getRequestDispatcher("cadastroAeronave.jsp")
 							.forward(request, response);
 				}
-			} else if(operacao.equals("Excluir") && (!(oValida.camposEmBranco(sCodigo)))) {
+			} else if(oValida.operacaoExcluir(operacao) && (!(oValida.camposEmBranco(sCodigo)))) {
 				try {
 					aeronave.setCodigoAeronave(Integer.parseInt(sCodigo));
 					Aeronave a = new Aeronave(aeronave);

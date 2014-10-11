@@ -9,13 +9,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
-	String lingua, pais;
+	/* String lingua, pais;
 	lingua = session.getAttribute("idioma").toString();
 	pais = session.getAttribute("pais").toString();
 
 	Locale idioma = new Locale(lingua, pais);
 	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma",
-			idioma);
+			idioma); */
+			ResourceBundle bundle;
+			bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <title>
 	<%

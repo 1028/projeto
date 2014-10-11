@@ -70,15 +70,17 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 
 	// método de update
 	public void alterarAeronave(AeronaveTO aeronave) {
-		String update = String
-				.format("UPDATE AERONAVE SET TIPO_AERO = %d, NOME_AERO = '%s', QTD_ASSENTOS_AERO = %d WHERE COD_AERO = %d",
-						aeronave.getTipoAeronave(), aeronave.getNome(), aeronave.getQtdAssentos(), aeronave.getCodigoAeronave());
+		String update = "UPDATE AERONAVE SET TIPO_AERO = ?, NOME_AERO = ?, QTD_ASSENTOS_AERO = ? WHERE COD_AERO = ?";
 
 		PreparedStatement stm = null;
 		conexao = null;
 		try {
 			conexao = obtemConexao();
 			stm = prepararComando(update);
+			stm.setString(1, aeronave.getTipoAeronave());
+			stm.setString(2, aeronave.getNome());
+			stm.setInt(3, aeronave.getQtdAssentos());
+			stm.setInt(4, aeronave.getCodigoAeronave());
 			stm.execute();
 			//conexao.commit();
 		} catch (Exception e) {
@@ -159,6 +161,7 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();
+			System.out.println("rs estado: " + rs.getRow());
 			// retornoQuery = (ArrayList) rs.getArray(0);
 			// System.out.println(rs.getArray(0));
 			if (rs.next()) {

@@ -3,16 +3,17 @@
 <%@ page import="java.util.Locale" import="java.util.ResourceBundle"
 	import="java.util.List" import="Model.FormaTratamento"
 	import="Model.FormaTratamentoTO" import = "Model.Perfil" import = "Model.PerfilTO"%>
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <%
-	String lingua, pais;
+/*	String lingua, pais;
 lingua = session.getAttribute("idioma").toString();
 pais = session.getAttribute("pais").toString();
 Locale idioma = new Locale(lingua, pais);
-ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma); */
+ResourceBundle bundle;
+bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <title>
 	<%
@@ -95,7 +96,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 								// ìndices são invertidos pois na instanciação
 								String nome = "forma.trat." + auxFormaTrata.get(i).getCodigo();
 								String forma = (i + 1) + " - " + bundle.getString(nome);
-								out.print("<option value = '(i + 1)'>" + forma + "</option>");
+								out.print("<option value =" + (i + 1) + ">" + forma + "</option>");
 							}
 						%>
 					</select>
@@ -114,7 +115,7 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 							for(int i = 0; i < auxPerfil.size(); i++){
 								String nome = "tipo.pass." + auxPerfil.get(i).getCodigo();
 								String forma = (i + 1) + " - " + bundle.getString(nome);
-								out.print("<option value = '(i + 1)'>" + forma + "</option>");
+								out.print("<option value =" + (i + 1) + ">" + forma + "</option>");
 							}					
 						%>
 					</select>
@@ -130,7 +131,15 @@ ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 		</form>
 		<div id="msg">
 			<%
-				out.print(request.getAttribute("msg"));
+			String msg;
+			if (session.getAttribute("msg").toString().equals("")) {
+				msg = request.getAttribute("msg").toString();
+			} else {
+				msg = session.getAttribute("msg").toString();
+			}
+			session.setAttribute("msg", "");
+			System.out.println(msg);
+			out.print(bundle.getString(msg));
 			%>
 		</div>
 	</div>

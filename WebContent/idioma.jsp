@@ -11,7 +11,7 @@
 <body>
 
 	<div id="container">
-		<form action="login.jsp" method="post" id="idioma">
+		<form action="GerenciaIdioma" method="post" id="idioma">
 			<table>
 				<tr>
 					<td><input type="submit" id="btnEspanhol" name="idioma"

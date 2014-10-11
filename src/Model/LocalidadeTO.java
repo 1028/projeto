@@ -8,7 +8,10 @@ public class LocalidadeTO {
 	private String tipo;
 	
 	public LocalidadeTO() {
-		
+		setCodigo(-1);
+		setNome("");
+		setUf("");
+		setTipo("");
 	}
 	
 	public LocalidadeTO(int codigo, String nome, String uf,String tipo) {
@@ -51,6 +54,13 @@ public class LocalidadeTO {
 	}
 	
 	public String toString() {
-		return "" + getCodigo() + " - " + getUf() + " - " + getNome();
+		if(getCodigo() == -1 ||  getUf() == null || getNome() == null) {
+			return "";
+		}
+		else {
+			return "" + getCodigo() + " - " + getUf() + " - " + getNome();
+		}
 	}
 }
+
+	

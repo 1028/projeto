@@ -9,15 +9,17 @@ public interface VooDao {
 
 	public void inserirVoo(VooTO voo);
 	
-	public void consultarVoo(VooTO voo);
+	public VooTO consultarVoo(int codigo);
 	
-	public void alterarVoo(VooTO voo);
+	public int alterarVoo(VooTO voo);
 	
 	public void excluirVoo(VooTO voo);
 	
 	public int cadastrarVoo(VooTO voo) throws SQLException;
 	
 	public List<VooTO> consultar();
+	
+	public List<VooTO> consultar(int paginaAtual, int qtdRegistros);
 	
 	public int total();
 }

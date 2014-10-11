@@ -10,7 +10,9 @@
 	lingua = session.getAttribute("idioma").toString();
 	pais = session.getAttribute("pais").toString();
 	Locale idioma = new Locale(lingua, pais);
-	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma); 
+	//ResourceBundle bundle;
+	//bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -40,7 +42,7 @@
 						<ul>
 							<li><a href="cadastroVoo.jsp"><% out.print(bundle.getString("cadastrar")); %></a></li><!-- Btn Cadastrar -->
 							<li><a href="consultarVoo.jsp"><% out.print(bundle.getString("consultar")); %></a></li><!-- Btn Consultar -->
-							<li><a href="#"><% out.print(bundle.getString("alterar")); %></a></li><!-- Btn Alterar -->
+							<li><a href="gerenciaVoo.jsp"><% out.print(bundle.getString("alterar")); %></a></li><!-- Btn Alterar -->
 							<li><a href="#"><% out.print(bundle.getString("excluir")); %></a></li><!-- Btn Excluir -->
 						</ul>
 					</li>

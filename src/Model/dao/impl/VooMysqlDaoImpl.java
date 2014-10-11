@@ -156,6 +156,100 @@ public class VooMysqlDaoImpl implements VooDao {
 		return confirmacao;
 	}
 	
+	public List<VooTO> consultar(int paginaAtual, int qtdRegistros) {
+		
+		String consulta = "SELECT * FROM VOO_GERAL LIMIT ?,?";
+		
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		ArrayList<VooTO> resultado = new ArrayList<VooTO>();
+		
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+
+			stm.setInt(1, paginaAtual);
+			stm.setInt(2, qtdRegistros);
+			
+			rs = stm.executeQuery();
+			
+			
+			while (rs.next()) {
+				VooTO voo = new VooTO();
+				voo.setCodigoVoo((rs.getInt(1)));
+				voo.setValor((rs.getDouble(2)));
+				//3 - CODIGO DA AERONAVE
+				//4 - COD DA SITUACAO
+				String auxiliar = rs.getString(5);
+				
+				String[] strLocalidade;
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(5).split("-");//Pega a origem, índice 5 do retorno da query
+					LocalidadeTO origem = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "O");
+					voo.setOrigem(origem);
+					//6 - DATA DA ORIGEM	
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setOrigem(localidade);
+				}
+				
+				auxiliar = rs.getString(7);
+				
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(7).split("-");//Pega o Destino, índice 7 do retorno da query
+					LocalidadeTO destino = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "D");
+					voo.setDestino(destino);
+					//8 - DATA DESTINO
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setDestino(localidade);
+				}
+				
+				auxiliar = rs.getString(9);
+				
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(9).split("-");//Pega escala, índice 9 do retorno da query
+					LocalidadeTO escala = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "D");
+					voo.setEscala(escala);
+					voo.setDateHora(rs.getString(6));
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setEscala(localidade);
+				}
+				
+				resultado.add(voo);
+			}
+			
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			e.printStackTrace();
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
+				sqlEx.getStackTrace();
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					sqlEx.getStackTrace();
+				}
+			}
+
+		}
+		
+		return resultado;
+	}
+	
 	public List<VooTO> consultar() {
 		
 		String consulta = "SELECT * FROM VOO_GERAL";
@@ -360,15 +454,113 @@ public class VooMysqlDaoImpl implements VooDao {
 
 
 	@Override
-	public void consultarVoo(VooTO voo) {
-		// TODO Auto-generated method stub
+	public VooTO consultarVoo(int codigo) {
+		String consulta = "SELECT * FROM VOO_GERAL WHERE COD_VOO = ?";
 		
+		conexao = null;
+		PreparedStatement stm = null;
+		ResultSet rs = null;
+		VooTO resultado = new VooTO();
+		
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(consulta);
+
+			stm.setInt(1, codigo);
+
+			rs = stm.executeQuery();
+			
+			
+			while (rs.next()) {
+				VooTO voo = new VooTO();
+				voo.setCodigoVoo((rs.getInt(1)));
+				voo.setValor((rs.getDouble(2)));
+				//3 - CODIGO DA AERONAVE
+				//4 - COD DA SITUACAO
+				String auxiliar = rs.getString(5);
+				
+				String[] strLocalidade;
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(5).split("-");//Pega a origem, índice 5 do retorno da query
+					LocalidadeTO origem = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "O");
+					voo.setOrigem(origem);
+					//6 - DATA DA ORIGEM	
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setOrigem(localidade);
+				}
+				
+				voo.getOrigem().toString();
+				
+				auxiliar = rs.getString(7);
+				
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(7).split("-");//Pega o Destino, índice 7 do retorno da query
+					LocalidadeTO destino = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "D");
+					voo.setDestino(destino);
+					//8 - DATA DESTINO
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setDestino(localidade);
+				}
+				
+				auxiliar = rs.getString(9);
+				
+				if(auxiliar != null)
+				{
+					strLocalidade = rs.getString(9).split("-");//Pega escala, índice 9 do retorno da query
+					LocalidadeTO escala = new LocalidadeTO(Integer.parseInt(strLocalidade[0]), strLocalidade[2], strLocalidade[1], "D");
+					voo.setEscala(escala);
+					voo.setDateHora(rs.getString(6));
+				}
+				else {
+					LocalidadeTO localidade = new LocalidadeTO();
+					voo.setEscala(localidade);
+				}
+				
+				resultado = voo;
+				
+			}
+			
+		} catch (Exception e) {
+			// tenta dar rollback na instrução realizada
+			e.printStackTrace();
+			try {
+				conexao.rollback();
+				e.printStackTrace();
+			} catch (SQLException sqlEx) {
+				sqlEx.getStackTrace();
+			}
+		} finally {
+			if (stm != null) {
+				try {
+					conexao.close();
+				} catch (SQLException sqlEx) {
+					sqlEx.getStackTrace();
+				}
+			}
+
+		}
+		return resultado;
 	}
 
 
 	@Override
-	public void alterarVoo(VooTO voo) {
+	public int alterarVoo(VooTO voo) {
 		// TODO Auto-generated method stub
+		int alterado = -1;
 		
+		String altera = "UPDATE ";
+		
+		
+		
+		return alterado;
 	}
+
+
+	
 }

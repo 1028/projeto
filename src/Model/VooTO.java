@@ -2,11 +2,11 @@ package Model;
 
 public class VooTO {
 	private int codigoVoo, situacao;
-	//private String origem, destino, escala;
 	private String dateHora;
 	private double valor;
 	private int aeronave;
 	private LocalidadeTO origem , destino, escala;
+	
 	
 	public int getCodigoVoo() {
 		return codigoVoo;

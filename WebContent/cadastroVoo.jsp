@@ -14,7 +14,7 @@ pais = session.getAttribute("pais").toString();
 Locale idioma = new Locale(lingua, pais);
 ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
 
-
+//verifica se há necessidade de carregar os comboBox das classes de domínios
 if(request.getAttribute("carrega") == null) {
 	request.setAttribute("carrega", "true");
 	request.getRequestDispatcher("GerenciaVoo").forward(request, response);
@@ -27,9 +27,6 @@ if(request.getAttribute("carrega") == null) {
 <script type="text/javascript" rel="javascript" ></script>
 </head>
 <body>
-		<%
-			out.print(request.getAttribute("carrega"));
-		%>
 		<form method="GET" action="GerenciaVoo" >
 			<fieldset>
 				<input type="hidden" name="op" value="cadastro" />

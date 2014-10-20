@@ -60,7 +60,7 @@ public class Validacao {
 	}
 
 	public boolean operacaoCadastro(String operacao){
-		if(operacao.equals("Cadastro") || operacao.equals("Register") || operacao.equals("Registro")){
+		if(operacao.equals("Cadastrar") || operacao.equals("Register") || operacao.equals("Registro")){
 			return true;
 		}
 		return false;

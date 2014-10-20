@@ -19,10 +19,9 @@ public class BancoDeDados {
 		// Realiza Conexão no PC dos Desenvolvedores.
 		 return
 		 DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1", "root", "490779");
-		 //("jdbc:mysql://localhost/dbprojeto1?user=root&password=490779");
 
 		 // Realiza Conexão no PC do Universidade.
 		 //return
-		// DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1?user=alunos&password=alunos"); 
+		// DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1, "alunos", "alunos"); 
 	}
 }

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 import Model.AeronaveTO;
-import Model.LocalidadeTO;
 import Model.dao.AeronaveDao;
 
 import java.sql.Connection;
@@ -161,11 +160,8 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();
-			System.out.println("rs estado: " + rs.getRow());
-			// retornoQuery = (ArrayList) rs.getArray(0);
-			// System.out.println(rs.getArray(0));
+			
 			if (rs.next()) {
-				//VERIFICARR!!!
 				AeronaveTO aero = new AeronaveTO();
 				aero.setCodigoAeronave((rs.getInt(1)));
 				aero.setTipoAeronave((rs.getString(2)));
@@ -215,7 +211,6 @@ public class AeronaveMysqlDaoImpl implements AeronaveDao {
 			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();
-			System.out.println("Executou a query.");
 			while (rs.next()) {
 				AeronaveTO aeronave = new AeronaveTO();
 				aeronave.setCodigoAeronave((rs.getInt(1)));

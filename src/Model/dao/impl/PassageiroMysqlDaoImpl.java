@@ -47,7 +47,6 @@ public class PassageiroMysqlDaoImpl implements PassageiroDao{
 		} catch (Exception e) {
 			try {
 				conexao.rollback();
-				System.out.println(e.getStackTrace());
 				throw e;
 				
 			} catch (SQLException sqlEx) {
@@ -126,7 +125,7 @@ public class PassageiroMysqlDaoImpl implements PassageiroDao{
 	}
 	
 	public List<PassageiroTO> consultarPassageiro(PassageiroTO passageiro){
-		String sConsulta = "SELECT * FORM PASSAGEIRO WHERE COD_PASSAGEIRO = ?";
+		String sConsulta = "SELECT * FROM PASSAGEIRO WHERE NOM_PAS = ?";
 		
 		conexao = null;
 		PreparedStatement stm = null;
@@ -135,18 +134,19 @@ public class PassageiroMysqlDaoImpl implements PassageiroDao{
 		try{
 			conexao = obtemConexao();
 			stm = prepararComando(sConsulta);
-			stm.setInt(1, passageiro.getCodigo());
+			stm.setString(1, passageiro.getNome());
 			rs = stm.executeQuery();
 			
 			if(rs.next()){
 				PassageiroTO oPassageiro = new PassageiroTO();
-				oPassageiro.setNome(rs.getString(1));
-				oPassageiro.setSobrenome(rs.getString(2));
-				oPassageiro.setCelular(rs.getString(3));
-				oPassageiro.setDataNascimento(rs.getString(4));
-				oPassageiro.setEmail(rs.getString(5));
-				oPassageiro.setFormaTrata(Integer.parseInt(rs.getString(6)));
-				oPassageiro.setTipoPassageiro(Integer.parseInt(rs.getString(7)));
+				oPassageiro.setCodigo(rs.getInt(1));
+				oPassageiro.setNome(rs.getString(2));
+				oPassageiro.setSobrenome(rs.getString(3));
+				oPassageiro.setCelular(rs.getString(4));
+				oPassageiro.setDataNascimento(rs.getString(5));
+				oPassageiro.setEmail(rs.getString(6));
+				oPassageiro.setFormaTrata(rs.getInt(7));
+				oPassageiro.setTipoPassageiro(rs.getInt(8));
 				resultado.add(oPassageiro);
 			}
 		} catch(Exception e){

@@ -6,38 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
-	Locale idioma;
 	ResourceBundle bundle;
 	bundle = (ResourceBundle) session.getAttribute("idioma");
-	/* if ((session.getAttribute("idiomaOk").toString()).equals("false")) {
-		String escolha = request.getParameter("idioma");
-		String escolhaPais = "";
-		if (escolha.equals("es")) {
-	idioma = new Locale("es", "ES");
-	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	escolhaPais = "ES";
-		} else if (escolha.equals("en")) {
-	idioma = new Locale("en", "US");
-	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	escolhaPais = "US";
-		} else {
-	idioma = new Locale("pt", "BR");
-	bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	escolhaPais = "BR";
-		}
-
-		session.setAttribute("idioma", escolha);
-		session.setAttribute("pais", escolhaPais);
-		session.setAttribute("idiomaOk", "true");
-	} else {
-
-		String lingua, pais;
-		lingua = session.getAttribute("idioma").toString();
-		pais = session.getAttribute("pais").toString();
-
-		idioma = new Locale(lingua, pais);
-		bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	}*/
 %>
 
 <title>
@@ -47,9 +17,6 @@
 </title>
 </head>
 <body>
-
-
-
 	<form action="GerenciaLogin" method="post">
 		<fieldset>
 			<p>

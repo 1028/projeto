@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Idioma/Language</title>
 <link rel="stylesheet" type="text/css" href="estilo.css" />
 </head>
 <body>
@@ -14,12 +14,9 @@
 		<form action="GerenciaIdioma" method="post" id="idioma">
 			<table>
 				<tr>
-					<td><input type="submit" id="btnEspanhol" name="idioma"
-						value="es"></td>
-					<td><input type="submit" id="btnIngles" name="idioma"
-						value="en"></td>
-					<td><input type="submit" id="btnPortugues" name="idioma"
-						value="pt"></td>
+					<td><input type="submit" id="btnEspanhol" name="idioma" value="es"></td>
+					<td><input type="submit" id="btnIngles" name="idioma" value="en"></td>
+					<td><input type="submit" id="btnPortugues" name="idioma" value="pt"></td>
 				</tr>
 			</table>
 		</form>

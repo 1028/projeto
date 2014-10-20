@@ -9,19 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
-	/* String lingua, pais;
-	lingua = session.getAttribute("idioma").toString();
-	pais = session.getAttribute("pais").toString();
-
-	Locale idioma = new Locale(lingua, pais);
-	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma",
-			idioma); */
-			ResourceBundle bundle;
-			bundle = (ResourceBundle) session.getAttribute("idioma");
+	ResourceBundle bundle;
+	bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <title>
 	<%
-		out.print(bundle.getString("FrmCadastrarAeronave.titulo"));
+		out.print(bundle.getString("FrmAeronave.titulo"));
 	%>
 </title>
 <link rel="stylesheet" type="text/css" href="estilo.css">
@@ -29,7 +22,6 @@
 	rel='stylesheet' type='text/css'>
 </head>
 <body>
-
 	<%
 		String consultar = (String) request.getAttribute("consultou");
 
@@ -40,13 +32,7 @@
 			Iterator itr = consulta.iterator();
 			while (itr.hasNext()) {
 				element = (AeronaveTO) itr.next();
-				System.out.print(element.getCodigoAeronave() + " ");
 			}
-			/*	for (AeronaveTO aTO : consulta) {
-					out.print(aTO.getCodigoAeronave() + "/" + aTO.getNome()
-							+ "/" + aTO.getQtdAssentos() + "/"
-							+ aTO.getTipoAeronave());
-				}*/
 		} else {
 			AeronaveTO naoConsultado = new AeronaveTO();
 			naoConsultado.setNome("");
@@ -54,7 +40,6 @@
 			Iterator itr = consulta.iterator();
 			while (itr.hasNext()) {
 				element = (AeronaveTO) itr.next();
-				System.out.print(element + " ");
 			}
 		}
 	%>
@@ -62,7 +47,7 @@
 		<fieldset>
 			<legend>
 				<%
-					out.print(bundle.getString("FrmCadastrarAeronave.titulo"));
+					out.print(bundle.getString("FrmAeronave.titulo"));
 				%>
 			</legend>
 			<p>
@@ -70,41 +55,35 @@
  	out.print(bundle.getString("rotulo.codigo"));
  %>
 				</label> <input type="text" id="codigo" name="fcodigo"
-					value=<%if(element.getCodigoAeronave() > 0){
-						out.print(element.getCodigoAeronave());
-						}
-						else{
-							out.print("");
-						}
-						%>>
+					value=<%if (element.getCodigoAeronave() > 0) {
+				out.print(element.getCodigoAeronave());
+			} else {
+				out.print("");
+			}%>>
 			</p>
 
 			<p>
 				<label for="nome"> <%
  	out.print(bundle.getString("rotulo.nome"));
- %></label>
-				<input type="text" id="nome" name="fnome"
+ %></label> <input type="text" id="nome" name="fnome"
 					value=<%out.print(element.getNome());%>>
 			</p>
 
 			<p>
 				<label> <%
  	out.print(bundle.getString("rotulo.qntAssentos"));
- %></label>
-				<input type="text" name="fqntassento"
-					value=<%if(element.getQtdAssentos() > 0){
-						out.print(element.getQtdAssentos());
-						}
-						else{
-							out.print("");
-						}%>>
+ %></label> <input type="text" name="fqntassento"
+					value=<%if (element.getQtdAssentos() > 0) {
+				out.print(element.getQtdAssentos());
+			} else {
+				out.print("");
+			}%>>
 			</p>
 
 			<p>
 				<label> <%
  	out.print(bundle.getString("rotulo.tipoAeronave"));
- %></label>
-				<select name="ftipoaeronave">
+ %></label> <select name="ftipoaeronave">
 					<option value="1">
 						<%
 							out.print(bundle.getString("tipoAeronave.comercial"));
@@ -144,21 +123,8 @@
 				msg = session.getAttribute("msg").toString();
 			}
 			session.setAttribute("msg", "");
-			System.out.println(msg);
 			out.print(bundle.getString(msg));
 		%>
 	</div>
-	<!-- <form action="IncluiAeronave" method="post">
-		<input type="hidden" name="operacao" value="consultar">
-		<input type="submit" name="btn" value="con" class="botoes">
-	</form>
-	<form action="IncluiAeronave" method="post">
-		<input type="hidden" name="operacao" value="alterar">
-		<input type="submit" name="btn" value="alt" class="botoes">
-	</form>
-	<form action="IncluiAeronave" method="post">
-		<input type="hidden" name="operacao" value="excluir">
-		<input type="submit" name="btn" value="ex" class="botoes">
-	</form> -->
 </body>
 </html>

@@ -44,36 +44,58 @@
 	<title><% out.print(bundle.getString("FrmConsultarVoo.titulo")); %></title>
 	<link rel="stylesheet" type="text/css" href="estilo.css">
 	<script type="text/javascript" rel="javascript" >
+			
 		window.onload = function() {
 			
 			
 			
 			var operacao = "${operacao}";
 			var btnCadastrar = document.getElementById("btnCadastrar");
+			var btnAlterar = document.getElementById("btnAlterar");
+			var btnExcluir = document.getElementById("btnExcluir");
 			
-			
-			if(operacao === "listar") {
-				var btnAlterar = document.getElementById("btnAlterar").disabled = true;
-				btnCadastrar.disabled = false;
-			}
-			else if(operacao === "cadastro") {
-				window.alert("cadastro");
-			}
-			else {
-				window.alert("Indefinido");
-			}
-			
-			document.getElementById("formulario").onsubmit = cadastrar();
-			
-			btnCadastrar.onclick = function() {
-				window.alert("clicou");
-			}
-			
-			function cadastrar() {
-				window.alert("Tentou submeter o form");
+			//trata os eventos do botão alterar
+			btnAlterar.addEventListener('click', function(event) {
+				var oper = document.getElementsByName("op")[0];
 				
-				return;
-			}
+				if(oper.value ==="listar") {
+					document.getElementById("formulario").onsubmit = function() {return false};
+				}
+				else if(oper.value ==="alterar") {
+					window.alert("mandou Alterar");
+				}
+			});
+			
+			//trata os eventos do botão excluir
+			btnExcluir.addEventListener('click', function(event) {
+				var oper = document.getElementsByName("op")[0];
+				
+				if(oper.value === "alterar") {
+					oper.value = "excluir";
+				}
+				else {
+					window.alert("Voo ainda não selelcionado");
+					document.getElementById("formulario").onsubmit = function() {return false};
+				}
+				
+			});
+			
+			//trata os eventos do botão cadastrar
+			btnCadastrar.addEventListener('click',function(){
+				var oper = document.getElementsByName("op")[0];
+				
+				if(oper.value != "cadastro") {
+
+					document.getElementById("formulario").reset();
+					oper.value = "cadastro";
+					document.getElementById("formulario").onsubmit = function() {return false};
+				}
+				else {
+					document.getElementById("formulario").onsubmit = function() {return true};
+				}
+				
+			});
+			
 			
 			//altera o botão alterar no evento checked
 			var ckSelecao = document.getElementsByName("voo");
@@ -84,13 +106,14 @@
 				
 				ckSelecao[i].onclick = function modoAlterar() {
 					var btnAlterar = document.getElementById("btnAlterar");
-					btnAlterar.disabled = false;
+					//btnAlterar.disabled = false;
 					
-					var codigo = document.getElementsByName("fcodigo")[0];
+					var codigo = document.getElementById("fcodigo");
 					var valor = document.getElementsByName("fvalor")[0];
 					var data = document.getElementsByName("fdata")[0];
-					codigo.disabled = true;
+					//codigo.disabled = true;
 					codigo.value = this.value;
+					
 					valor.value = document.getElementsByName("exibeVal" + codigo.value)[0].innerHTML;
 					data.value = document.getElementsByName("exibeData" + codigo.value)[0].innerHTML;
 					var operacao = document.getElementsByName("op")[0];
@@ -196,7 +219,7 @@
 						<c:if test="${not empty total}" >
 							<c:forEach var="cont" begin="1" end="${total }" >
 								<c:set var="valor" value="${cont * 2-cont}" ></c:set>
-								<a href="GerenciaVoo?pageAt=${valor }&op=${operacao}&carrega=${carrega}&fcodigo=" onclick="" >${cont }</a>
+								<a href="GerenciaVoo?pageAt=${valor }&op=${operacao}&carrega=${carrega}" onclick="" >${cont }</a>
 							</c:forEach>
 						</c:if>
 					</nav>

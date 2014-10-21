@@ -13,7 +13,7 @@ public interface VooDao {
 	
 	public int alterarVoo(VooTO voo);
 	
-	public void excluirVoo(VooTO voo);
+	public void excluirVoo(VooTO voo) throws SQLException;
 	
 	public int cadastrarVoo(VooTO voo) throws SQLException;
 	

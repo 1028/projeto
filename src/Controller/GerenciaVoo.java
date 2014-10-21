@@ -122,6 +122,7 @@ public class GerenciaVoo extends HttpServlet {
 		teste = (teste != null ? teste : "");
 		
 		
+		
 		switch (teste) {
 		case "listar" :
 			String codigo = (request.getParameter("fcodigo").equals("") ? "" : request.getParameter("fcodigo"));
@@ -139,8 +140,34 @@ public class GerenciaVoo extends HttpServlet {
 		case "alterar" :
 			alterar(request,response);
 			break;
+		case "excluir" :
+			excluir(request,response);
+			break;
 		}
 	}
+	
+	public void excluir(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
+		VooTO vooTO = new VooTO();
+		
+		String codigoVoo = request.getParameter("fcodigo");
+		int codigo = Integer.parseInt(codigoVoo);
+		
+		
+		vooTO.setCodigoVoo(codigo);
+		
+		Voo voo = new Voo(vooTO);
+		try {
+			voo.excluirVoo();
+			
+			request.setAttribute("msg", "Voo " + codigoVoo + " excluido com sucesso!");
+			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
+		} 
+		catch(Exception e) {
+			request.setAttribute("msg", e.getMessage());
+			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
+		}
+	}
+	
 	
 	public void alterar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		VooTO vooTO = new VooTO();
@@ -213,8 +240,10 @@ public class GerenciaVoo extends HttpServlet {
 	public void cadastrar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		VooTO vooTO = new VooTO();
 		vooTO.setValor(Double.parseDouble(request.getParameter("fvalor")));
-		vooTO.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
-		vooTO.setAeronave(Integer.parseInt(request.getParameter("faeronave")));
+		//vooTO.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
+		//vooTO.setAeronave(Integer.parseInt(request.getParameter("faeronave")));
+		vooTO.setSituacao(1);
+		vooTO.setAeronave(1);
 		//Transforma uma data no formato Brasileiro e retorna em formato SQL
 		Formatador forma = new Formatador();
 		vooTO.setDateHora(forma.dataNacional(request.getParameter("fdata")));
@@ -258,7 +287,7 @@ public class GerenciaVoo extends HttpServlet {
 			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
 		}
 		catch (Exception e) {
-			request.setAttribute("msg", "Voo não foi cadastrado!");
+			request.setAttribute("msg", "Voo não foi cadastrado!" + "<br />"+ e.getMessage());
 			request.setAttribute("erro", e.getMessage());
 			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
 		}
@@ -280,13 +309,13 @@ public class GerenciaVoo extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			String msg = e.getMessage();
-			System.out.println("Entrou no catch");
+			
 			request.setAttribute("msg", msg);
 		}
 		
 		request.setAttribute("ret", "listar");
 		
-		System.out.println("Saiu do catch");
+
 		
 		request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
 	}

@@ -417,22 +417,32 @@ public class VooMysqlDaoImpl implements VooDao {
 	}
 
 	
-	public void excluirVoo(VooTO voo) {
-		String delete = "DELETE FROM VOO WHERE COD_VOO = ?";
+	public void excluirVoo(VooTO voo) throws SQLException {
+		String deleteLocalidaeVoo = "DELETE FROM LOCALIDADE_VOO WHERE COD_VOO = ?";
+		String deleteVoo = "DELETE FROM VOO WHERE COD_VOO = ?";
 
 		PreparedStatement stm = null;
-
+		conexao = null;
+		
 		try {
-			stm = prepararComando(delete);
+			conexao = obtemConexao();
+			conexao.setAutoCommit(false);
+			
+			stm = prepararComando(deleteLocalidaeVoo);
 			stm.setInt(1, voo.getCodigoVoo());
 			stm.execute();
+			
+			stm = prepararComando(deleteVoo);
+			stm.setInt(1, voo.getCodigoVoo());
+			stm.execute();
+			
 			conexao.commit();
-
 		} catch (Exception e) {
 			try {
 				conexao.rollback();
+				throw e;
 			} catch (SQLException sqlEx) {
-
+				throw sqlEx;
 			}
 		} finally {
 			if (stm != null) {

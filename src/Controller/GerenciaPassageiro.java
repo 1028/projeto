@@ -92,6 +92,7 @@ public class GerenciaPassageiro extends HttpServlet {
 				
 				consulta = p.consultarPassageiro();
 				if(consulta.size() > 0){
+					consulta.get(0).setDataNascimento(formatador.dataView((consulta.get(0).getDataNascimento())));
 					request.setAttribute("msg", "mensagem.branco");
 					request.setAttribute("consultou", "ok");
 					request.setAttribute("con", consulta);

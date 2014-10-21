@@ -85,10 +85,5 @@ public class GerenciaLogin extends HttpServlet {
 			request.getRequestDispatcher("login.jsp")
 					.forward(request, response);
 		}
-		/*
-		 * request.setAttribute("msg", "FrmLogin.mensagem.validado");
-		 * request.getRequestDispatcher("principal.jsp").forward(request,
-		 * response);
-		 */
 	}
 }

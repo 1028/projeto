@@ -52,7 +52,6 @@ public class GerenciaAeronave extends HttpServlet {
 	protected void executa(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String operacao = (String) request.getParameter("btn");
-		System.out.println(operacao);
 		String sCodigo, sQntAssento;
 		sCodigo = request.getParameter("fcodigo");
 		sQntAssento = request.getParameter("fqntassento");
@@ -74,10 +73,10 @@ public class GerenciaAeronave extends HttpServlet {
 					
 					a.incluirAeronave(aeronave);
 					request.setAttribute("msg", "mensagem.cadastrar.exito");
-					request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
+					request.getRequestDispatcher("gerenciaAeronave.jsp").forward(request, response);
 				} catch (Exception e) {
 					request.setAttribute("msg", "mensagem.cadastrar.erro");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				}
 
@@ -92,11 +91,11 @@ public class GerenciaAeronave extends HttpServlet {
 						request.setAttribute("msg", "mensagem.branco");
 						request.setAttribute("consultou", "ok");
 						request.setAttribute("con", consulta);
-						request.getRequestDispatcher("cadastroAeronave.jsp").forward(request, response);
+						request.getRequestDispatcher("gerenciaAeronave.jsp").forward(request, response);
 					} else {
 						request.setAttribute("msg",
 								"mensagem.consulta.dado.nao.encontrado");
-						request.getRequestDispatcher("cadastroAeronave.jsp")
+						request.getRequestDispatcher("gerenciaAeronave.jsp")
 								.forward(request, response);
 					}
 
@@ -105,7 +104,7 @@ public class GerenciaAeronave extends HttpServlet {
 					// e.printStackTrace();
 					request.setAttribute("msg",
 							"mensagem.consulta.dado.nao.encontrado");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				}
 
@@ -118,13 +117,13 @@ public class GerenciaAeronave extends HttpServlet {
 					
 					a.alterarAeronave();
 					request.setAttribute("msg", "mensagem.alterar.exito");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					// e.printStackTrace();
 					request.setAttribute("msg", "mensagem.alterar.erro");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				}
 			} else if(oValida.operacaoExcluir(operacao) && (!(oValida.camposEmBranco(sCodigo)))) {
@@ -134,19 +133,19 @@ public class GerenciaAeronave extends HttpServlet {
 					
 					a.excluirAeronave();
 					request.setAttribute("msg", "mensagem.excluir.exito");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					// e.printStackTrace();
 					request.setAttribute("msg", "mensagem.excluir.erro");
-					request.getRequestDispatcher("cadastroAeronave.jsp")
+					request.getRequestDispatcher("gerenciaAeronave.jsp")
 							.forward(request, response);
 				}
 			
 		} else {
 			request.setAttribute("msg", "mensage.campos.branco");
-			request.getRequestDispatcher("cadastroAeronave.jsp").forward(
+			request.getRequestDispatcher("gerenciaAeronave.jsp").forward(
 					request, response);
 		}
 

@@ -1,6 +1,10 @@
 package Controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,9 +52,10 @@ public class GerenciaPassageiro extends HttpServlet {
 
 	protected void executa(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Passou no servlets");
+		String operacao = (String) request.getParameter("btn");
 		PassageiroTO passageiro = new PassageiroTO();
 
+		passageiro.setCodigo(Integer.parseInt(request.getParameter("codigo")));
 		passageiro.setNome(request.getParameter("nome"));
 		passageiro.setSobrenome(request.getParameter("sobrenome"));
 		passageiro.setCelular(request.getParameter("celular"));
@@ -63,67 +68,80 @@ public class GerenciaPassageiro extends HttpServlet {
 		passageiro.setTipoPassageiro(Integer.parseInt(request
 				.getParameter("perfil")));
 
-		System.out.println(request.getParameter("nome"));
-		System.out.println(request.getParameter("sobrenome"));
-		System.out.println(request.getParameter("celular"));
-		System.out.println(request.getParameter("email"));
-		System.out.println(request.getParameter("nascimento"));
-		System.out
-				.println(Integer.parseInt(request.getParameter("tratamento")));
-		System.out.println(Integer.parseInt(request.getParameter("perfil")));
-
 		// Verifica os campos enviados
 		Validacao oValida = new Validacao();
 
-		if (!(oValida.camposEmBranco(passageiro.getNome(),
-				passageiro.getEmail(), passageiro.getDataNascimento()))) {
-			Passageiro p = new Passageiro(passageiro);
-
+		if (oValida.operacaoCadastro(operacao) && (!(oValida.camposEmBranco(passageiro.getNome(),
+				passageiro.getEmail(), passageiro.getDataNascimento())))) {
 			try {
+				Passageiro p = new Passageiro(passageiro);
 				p.cadastrarPassageiro();
 				request.setAttribute("msg", "mensagem.cadastrar.exito");
-				System.out.println("Aqui");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
 						request, response);
 				// response.getWriter().write("Usuário cadastrado com sucesso!");
 			} catch (Exception e) {
-				// System.out.println("Exception");
-				// System.out.println(e.getMessage());
 				request.setAttribute("msg", "mensagem.cadastrar.erro");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
 						request, response);
-				// out.print("<p>Falha ao cadastrar o Passageiro!</p>");
-				// out.print("<p>" + e.getMessage() +"</p>");
-				// out.print("<p>" + e.getStackTrace() +"</p>");
 			}
-
+		} else if (oValida.operacaoConsultar(operacao) && (!(oValida.camposEmBranco(passageiro.getNome())))){
+			try {
+				Passageiro p = new Passageiro(passageiro);
+				List<PassageiroTO> consulta = new ArrayList<PassageiroTO>();
+				
+				consulta = p.consultarPassageiro();
+				if(consulta.size() > 0){
+					request.setAttribute("msg", "mensagem.branco");
+					request.setAttribute("consultou", "ok");
+					request.setAttribute("con", consulta);
+					request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(request, response);
+				} else {
+					request.setAttribute("msg",
+							"mensagem.consulta.dado.nao.encontrado");
+					request.getRequestDispatcher("gerenciaPassageiro.jsp")
+							.forward(request, response);
+				}
+			} catch (SQLException e) {
+				request.setAttribute("msg",
+						"mensagem.consulta.dado.nao.encontrado");
+				request.getRequestDispatcher("gerenciaPassageiro.jsp")
+						.forward(request, response);
+			}
+			
+		} else if (oValida.operacaoAlterar(operacao) && (passageiro.getCodigo() > 0) && (!(oValida.camposEmBranco(passageiro.getNome(),
+				passageiro.getEmail(), passageiro.getDataNascimento())))){
 			// Alteração do dados do Passageiro
 			try {
+				Passageiro p = new Passageiro(passageiro);
 				p.alterarPassageiro();
 				request.setAttribute("msg", "mensagem.alterar.exito");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
 						request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				// e.printStackTrace();
 				request.setAttribute("msg", "mensagem.alterar.erro");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
 						request, response);
 			}
-
+		} else if(oValida.operacaoExcluir(operacao) && (passageiro.getCodigo() > 0) && (!(oValida.camposEmBranco(passageiro.getNome())))){
 			try {
+				Passageiro p = new Passageiro(passageiro);
 				p.excluirPassageiro();
 				request.setAttribute("msg", "mensagem.excluir.exito");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(request, response);
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
+						request, response);
 			} catch (Exception e) {
 				request.setAttribute("msg", "mensagem.excluir.erro");
-				request.getRequestDispatcher("cadastroPassageiro.jsp").forward(request, response);
+				request.getRequestDispatcher("gerenciaPassageiro.jsp").forward(
+						request, response);
 			}
 
 		} else {
 			// response.sendError(HttpServletResponse.SC_BAD_REQUEST,"Há campos não preenchidos.");
 			request.setAttribute("msg", "mensage.campos.branco");
-			request.getRequestDispatcher("/cadastroPassageiro.jsp").forward(
+			request.getRequestDispatcher("/gerenciaPassageiro.jsp").forward(
 					request, response);
 		}
 	}

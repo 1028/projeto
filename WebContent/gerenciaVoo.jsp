@@ -6,12 +6,9 @@
     		 import = "Model.VooTO"
     %>
 <%
-	String lingua, pais;
-	lingua = session.getAttribute("idioma").toString();
-	pais = session.getAttribute("pais").toString();
 	
-	Locale idioma = new Locale(lingua, pais);
-	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+	ResourceBundle bundle;
+	bundle = (ResourceBundle) session.getAttribute("idioma");
 	
 	//verifica se há necessidade de carregar os comboBox das classes de domínios
 	if(request.getAttribute("carrega") == null) {
@@ -49,12 +46,15 @@
 	<script type="text/javascript" rel="javascript" >
 		window.onload = function() {
 			
+			
+			
 			var operacao = "${operacao}";
 			var btnCadastrar = document.getElementById("btnCadastrar");
+			
+			
 			if(operacao === "listar") {
-				var btnExcluir = document.getElementById("btnExcluir").disabled = true;
 				var btnAlterar = document.getElementById("btnAlterar").disabled = true;
-				btnCadastrar.disabled = true;
+				btnCadastrar.disabled = false;
 			}
 			else if(operacao === "cadastro") {
 				window.alert("cadastro");
@@ -63,7 +63,11 @@
 				window.alert("Indefinido");
 			}
 			
-			//document.getElementById("formulario").onsubmit = cadastrar();
+			document.getElementById("formulario").onsubmit = cadastrar();
+			
+			btnCadastrar.onclick = function() {
+				window.alert("clicou");
+			}
 			
 			function cadastrar() {
 				window.alert("Tentou submeter o form");
@@ -84,13 +88,27 @@
 					
 					var codigo = document.getElementsByName("fcodigo")[0];
 					var valor = document.getElementsByName("fvalor")[0];
+					var data = document.getElementsByName("fdata")[0];
 					codigo.disabled = true;
 					codigo.value = this.value;
-					valor.value = this.index;
+					valor.value = document.getElementsByName("exibeVal" + codigo.value)[0].innerHTML;
+					data.value = document.getElementsByName("exibeData" + codigo.value)[0].innerHTML;
 					var operacao = document.getElementsByName("op")[0];
 					
-					operacao.value = "alterar";
+					var origem = document.getElementsByName("forigem")[0];
+					var oriVoo = document.getElementsByName("exibeOri" + codigo.value)[0].innerHTML;
+					origem.selectedIndex = (oriVoo.substring(0,1)-1);
 					
+					var destino = document.getElementsByName("fdestino")[0];
+					var destVoo = document.getElementsByName("exibeDes" + codigo.value)[0].innerHTML;
+					destino.selectedIndex = (destVoo.substring(0,1)-1);
+					
+					var escala = document.getElementsByName("fescala")[0];
+					var escVoo = document.getElementsByName("exibeEscala" + codigo.value)[0].innerHTML;
+					escala.selectedIndex = (escVoo.substring(0,1)-1);
+					
+					
+					operacao.value = "alterar";
 				}
 				i++;
 			}
@@ -200,11 +218,14 @@
 							<c:choose>
 								<c:when test="${not empty lst }" >
 									<c:forEach var="voo" items="${lst}" >
-										<tr>
+										<tr name="${voo.codigoVoo }" >
 											<td><input type="radio" value="${voo.codigoVoo }" name="voo" /></td>
-											<td name="exibecod" >${voo.codigoVoo }</td><td name="exibeOri" >${voo.origem }</td>
-											<td name="exibeDes" >${voo.destino}</td name="exibeEscala" ><td>${voo.escala}</td>
-											<td name="exibeData" >${voo.dateHora}</td><td name="exibeVal" >${voo.valor}</td>
+											<td name="exibecod${voo.codigoVoo }" >${voo.codigoVoo }</td>
+											<td name="exibeOri${voo.codigoVoo }" >${voo.origem }</td>
+											<td name="exibeDes${voo.codigoVoo }" >${voo.destino}</td>
+											<td name="exibeEscala${voo.codigoVoo }" >${voo.escala}</td>
+											<td name="exibeData${voo.codigoVoo }" >${voo.dateHora}</td>
+											<td name="exibeVal${voo.codigoVoo }" >${voo.valor}</td>
 										</tr>
 									</c:forEach>
 								</c:when>

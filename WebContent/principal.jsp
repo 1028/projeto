@@ -5,13 +5,13 @@ pageEncoding="ISO-8859-1"%>
 <html lang="pt-br">
 <head>
 <%
-String lingua, pais;
-lingua = session.getAttribute("idioma").toString();
-pais = session.getAttribute("pais").toString();
-Locale idioma = new Locale(lingua, pais);
-ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-//ResourceBundle bundle;
-//bundle = (ResourceBundle) session.getAttribute("idioma");
+	/* String lingua, pais;
+	lingua = session.getAttribute("idioma").toString();
+	pais = session.getAttribute("pais").toString();
+	Locale idioma = new Locale(lingua, pais);
+	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma); */
+ResourceBundle bundle;
+bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> <% out.print(bundle.getString("FrmSistemaPassagensAereas.titulo")); %></title>

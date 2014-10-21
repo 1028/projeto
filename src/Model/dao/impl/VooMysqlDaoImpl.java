@@ -366,9 +366,10 @@ public class VooMysqlDaoImpl implements VooDao {
 			String dataHora, Double valor, int codigoAeronave,
 			int codigoLocalidade, int situacao, int codigoVoo) {
 
-		String update = "UPDATE VOO "
-				+ "SET ORIGEM_VOO = ?, DESTINO_VOO = ?, ESCALA_VOO = ?, DATA_VOO = ?, "
-				+ "VALOR_VOO = ?, COD_AERO_VOO = ?, COD_LOC_VOO = ?, COD_SIT_VOO = ? WHERE COD_VOO = ?";
+		String update = "UPDATE LOCALIDADE_VOO"
+						+ "WHERE COD_VOO = ?"
+						+ "AND COD_LOC = ?"
+						+ "AND TIPO = ?";
 
 		PreparedStatement stm = null;
 

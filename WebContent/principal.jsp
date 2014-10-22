@@ -23,7 +23,7 @@ bundle = (ResourceBundle) session.getAttribute("idioma");
 </ul></li>
 <li><a><% out.print(bundle.getString("FrmSistemaPassagensAereas.menu.passagem")); %></a><!-- Btn Passagem -->
 <ul>
-<li><a href="comprarPassagem.jsp"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li><!-- Btn Comprar-->
+<li><a href="comprarPassagem"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.comprar")); %></a></li><!-- Btn Comprar-->
 <li><a href="#"><% out.print(bundle.getString("FrmSistemaPassagensAereas.submenu.cancelar")); %></a></li><!-- Btn Cancelar -->
 <li><a href="gerenciaPassageiro.jsp"><%out.print(bundle.getString("FrmPassageiro.titulo"));%></a></li>
 </ul></li>

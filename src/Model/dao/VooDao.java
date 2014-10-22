@@ -11,13 +11,13 @@ public interface VooDao {
 	
 	public VooTO consultarVoo(int codigo);
 	
-	public int alterarVoo(VooTO voo);
+	public int alterarVoo(VooTO novo, VooTO antigo) throws SQLException;
 	
 	public void excluirVoo(VooTO voo) throws SQLException;
 	
 	public int cadastrarVoo(VooTO voo) throws SQLException;
 	
-	public List<VooTO> consultar();
+	public List<VooTO> consultar() throws Exception;
 	
 	public List<VooTO> consultar(int paginaAtual, int qtdRegistros);
 	

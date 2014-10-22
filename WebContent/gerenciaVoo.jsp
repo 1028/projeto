@@ -53,15 +53,31 @@
 			var btnCadastrar = document.getElementById("btnCadastrar");
 			var btnAlterar = document.getElementById("btnAlterar");
 			var btnExcluir = document.getElementById("btnExcluir");
+			var btnConsultar = document.getElementById("btnConsulta");
+			
+			btnConsultar.addEventListener('click',function(event) {
+				var oper = document.getElementsByName("op")[0];
+				var exibe = document.getElementById("mostraOp");
+				
+				if(oper.value != "listar") {
+					oper.value = "listar";
+					exibe.innerHTML = oper.value;
+				}
+			});
 			
 			//trata os eventos do botão alterar
 			btnAlterar.addEventListener('click', function(event) {
 				var oper = document.getElementsByName("op")[0];
+				var exibe = document.getElementById("mostraOp");
 				
 				if(oper.value ==="listar") {
 					document.getElementById("formulario").onsubmit = function() {return false};
+					oper.value = "alterar";
+					exibe.innerHTML = oper.value;					
 				}
 				else if(oper.value ==="alterar") {
+					window.alert(document.getElementById("fcodigo").value);
+					document.getElementById("fcodigo").disabled = false;
 					window.alert("mandou Alterar");
 				}
 			});
@@ -83,11 +99,12 @@
 			//trata os eventos do botão cadastrar
 			btnCadastrar.addEventListener('click',function(){
 				var oper = document.getElementsByName("op")[0];
+				var exibe = document.getElementById("mostraOp");
 				
 				if(oper.value != "cadastro") {
-
 					document.getElementById("formulario").reset();
 					oper.value = "cadastro";
+					exibe.innerHTML = "Operação: " + oper.value;
 					document.getElementById("formulario").onsubmit = function() {return false};
 				}
 				else {
@@ -106,12 +123,14 @@
 				
 				ckSelecao[i].onclick = function modoAlterar() {
 					var btnAlterar = document.getElementById("btnAlterar");
-					//btnAlterar.disabled = false;
+					var vooAntigo = document.getElementById("vooAntigo");
+					
+					
 					
 					var codigo = document.getElementById("fcodigo");
 					var valor = document.getElementsByName("fvalor")[0];
 					var data = document.getElementsByName("fdata")[0];
-					//codigo.disabled = true;
+					codigo.disabled = true;
 					codigo.value = this.value;
 					
 					valor.value = document.getElementsByName("exibeVal" + codigo.value)[0].innerHTML;
@@ -130,7 +149,9 @@
 					var escVoo = document.getElementsByName("exibeEscala" + codigo.value)[0].innerHTML;
 					escala.selectedIndex = (escVoo.substring(0,1)-1);
 					
-					
+					//falta complementar com o código da situação e também da aeronavee
+					vooAntigo.value = valor.value + "#" + data.value + "#" + (oriVoo.substring(0,1)) + "#" + (destVoo.substring(0,1)) + "#" + (escVoo.substring(0,1));
+					window.alert(vooAntigo.value);
 					operacao.value = "alterar";
 				}
 				i++;
@@ -145,7 +166,7 @@
 </head>
 <body>
 	<div id="wrap" >
-			
+			<p id="mostraOp" >Operação: ${op }</p>
 			<c:if test="${empty pageAt }" >
 						<c:out value="parametro nulo" ></c:out>
 			</c:if>
@@ -156,8 +177,8 @@
 					
 					<input type="hidden" name="op" value="${operacao }" />
 					<input type="hidden" name="carrega" value="${carrega }" />
-					
 					<input type="hidden" value="${pageAt }" name="pageAt" />
+					<input type="hidden" value="" name="vooAntigo" id="vooAntigo" />
 					
 					
 					<p>

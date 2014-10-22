@@ -250,7 +250,7 @@ public class VooMysqlDaoImpl implements VooDao {
 		return resultado;
 	}
 	
-	public List<VooTO> consultar() {
+	public List<VooTO> consultar() throws Exception {
 		
 		String consulta = "SELECT * FROM VOO_GERAL";
 		
@@ -291,16 +291,17 @@ public class VooMysqlDaoImpl implements VooDao {
 			// tenta dar rollback na instrução realizada
 			try {
 				conexao.rollback();
-				e.printStackTrace();
+				throw e;
 			} catch (SQLException sqlEx) {
 				sqlEx.getStackTrace();
 			}
+			throw e;
 		} finally {
 			if (stm != null) {
 				try {
 					conexao.close();
 				} catch (SQLException sqlEx) {
-					sqlEx.getStackTrace();
+					throw sqlEx;
 				}
 			}
 
@@ -362,58 +363,93 @@ public class VooMysqlDaoImpl implements VooDao {
 
 	
 
-	public void alterarVoo(String origem, String destino, String escala,
-			String dataHora, Double valor, int codigoAeronave,
-			int codigoLocalidade, int situacao, int codigoVoo) {
-
-		String update = "UPDATE LOCALIDADE_VOO"
-						+ "WHERE COD_VOO = ?"
-						+ "AND COD_LOC = ?"
-						+ "AND TIPO = ?";
-
+	public int alterarVoo(VooTO novo, VooTO antigo) throws SQLException {
+		int retorno = -1;
+		String update = "UPDATE LOCALIDADE_VOO "
+						+ " SET COD_LOC = ?, DATA = ? "
+						+ " WHERE COD_VOO = ? "
+						+ " AND COD_LOC = ? "
+						+ " AND TIPO = ?" ;
+		
+		String update2 = "UPDATE VOO "
+						+ " SET VALOR_VOO = ?, COD_AERO_VOO = ?, COD_SIT_VOO = ? "
+						+ " WHERE COD_VOO = ? ";
+		
 		PreparedStatement stm = null;
+		conexao = null;
 
 		try {
+			
+			conexao = obtemConexao();
+			conexao.setAutoCommit(false);
+			
+			
+			
 			stm = prepararComando(update);
-
-			stm.setString(1, origem);
-			stm.setString(2, destino);
-			stm.setString(3, escala);
-			stm.setString(4, dataHora);
-			stm.setDouble(5, valor);
-			stm.setInt(6, codigoAeronave);
-			stm.setInt(7, codigoLocalidade);
-			stm.setInt(8, situacao);
-			stm.setInt(9, codigoVoo);
-
+			//Prepara os dados da Origem
+			stm.setInt(1, novo.getOrigemObj().getCodigo());
+			stm.setString(2, novo.getDateHora());
+			stm.setInt(3, novo.getCodigoVoo());
+			stm.setInt(4, antigo.getOrigemObj().getCodigo());
+			stm.setString(5,antigo.getOrigemObj().getTipo());
+			
+			stm.addBatch();
+			
+			//Prepara os dados do Destino
+			stm.setInt(1, novo.getDestinoObj().getCodigo());
+			stm.setString(2, novo.getDateHora());
+			stm.setInt(3, novo.getCodigoVoo());
+			stm.setInt(4, antigo.getDestinoObj().getCodigo());
+			stm.setString(5,antigo.getDestinoObj().getTipo());
+			
+			stm.addBatch();
+			
+			//Prepara os dados do Escala
+			stm.setInt(1, novo.getEscalaObj().getCodigo());
+			stm.setString(2, novo.getDateHora());
+			stm.setInt(3, novo.getCodigoVoo());
+			stm.setInt(4, antigo.getEscalaObj().getCodigo());
+			stm.setString(5,antigo.getEscalaObj().getTipo());
+			
+			stm.addBatch();
+			
+			System.out.println(stm);
+			stm.executeBatch();
+			
+			stm = prepararComando(update2);
+			
+			stm.setDouble(1,novo.getValor());
+			stm.setInt(2,novo.getAeronave());
+			stm.setInt(3, novo.getSituacao());
+			stm.setInt(4, novo.getCodigoVoo());
+			
 			stm.execute();
-
+			
 			conexao.commit();
-
+			System.out.println("Comitou e executou");
+			retorno = novo.getCodigoVoo();
+			
 		} catch (Exception e) {
-			e.printStackTrace();
-
+			
 			try {
 				conexao.rollback();
 			} catch (SQLException sqlEx) {
-				JOptionPane.showMessageDialog(
-						null,
-						"Não foi possível realizar o rollback \n\n"
-								+ sqlEx.getStackTrace());
+				throw sqlEx;
 			}
+			
+			throw e;
 		} finally {
 			if (stm != null) {
 				try {
 					conexao.close();
 				} catch (SQLException sqlEx) {
-					JOptionPane.showMessageDialog(null,
-							"Não foi possível fechar a conexão com o banco \n"
-									+ sqlEx.getStackTrace());
+					throw sqlEx;
 				}
 			}
 
 		}
-
+		
+		return retorno;
 	}
 
 	
@@ -559,18 +595,6 @@ public class VooMysqlDaoImpl implements VooDao {
 		return resultado;
 	}
 
-
-	@Override
-	public int alterarVoo(VooTO voo) {
-		// TODO Auto-generated method stub
-		int alterado = -1;
-		
-		String altera = "UPDATE ";
-		
-		
-		
-		return alterado;
-	}
 
 
 	

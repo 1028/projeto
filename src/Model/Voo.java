@@ -31,7 +31,7 @@ public class Voo {
 		return dao.consultarVoo(codigo);
 	}
 	
-	public List<VooTO> consultar() throws SQLException {
+	public List<VooTO> consultar() throws Exception {
 		DaoFactory factory = DaoFactory.getInstance();
 		VooDao dao = factory.getVooDao();
 		return dao.consultar();
@@ -55,10 +55,10 @@ public class Voo {
 		return dao.cadastrarVoo(dadosVoo);
 	}
 
-	public int alterarVoo() throws SQLException {
+	public int alterarVoo(VooTO antigo) throws SQLException {
 		DaoFactory factory = DaoFactory.getInstance();
 		VooDao dao = factory.getVooDao();
-		return dao.alterarVoo(dadosVoo);
+		return dao.alterarVoo(dadosVoo, antigo);
 	}
 
 	public void excluirVoo() throws SQLException {

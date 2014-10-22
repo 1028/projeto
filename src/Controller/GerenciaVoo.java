@@ -170,13 +170,56 @@ public class GerenciaVoo extends HttpServlet {
 	
 	
 	public void alterar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-		VooTO vooTO = new VooTO();
-		vooTO.setValor(Double.parseDouble(request.getParameter("fvalor")));
-		vooTO.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
-		vooTO.setAeronave(Integer.parseInt(request.getParameter("faeronave")));
-		//Transforma uma data no formato Brasileiro e retorna em formato SQL
 		Formatador forma = new Formatador();
-		vooTO.setDateHora(forma.dataNacional(request.getParameter("fdata")));
+		
+		String codigoVoo = request.getParameter("fcodigo");
+		int codigo = Integer.parseInt(codigoVoo);
+		
+		//valores do voo antigo
+		VooTO vooAntigo = new VooTO();
+		
+		
+		System.out.println(request.getParameter("vooAntigo"));
+		String txt = request.getParameter("vooAntigo");
+		String txtAuxiliar[] = txt.split("#");
+		
+		System.out.println(txtAuxiliar[1]);
+		double valorAntigo = Double.parseDouble(txtAuxiliar[0]);
+		//String dataAntiga = forma.dataNacional(txtAuxiliar[1]);
+		
+		//Pega Origem antiga
+		LocalidadeTO origemAntiga = new LocalidadeTO();
+		origemAntiga.setCodigo(Integer.parseInt(txtAuxiliar[2]));
+		origemAntiga.setTipo("O");
+		
+		//Pega Destino antiga
+		LocalidadeTO destinoAntiga = new LocalidadeTO();
+		destinoAntiga.setCodigo(Integer.parseInt(txtAuxiliar[3]));
+		destinoAntiga.setTipo("D");
+		
+		//Pega Escala antiga
+		LocalidadeTO escalaAntiga = new LocalidadeTO();
+		escalaAntiga.setCodigo(Integer.parseInt(txtAuxiliar[4]));
+		escalaAntiga.setTipo("E");
+		
+		vooAntigo.setCodigoVoo(codigo);
+		//vooAntigo.setDateHora(dataAntiga);
+		vooAntigo.setValor(valorAntigo);
+		vooAntigo.setOrigem(origemAntiga);
+		vooAntigo.setDestino(destinoAntiga);
+		vooAntigo.setEscala(escalaAntiga);
+		
+		
+		VooTO vooNovo = new VooTO();
+		vooNovo.setCodigoVoo(codigo);
+		vooNovo.setValor(Double.parseDouble(request.getParameter("fvalor")));
+		//vooTO.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
+		//vooTO.setAeronave(Integer.parseInt(request.getParameter("faeronave")));
+		vooNovo.setSituacao(1);
+		vooNovo.setAeronave(1);
+		//Transforma uma data no formato Brasileiro e retorna em formato SQL
+		
+		vooNovo.setDateHora(forma.dataNacional(request.getParameter("fdata")));
 		
 		//Atribuindo a Origem
 		String[] localidade;
@@ -186,7 +229,7 @@ public class GerenciaVoo extends HttpServlet {
 		loca.setUf(localidade[1]);
 		loca.setNome(localidade[2]);
 		loca.setTipo("O");
-		vooTO.setOrigem(loca);
+		vooNovo.setOrigem(loca);
 		
 		//Atribuindo o Destino
 		loca = new LocalidadeTO();
@@ -195,7 +238,7 @@ public class GerenciaVoo extends HttpServlet {
 		loca.setUf(localidade[1]);
 		loca.setNome(localidade[2]);
 		loca.setTipo("D");
-		vooTO.setDestino(loca);
+		vooNovo.setDestino(loca);
 		
 		//Atribuindo a escala
 		loca = new LocalidadeTO();
@@ -204,20 +247,20 @@ public class GerenciaVoo extends HttpServlet {
 		loca.setUf(localidade[1]);
 		loca.setNome(localidade[2]);
 		loca.setTipo("E");
-		vooTO.setEscala(loca);
+		vooNovo.setEscala(loca);
 		
-		Voo voo = new Voo(vooTO);
+		Voo voo = new Voo(vooNovo);
 		
 		try {
-			int confirmacao = voo.alterarVoo();
-			vooTO.setCodigoVoo(confirmacao);
+			int confirmacao = voo.alterarVoo(vooAntigo);
+			vooNovo.setCodigoVoo(confirmacao);
 
-			request.setAttribute("msg", "Voo " + confirmacao + " cadastrado com sucesso!");
-			request.setAttribute("vooCadastrado", vooTO);
+			request.setAttribute("msg", "Voo " + confirmacao + " alterado com sucesso!");
+			request.setAttribute("vooCadastrado", vooNovo);
 			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
 		}
 		catch (Exception e) {
-			request.setAttribute("msg", "Voo não foi cadastrado!");
+			request.setAttribute("msg", "Voo não foi cadastrado!" + "<br />" + e.getMessage());
 			request.setAttribute("erro", e.getMessage());
 			request.getRequestDispatcher("gerenciaVoo.jsp").forward(request, response);
 		}

@@ -20,6 +20,14 @@
 <link rel="stylesheet" type="text/css" href="estilo.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500'
 	rel='stylesheet' type='text/css'>
+		<%
+			String msg;
+			if(session.getAttribute("msg").toString().equals("")){
+				out.print("<script src='scripts/jquery-1.11.0.min.js'>"
+				+"</script>"
+				+"<script src='scripts/msg.js'></script>");
+			}
+		%>
 </head>
 <body>
 	<%
@@ -117,7 +125,6 @@
 	</form>
 	<div id=msg>
 		<%
-			String msg;
 			if (session.getAttribute("msg").toString().equals("")) {
 				msg = request.getAttribute("msg").toString();
 			} else {

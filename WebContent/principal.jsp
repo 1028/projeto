@@ -12,6 +12,9 @@ bundle = (ResourceBundle) session.getAttribute("idioma");
 <title> <% out.print(bundle.getString("FrmSistemaPassagensAereas.titulo")); %></title>
 <link rel="stylesheet" type="text/css" href="estilo.css">
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<script src="scripts/jquery-1.11.0.min.js">
+</script>
+<script src="scripts/msg.js"></script>
 </head>
 <body>
 <div id="wrap" >

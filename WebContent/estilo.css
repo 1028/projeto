@@ -1,6 +1,6 @@
 * {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 }
 
 body {
@@ -98,16 +98,18 @@ table,td,tr {
 
 .menu {
 	list-style: none;
-	float: left;
-	margin: 0px;
-	width: 660px;
+	position: absolute;
+	left: 50%;
+	top: 0px;
+	margin-left: -600px;
+	width: 1200px;
 }
 
 .menu  li {
 	position: relative;
 	float: left;
 	background-color: rgba(222,238,250,1);
-	width: 108px;
+	width: 198px;
 	height: 35px;
 	border-left: 1px solid rgba(155,204,240,1);
 	border-right: 1px solid rgba(155,204,240,1);
@@ -148,7 +150,7 @@ table,td,tr {
 
 .menu li ul li {
 	display: block;
-	width: 110px;
+	width: 200px;
 	border: 0px;
 }
 
@@ -161,6 +163,15 @@ table,td,tr {
 }
 
 #msg{
-	color: red;
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 380px;
+	height: 120px;
+	margin-left: -190px;
+	margin-top: -60px;
+	background-color: rgba(222,238,250,0.8);
+	color: rgba(11,45,70,1);
 	border: 0px;
 }

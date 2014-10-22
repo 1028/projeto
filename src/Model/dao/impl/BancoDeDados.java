@@ -17,11 +17,11 @@ public class BancoDeDados {
 	
 	public Connection obtemConexao() throws SQLException {
 		// Realiza Conexão no PC dos Desenvolvedores.
-		 return
-		 DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1", "root", "490779");
+		 //return
+		// DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1", "root", "490779");
 
 		 // Realiza Conexão no PC do Universidade.
-		 //return
-		// DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1, "alunos", "alunos"); 
+		 return
+		 DriverManager.getConnection("jdbc:mysql://localhost/dbprojeto1", "root", ""); 
 	}
 }

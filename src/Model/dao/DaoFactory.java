@@ -3,11 +3,15 @@ package Model.dao;
 import java.sql.SQLException;
 
 import Model.dao.impl.AeronaveMysqlDaoImpl;
-import Model.dao.impl.FormaTratamentoMysqlImpl;
-import Model.dao.impl.LoginMysqlImpl;
+import Model.dao.impl.ChequeMysqlDaoImpl;
+import Model.dao.impl.FormaTratamentoMysqlDaoImpl;
+import Model.dao.impl.LoginMysqlDaoImpl;
+import Model.dao.impl.PagamentoMysqlDaoImpl;
 import Model.dao.impl.PassageiroMysqlDaoImpl;
-import Model.dao.impl.PerfilMysqlImpl;
-import Model.dao.impl.SituacaoMysqlImpl;
+import Model.dao.impl.PassagemCompraMysqlDaoImpl;
+import Model.dao.impl.PassagemMysqlDaoImpl;
+import Model.dao.impl.PerfilMysqlDaoImpl;
+import Model.dao.impl.SituacaoMysqlDaoImpl;
 import Model.dao.impl.VooMysqlDaoImpl;
 import Model.dao.impl.LocalidadeMysqlDaoImpl;
 
@@ -38,23 +42,39 @@ public class DaoFactory {
 		return new VooMysqlDaoImpl();
 	}
 	
-	public LoginMysqlImpl getLoginDao(){
-		return new LoginMysqlImpl(); 
+	public LoginMysqlDaoImpl getLoginDao(){
+		return new LoginMysqlDaoImpl(); 
 	}
 	
-	public SituacaoMysqlImpl getSituacaoDao(){
-		return new SituacaoMysqlImpl();
+	public SituacaoMysqlDaoImpl getSituacaoDao(){
+		return new SituacaoMysqlDaoImpl();
 	}
 	
-	public FormaTratamentoMysqlImpl getFormaTratamentoDao(){
-		return new FormaTratamentoMysqlImpl();
+	public FormaTratamentoMysqlDaoImpl getFormaTratamentoDao(){
+		return new FormaTratamentoMysqlDaoImpl();
 	}
 	
-	public PerfilMysqlImpl getPerfilDao(){
-		return new PerfilMysqlImpl();
+	public PerfilMysqlDaoImpl getPerfilDao(){
+		return new PerfilMysqlDaoImpl();
 	}
 	
 	public LocalidadeMysqlDaoImpl getLocalidadeDao(){
 		return new LocalidadeMysqlDaoImpl();
+	}
+	
+	public PassagemMysqlDaoImpl getPassagemDao(){
+		return new PassagemMysqlDaoImpl(); 
+	}
+	
+	public PassagemCompraMysqlDaoImpl getPassagemCompraDao(){
+		return new PassagemCompraMysqlDaoImpl(); 
+	}
+	
+	public PagamentoMysqlDaoImpl getPagamentoDao(){
+		return new PagamentoMysqlDaoImpl(); 
+	}
+	
+	public ChequeMysqlDaoImpl getChequeDao(){
+		return new ChequeMysqlDaoImpl(); 
 	}
 }

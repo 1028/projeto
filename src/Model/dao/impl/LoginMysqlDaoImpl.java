@@ -11,7 +11,7 @@ import com.mysql.jdbc.PreparedStatement;
 import Model.LoginTO;
 import Model.dao.LoginDao;
 
-public class LoginMysqlImpl implements LoginDao {
+public class LoginMysqlDaoImpl implements LoginDao {
 	private Connection conexao;
 
 	private Connection obtemConexao() throws SQLException {

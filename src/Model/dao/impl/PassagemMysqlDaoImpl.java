@@ -4,53 +4,70 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import Model.PerfilTO;
-import Model.dao.PerfilDao;
+import Model.PassagemTO;
+import Model.dao.PassagemDao;
 
-public class PerfilMysqlImpl implements PerfilDao {
+public class PassagemMysqlDaoImpl implements PassagemDao {
 	private Connection conexao;
-	
+
 	private Connection obtemConexao() throws SQLException {
 		BancoDeDados bd = new BancoDeDados();
 		return bd.obtemConexao();
 	}
-	
+
 	public PreparedStatement prepararComando(String comando)
 			throws SQLException {
-		return conexao.prepareStatement(comando);
+		return (PreparedStatement) conexao.prepareStatement(comando);
 	}
-	
-	public List<PerfilTO> consultarPerfil() {
-		String consulta = "SELECT * FROM PERFIL";
-		ArrayList<PerfilTO> resultado = new ArrayList<PerfilTO>();
+
+	public void consultarPassagem(PassagemTO passagem) {
+		String consulta = String.format(
+				"SELECT * FROM PASSAGEM WHERE NUM_PASS = %d", passagem.getNumeroPassagem());
+
 		PreparedStatement stm = null;
 		ResultSet rs = null;
-		conexao = null;
 		try {
-			conexao = obtemConexao();
 			stm = prepararComando(consulta);
 			rs = stm.executeQuery();
 
 			while (rs.next()) {
-				PerfilTO perfil  = new PerfilTO();
-				perfil.setCodigo(rs.getInt(1));
-				perfil.setNome(rs.getString(2));
-				resultado.add(perfil);
+			//	retornoQuery.add(rs.getInt(1));
+		//		retornoQuery.add(rs.getDate(2));
 			}
-
-		return resultado;
 		} catch (Exception e) {
-			// tenta dar rollback na instrução realizada
 			try {
 				conexao.rollback();
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null,
-						"Rollback realizado com sucesso");
+
+			} catch (SQLException sqlEx) {
+
+			} finally {
+				if (stm != null) {
+					try {
+						conexao.close();
+					} catch (SQLException sqlEx) {
+
+					}
+				}
+			}
+		}
+	}
+
+	public void tranferirPassagem(PassagemTO passagem) {
+		String update = String.format("", passagem.getNumeroPassagem());
+		conexao = null;
+		PreparedStatement stm = null;
+
+		try {
+			conexao = obtemConexao();
+			stm = prepararComando(update);
+			stm.execute();
+			conexao.commit();
+		} catch (Exception e) {
+			try {
+				conexao.rollback();
 			} catch (SQLException sqlEx) {
 				JOptionPane.showMessageDialog(
 						null,
@@ -69,6 +86,5 @@ public class PerfilMysqlImpl implements PerfilDao {
 			}
 
 		}
-		return resultado;
 	}
 }

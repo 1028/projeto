@@ -6,13 +6,9 @@
     		 import = "Model.VooTO"
     %>
 <%
-	String lingua, pais;
-	lingua = session.getAttribute("idioma").toString();
-	pais = session.getAttribute("pais").toString();
-	
-	Locale idioma = new Locale(lingua, pais);
-	ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
-	
+
+ResourceBundle bundle;
+bundle = (ResourceBundle) session.getAttribute("idioma");
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>

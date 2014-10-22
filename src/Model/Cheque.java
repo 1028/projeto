@@ -2,25 +2,27 @@ package Model;
 
 import java.sql.SQLException;
 
+import Model.dao.ChequeDao;
+import Model.dao.DaoFactory;
+
 public class Cheque extends Pagamento {
 
-	private BancoDeDados bd;
+	ChequeTO dadosCheque = null;
 
-	public Cheque() {
-
+	public Cheque(PagamentoTO dadosPagamento, ChequeTO dadosCheque) {
+		super(dadosPagamento);
+		this.dadosCheque = dadosCheque;
 	}
 
 	public void cadastrarCheque() throws SQLException {
-		bd = new BancoDeDados();
-
-		// bd.cadastrarPagamento(getNomeTitular(), getCpf(), getDataPagamento(),
-		// getFormaPagamento());
-
-		System.out.println(getNomeTitular());
-		bd.cadastrarCheque(getBanco(), getAgencia(), getConta(), 1);// getCodigoPagamento());
+		DaoFactory factory = DaoFactory.getInstance();
+		ChequeDao dao = factory.getChequeDao();
+		dao.cadastrarCheque(dadosCheque);
 	}
 
 	public void consultarCheque() {
-
+		DaoFactory factory = DaoFactory.getInstance();
+		ChequeDao dao = factory.getChequeDao();
+		dao.consultarCheque(dadosCheque);
 	}
 }

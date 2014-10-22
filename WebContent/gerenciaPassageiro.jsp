@@ -51,6 +51,8 @@ bundle = (ResourceBundle) session.getAttribute("idioma");
 			naoConsultado.setCelular("");
 			naoConsultado.setDataNascimento("");
 			naoConsultado.setEmail("");
+			naoConsultado.setFormaTrata(1);
+			naoConsultado.setTipoPassageiro(1);
 			consulta.add(naoConsultado);
 			Iterator itr = consulta.iterator();
 			while (itr.hasNext()) {
@@ -114,7 +116,9 @@ bundle = (ResourceBundle) session.getAttribute("idioma");
 								// ìndices são invertidos pois na instanciação
 								String nome = "forma.trat." + auxFormaTrata.get(i).getCodigo();
 								String forma = (i + 1) + " - " + bundle.getString(nome);
-								out.print("<option value =" + (i + 1) + ">" + forma
+								out.print("<option value ='" + (i + 1) + "'" );
+								if(element.getFormaTrata() == (i + 1)){out.print("selected='selected'");}
+								out.print(">" + forma
 										+ "</option>");
 							}
 						%>
@@ -133,7 +137,9 @@ bundle = (ResourceBundle) session.getAttribute("idioma");
 							for (int i = 0; i < auxPerfil.size(); i++) {
 								String nome = "tipo.pass." + auxPerfil.get(i).getCodigo();
 								String forma = (i + 1) + " - " + bundle.getString(nome);
-								out.print("<option value =" + (i + 1) + ">" + forma
+								out.print("<option value ='" + (i + 1) + "'" );
+								if(element.getTipoPassageiro() == (i + 1)){out.print("selected='selected'");}
+								out.print(">" + forma
 										+ "</option>");
 							}
 						%>

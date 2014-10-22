@@ -59,7 +59,6 @@ public class GerenciaAeronave extends HttpServlet {
 		AeronaveTO aeronave = new AeronaveTO();
 		aeronave.setNome(request.getParameter("fnome"));
 		aeronave.setTipoAeronave((request.getParameter("ftipoaeronave")));
-		System.out.print(aeronave.getCodigoAeronave() + " aero cod");
 
 		Validacao oValida = new Validacao();
 

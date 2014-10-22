@@ -23,7 +23,6 @@
 	</div>
 
 	<%
-		session.setAttribute("idiomaOk", "false");
 		session.setAttribute("msg", "mensagem.branco");
 	%>
 </body>

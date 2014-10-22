@@ -8,6 +8,11 @@ body {
 	font-size: 14px;
 }
 
+input{
+	height: 20px;
+	width: auto;
+}
+
 #btnEspanhol{
 	font-size: 1px;
 	background-image: url("images/es.jpg");

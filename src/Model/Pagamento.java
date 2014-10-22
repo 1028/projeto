@@ -2,22 +2,26 @@ package Model;
 
 import java.sql.SQLException;
 
+import Model.dao.DaoFactory;
+import Model.dao.PagamentoDao;
+
 public class Pagamento {
 	
-	private BancoDeDados bd;
+	PagamentoTO dadosPagamento = null;
 
-	public Pagamento() {
-		
+	public Pagamento(PagamentoTO dadosPagamento) {
+		this.dadosPagamento = dadosPagamento;
 	}
 
 	public void pagar() throws SQLException {
-		bd = new BancoDeDados();
-		System.out.println(getNomeTitular());
-		bd.cadastrarPagamento(getNomeTitular(), getCpf(), getDataPagamento(),
-				getFormaPagamento());
+		DaoFactory factory = DaoFactory.getInstance();
+		PagamentoDao dao = (PagamentoDao) factory.getPagamentoDao();
+		dao.cadastrarPagamento(dadosPagamento);
 	}
 
 	public void consultarPagamneto() {
-
+		DaoFactory factory = DaoFactory.getInstance();
+		PagamentoDao dao = (PagamentoDao) factory.getPagamentoDao();
+		dao.consultarPagamento(dadosPagamento);
 	}
 }

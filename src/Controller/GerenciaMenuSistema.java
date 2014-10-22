@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class GerenciaPassagem
+ * Servlet implementation class GerenciaMenuSistema
  */
-@WebServlet("/GerenciaPassagem")
-public class GerenciaPassagem extends HttpServlet {
+@WebServlet("/GerenciaMenuSistema")
+public class GerenciaMenuSistema extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GerenciaPassagem() {
+    public GerenciaMenuSistema() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,7 +29,7 @@ public class GerenciaPassagem extends HttpServlet {
 		// TODO Auto-generated method stub
 		executa(request, response);
 	}
-		
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -38,7 +38,16 @@ public class GerenciaPassagem extends HttpServlet {
 		executa(request, response);
 	}
 
-	protected void executa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void executa(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		
+		String parametro = request.getParameter("op");  
+		if(parametro.equals("1")){
+			request.setAttribute("msg", "mensagem.sobre");
+			request.getRequestDispatcher("principal.jsp").forward(request, response);
+		}
+		else{
+			request.getRequestDispatcher("idioma.jsp").forward(request, response);
+		}
 	}
 }

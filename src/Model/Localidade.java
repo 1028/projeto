@@ -1,8 +1,6 @@
 package Model;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import Model.LocalidadeTO;
 import Model.dao.DaoFactory;
 import Model.dao.LocalidadeDao;

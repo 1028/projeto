@@ -1,6 +1,6 @@
 package Model;
 
-public class ChequeTO {
+public class ChequeTO extends PagamentoTO {
 	private int codigo, codigoPagamento;
 	private String banco, agencia, conta;
 	

@@ -15,10 +15,15 @@
 		out.print(bundle.getString("FrmLogin.titulo"));
 	%>
 </title>
+<link rel="stylesheet" type="text/css" href="estilo.css">
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
+<div id="container">
 	<form action="GerenciaLogin" method="post">
 		<fieldset>
+		<legend><%out.print(bundle.getString("FrmLogin.titulo"));%></legend>
 			<p>
 				<label> <%
  	out.print(bundle.getString("FrmLogin.rotulo.login"));
@@ -53,5 +58,6 @@
 				out.print(bundle.getString(msg));
 		%>
 	</div>
+</div>
 </body>
 </html>

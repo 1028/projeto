@@ -15,6 +15,8 @@
 		out.print(bundle.getString("FrmLogin.titulo"));
 	%>
 </title>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,500'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<form action="GerenciaLogin" method="post">

@@ -4,17 +4,14 @@ import java.sql.SQLException;
 
 public class Pagamento {
 	
-	private BancoDeDados bd;
+	PagamentoTO dadosPagamento = null;
 
-	public Pagamento() {
-		
+	public Pagamento(PagamentoTO dadosPagamento) {
+		this.dadosPagamento = dadosPagamento;
 	}
 
 	public void pagar() throws SQLException {
-		bd = new BancoDeDados();
-		System.out.println(getNomeTitular());
-		bd.cadastrarPagamento(getNomeTitular(), getCpf(), getDataPagamento(),
-				getFormaPagamento());
+	
 	}
 
 	public void consultarPagamneto() {

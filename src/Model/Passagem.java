@@ -1,30 +1,18 @@
 package Model;
 
-import java.sql.Date;
-import java.sql.SQLException;
-
 public class Passagem {
+	PassagemTO dadosPassagem = null;
 
-	private BancoDeDados bd;
-
-	public Passagem() {
-		bd = null;
+	public Passagem(PassagemTO dadosPassagem) {
+		this.dadosPassagem = dadosPassagem;
 	}
 
-	public Passagem(int iNumeroPassagem) {
-		setNumeroPassagem(iNumeroPassagem);
-	}
-
-	
-	
 	public void efetuarCheckin(){
 		
 	}
 	
-	public void transferir() throws SQLException {
-		bd = new BancoDeDados();
-
-		bd.tranferirPassagem(getNumeroPassagem());
+	public void transferir(){
+		
 	}
 	
 	public void consultarPassagem(){

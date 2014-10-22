@@ -243,7 +243,7 @@ public class GerenciaVoo extends HttpServlet {
 		//vooTO.setSituacao(Integer.parseInt(request.getParameter("fsituacao")));
 		//vooTO.setAeronave(Integer.parseInt(request.getParameter("faeronave")));
 		vooTO.setSituacao(1);
-		vooTO.setAeronave(1);
+		vooTO.setAeronave(6);
 		//Transforma uma data no formato Brasileiro e retorna em formato SQL
 		Formatador forma = new Formatador();
 		vooTO.setDateHora(forma.dataNacional(request.getParameter("fdata")));

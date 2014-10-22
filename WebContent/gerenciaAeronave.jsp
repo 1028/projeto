@@ -36,6 +36,7 @@
 		} else {
 			AeronaveTO naoConsultado = new AeronaveTO();
 			naoConsultado.setNome("");
+			naoConsultado.setTipoAeronave("1");
 			consulta.add(naoConsultado);
 			Iterator itr = consulta.iterator();
 			while (itr.hasNext()) {
@@ -84,12 +85,12 @@
 				<label> <%
  	out.print(bundle.getString("rotulo.tipoAeronave"));
  %></label> <select name="ftipoaeronave">
-					<option value="1">
+					<option value="1" <%if(element.getTipoAeronave().equals("1")){out.print("selected='selected'");} %>>
 						<%
 							out.print(bundle.getString("tipoAeronave.comercial"));
 						%>
 					</option>
-					<option value="2">
+					<option value="2" <%if(element.getTipoAeronave().equals("2")){out.print("selected='selected'");}%>>
 						<%
 							out.print(bundle.getString("tipoAeronave.luxo"));
 						%>

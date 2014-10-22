@@ -6,14 +6,13 @@ public class PassagemCompra extends Passagem {
 
 	PassagemCompraTO dadosPassagemCompra = null;
 
-	public PassagemCompra(PassagemCompraTO dadosPassagemCompra) {
+	public PassagemCompra(PassagemTO dadosPassagem, PassagemCompraTO dadosPassagemCompra) {
+		super(dadosPassagem);
 		this.dadosPassagemCompra = dadosPassagemCompra;
 	}
 
 	public void cancelarPassagem() throws SQLException {
-		bd = new BancoDeDados();
-
-		bd.cancelarPassagem(getNumeroPassagem());
+		
 	}
 
 	public void comprarPassagem() {

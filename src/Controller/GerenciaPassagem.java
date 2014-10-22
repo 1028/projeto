@@ -14,25 +14,27 @@ public class GerenciaPassagem {
 	// Métodos para gerenciar o pagamento das passagens.
 	public void pagarCartao(String sNomeTitular, String sCpf, String string,
 			String sFormaPagamento) throws SQLException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 		Pagamento oPagamento = new Pagamento(sNomeTitular, sCpf,
 				(sdf.format(new Date())), sFormaPagamento);
 
 		oPagamento.pagar();
+		*/
 	}
 
 	public void pagarCheque(String sNomeTitular, String sCpf, String string,
 			String sFormaPagamento, String sBanco, String sAgencia,
 			String sConta) throws SQLException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
 		Cheque oCheque = new Cheque(sNomeTitular, sCpf,
 				(sdf.format(new Date())), sFormaPagamento, sBanco, sAgencia,
 				sConta);
-
+		 
 		oCheque.pagar();
 		oCheque.cadastrarCheque();
+		*/
 	}
 
 	// Método para transferir passagem.
@@ -49,7 +51,7 @@ public class GerenciaPassagem {
 	public double calculaDevolucao(int iNumPassagem) {
 		double totalValorDevolucao = -1.0;
 
-		Passagem oPassagem = new Passagem(iNumPassagem);
+		//Passagem oPassagem = new Passagem(iNumPassagem);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 

@@ -133,8 +133,8 @@ public class PassagemMysqlImpl {
 			rs = stm.executeQuery();
 
 			while (rs.next()) {
-				retornoQuery.add(rs.getInt(1));
-				retornoQuery.add(rs.getDate(2));
+			//	retornoQuery.add(rs.getInt(1));
+		//		retornoQuery.add(rs.getDate(2));
 			}
 		} catch (Exception e) {
 			try {

@@ -1,5 +1,8 @@
 package Model;
 
+import Model.dao.DaoFactory;
+import Model.dao.PassagemDao;
+
 public class Passagem {
 	PassagemTO dadosPassagem = null;
 
@@ -12,11 +15,15 @@ public class Passagem {
 	}
 	
 	public void transferir(){
-		
+		DaoFactory factory = DaoFactory.getInstance();
+		PassagemDao dao = factory.getPassagemDao();
+		dao.tranferirPassagem(dadosPassagem);
 	}
 	
 	public void consultarPassagem(){
-		
+		DaoFactory factory = DaoFactory.getInstance();
+		PassagemDao dao = factory.getPassagemDao();
+		dao.consultarPassagem(dadosPassagem);
 	}
 	
 	public int emitirCartaoEmbarque(){

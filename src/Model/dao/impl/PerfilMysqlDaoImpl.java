@@ -9,10 +9,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import Model.FormaTratamentoTO;
-import Model.dao.FormaTratamentoDao;
+import Model.PerfilTO;
+import Model.dao.PerfilDao;
 
-public class FormaTratamentoMysqlImpl implements FormaTratamentoDao {
+public class PerfilMysqlDaoImpl implements PerfilDao {
 	private Connection conexao;
 	
 	private Connection obtemConexao() throws SQLException {
@@ -24,10 +24,10 @@ public class FormaTratamentoMysqlImpl implements FormaTratamentoDao {
 			throws SQLException {
 		return conexao.prepareStatement(comando);
 	}
-
-	public List<FormaTratamentoTO> consultarFormaTratamento() {
-		String consulta = "SELECT * FROM TRATAMENTO";
-		ArrayList<FormaTratamentoTO> resultado = new ArrayList<FormaTratamentoTO>();
+	
+	public List<PerfilTO> consultarPerfil() {
+		String consulta = "SELECT * FROM PERFIL";
+		ArrayList<PerfilTO> resultado = new ArrayList<PerfilTO>();
 		PreparedStatement stm = null;
 		ResultSet rs = null;
 		conexao = null;
@@ -37,13 +37,13 @@ public class FormaTratamentoMysqlImpl implements FormaTratamentoDao {
 			rs = stm.executeQuery();
 
 			while (rs.next()) {
-				FormaTratamentoTO formaTrat = new FormaTratamentoTO();
-				formaTrat.setCodigo(rs.getInt(1));
-				formaTrat.setNome(rs.getString(2));
-				resultado.add(formaTrat);
+				PerfilTO perfil  = new PerfilTO();
+				perfil.setCodigo(rs.getInt(1));
+				perfil.setNome(rs.getString(2));
+				resultado.add(perfil);
 			}
 
-			return resultado;
+		return resultado;
 		} catch (Exception e) {
 			// tenta dar rollback na instrução realizada
 			try {

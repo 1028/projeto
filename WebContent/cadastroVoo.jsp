@@ -7,12 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%
-String lingua, pais;
-lingua = session.getAttribute("idioma").toString();
-pais = session.getAttribute("pais").toString();
 
-Locale idioma = new Locale(lingua, pais);
-ResourceBundle bundle = ResourceBundle.getBundle("Idiomas/idioma", idioma);
+ResourceBundle bundle;
+bundle = (ResourceBundle) session.getAttribute("idioma");
 
 //verifica se há necessidade de carregar os comboBox das classes de domínios
 if(request.getAttribute("carrega") == null) {

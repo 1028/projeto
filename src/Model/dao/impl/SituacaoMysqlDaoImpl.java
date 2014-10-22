@@ -13,7 +13,7 @@ import Model.LocalidadeTO;
 import Model.SituacaoTO;
 import Model.dao.SituacaoDao;
 
-public class SituacaoMysqlImpl implements SituacaoDao{
+public class SituacaoMysqlDaoImpl implements SituacaoDao{
 
 	private Connection conexao;
 	
